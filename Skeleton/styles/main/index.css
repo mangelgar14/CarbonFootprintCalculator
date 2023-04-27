@@ -1,0 +1,104 @@
+/* Contenido */
+
+/*  Popup -----------------------------
+
+dialog {
+  width: 30%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  border: none;
+  border-radius: 1rem;
+  padding: 2rem 0rem 2rem 0rem;
+}
+
+dialog > div > h1 {
+  font-size: 1.5rem;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(1px);
+}
+
+dialog > button {
+  padding: 0.5rem 2rem 0.5rem 2rem;
+  border-radius: 1rem;
+  border: none;
+  background: #a100ff;
+  color: white;
+  cursor: pointer;
+}
+
+dialog > button:hover {
+  background: #66039f;
+}
+
+*/
+
+/*  Pestañas -----------------------------
+
+.tabset > input[type="radio"] {
+  position: absolute;
+  left: -200vw;
+}
+
+.tabset .tab-panel {
+  display: none;
+}
+
+.tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+.tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
+.tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
+.tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
+.tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
+.tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {
+  display: block;
+}
+
+div.tab-panels {
+  display: block;
+}
+
+div.tabset > label {
+  display: inline-block;
+  cursor: pointer;
+}
+
+*/
+
+
+/*  Pop-up -----------------------------
+
+dialog {
+  width: 30%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  border: none;
+  border-radius: 1rem;
+  padding: 2rem 0rem 2rem 0rem;
+}
+
+dialog > div > h1 {
+  font-size: 1.5rem;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(1px);
+}
+
+dialog > button {
+  padding: 0.5rem 2rem 0.5rem 2rem;
+  border-radius: 1rem;
+  border: none;
+  background: #a100ff;
+  color: white;
+  cursor: pointer;
+}
+
+dialog > button:hover {
+  background: #66039f;
+}
+*/

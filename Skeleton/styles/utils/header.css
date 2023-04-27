@@ -1,0 +1,121 @@
+/* Reset */
+@import url("./reset.css");
+
+/* Fuentes */
+@font-face {
+  font-family: "GraphikRegular";
+  src: url("../../fonts/Graphik-Regular-Web.woff2") format("woff2");
+}
+
+/* Contenido */
+:root {
+  --z-index-base: 0;
+  --z-index-medium: 1;
+  --z-index-top: 2;
+
+  --main-bg-color: rgba(206, 204, 225, 1);
+  --main-font: "GraphikRegular", sans-serif;
+  --main-color-font: white;
+}
+
+body {
+  background-color: var(--main-bg-color);
+  font-family: var(--main-font);
+  background: repeating-linear-gradient(
+    29.75deg,
+    #59008e 0%,
+    #7b10b5 28%,
+    #a022cb 65%,
+    #c250af 100%
+  );
+  background-attachment: fixed;
+  color: var(--main-color-font);
+  cursor: default;
+  overflow-x: hidden;
+}
+
+header,
+main {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+#title,
+#logo {
+  display: grid;
+  justify-content: center;
+}
+
+#title {
+  grid-column: 1 / 7;
+  padding-top: 3rem;
+}
+
+#logo {
+  grid-column: 7 / 13;
+  padding-top: 1rem;
+}
+
+#logo > img {
+  max-width: 13rem;
+}
+
+#title > h6 {
+  font-size: 1.2rem;
+}
+
+.remark {
+  animation: remark 0.7s steps(2) infinite;
+}
+
+@keyframes remark {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.bold {
+  font-weight: 600;
+}
+
+tool-tip {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+  background: rgba(255, 255, 255, 1);
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.4s ease 0s;
+  left: 41%;
+  top: -22;
+  color: black !important;
+}
+
+:has(> tool-tip) {
+  position: relative;
+}
+
+:has(> tool-tip):hover tool-tip {
+  opacity: 0.9;
+  transition: opacity 0.5s ease 0.7s;
+}
+
+tool-tip > b {
+  font-weight: 600;
+}
