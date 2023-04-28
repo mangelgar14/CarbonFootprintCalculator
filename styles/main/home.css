@@ -1,0 +1,221 @@
+/* Fuentes */
+@font-face {
+    font-family: "GraphikRegular";
+    src: url("../../fonts/Graphik-Regular-Web.woff2") format("woff2");
+
+    font-family: "GraphikBold";
+    src: url("../../fonts/Graphik-Bold-Web.woff2") format("woff2");
+  }
+
+body{
+    margin: 0px;
+}
+
+body .content-wrapper{
+    height: 80%;
+    margin: 0px;
+    background-image: url("../../imgs/gradient.png");
+}
+
+header{
+    display: grid;
+    height: 71px;
+    grid-template-columns: repeat(22, 1fr);
+    background-image: url("../../imgs/header_bg.png");
+}
+
+#menu{
+    display: grid;
+    grid-template-columns: repeat(22, 1fr);
+    grid-column: 1 / 25;
+
+} 
+
+#logo{
+    grid-column: 1 / 3;
+    align-self: center;
+    justify-self: center;
+}
+
+#separator{
+    grid-column: 3 / 4;
+    align-self: center;
+    justify-self: center;
+
+}
+
+#title{
+    grid-column: 4 / 9;
+    align-self: center;
+    justify-self: center;
+
+    font-family: 'GraphikRegular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #ffffff;
+}
+
+#btn_home{
+    grid-column: 15 / 17;
+    align-self: center;
+    justify-self: center;
+
+    font-family: 'GraphikRegular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+
+}
+
+#btn_projects{
+    grid-column: 17 / 19;
+    align-self: center;
+    justify-self: center;
+
+    font-family: 'GraphikRegular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #ffffff;
+}
+
+#btn_calculator{
+    grid-column: 19 / 21;
+    align-self: center;
+    justify-self: center;
+
+    font-family: 'GraphikRegular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #ffffff;
+}
+
+#btn_results{
+    grid-column: 21 / 23;
+    align-self: center;
+    justify-self: center;
+
+    font-family: 'GraphikRegular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #ffffff;
+}
+
+#main{
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+    margin-top: 5rem
+}
+
+#name{
+    grid-row: 1 / 4;
+    align-self: center;
+    justify-self: center;
+
+    font-family: 'GraphikRegular';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 90px;
+    line-height: 100%;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+
+    mix-blend-mode: normal;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#slogan{
+    grid-row: 4 / 6;
+    align-self: center;
+    justify-self: center;
+
+    font-family: 'GraphikRegular';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #FFFFFF;
+
+    mix-blend-mode: normal;
+}
+
+#getstarted{
+    grid-row: 8 / 11;
+    align-self: center;
+    justify-self: center;
+
+    /* BUTTON */
+    width: 216px;
+    height: 50px;
+    left: 0px;
+    top: 0px;
+    background: #FFFFFF;
+    border-radius: 999px;
+
+    
+
+}
+
+#btn_get_started{
+    width: 216px;
+    height: 50px;
+    background: transparent;
+    border: none;
+
+    /* TEXT */
+    text-align: center;
+    font-family: 'GraphikBold';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 110%;
+    letter-spacing: -0.02em;
+    color: #A100FF;
+}
+
+#about_us{
+    display: grid;
+    grid-template-rows: repeat(8, 1fr);
+}
+
+#title_aus{
+    font-family: 'GraphikRegular';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 64px;
+
+    margin-left: 2rem;
+}
+
+#description{
+    font-family: 'GraphikRegular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 26px;
+
+    margin-left: 2rem;
+}
+
+
+a:link{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a:visited{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+
