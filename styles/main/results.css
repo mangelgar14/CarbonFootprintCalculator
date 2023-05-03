@@ -37,6 +37,7 @@
     line-height: 20px;
     color: #ffffff;
 }
+
 #btn_home{
     grid-column: 15 / 17;
     align-self: center;
@@ -114,16 +115,6 @@
     font-size: 18px;
     line-height: 110%;
 }
-#btn_download{
-    width: 150px;
-    height: 50px;
-    color: white;
-    background: linear-gradient(180deg, #A100FF 0%, rgba(161, 0, 255, 0.95) 0.01%, rgba(161, 0, 255, 0.65) 100%);
-    border-radius: 999px;
-    position: absolute;
-    bottom: 110;
-    right: 100;
-}
 #didyouknow{
     display: grid;
     grid-template-rows: repeat(8, 1fr);
@@ -149,26 +140,42 @@
 table{
     border-spacing: 0;
     text-align: left;
-    width: 685px;
-    height: 566px;
 }
 #tablas{
-    border: solid #ccc 3px;
-    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
-    border-radius: 20px;
+    border: solid #ccc 1px; 
+    -moz-border-radius: 20px; 
+    -webkit-border-radius: 20px; 
+    border-radius: 20px; 
+    -webkit-box-shadow: 0 3px #ccc; 
+    -moz-box-shadow: 0 3px #ccc; 
+    box-shadow: 0 3px #ccc; 
 }
 #position_table1{
-    position: absolute;
-    top: 200;
-    left: 100;
+    position: relative;
+    bottom: 400px;
+    left: 100px;
 }
 #position_table2{
-    position: absolute;
-    top: 200;
-    right: 100;
-    
+    position: relative;
+    bottom: 789px;
+    left: 1000px;
 }
-.text-wrapper{
-    position: absolute;
-    bottom: -400;
+#sinborde_titulo{
+    border: 0;
+}
+#sinborde_lista{
+    border:0;
+}
+#separador{
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+}
+#separador_derecha{
+    height: 100px;
+    text-align: center;
+    border-left: 0px;
+}
+#carbon_foot{
+    text-align: center;
 }
