@@ -7,13 +7,14 @@ body {
     font-family: Graphik;
 }
 
-.dev-nav{
+.dev-nav {
     position: fixed;
     bottom: 0px;
     right: 0px;
     padding: 10px;
     background-color: #A100FF;
 }
+
 .grid-container {
     margin: 15px auto;
     grid-template-columns: 1fr auto auto auto;
@@ -55,20 +56,29 @@ body {
 }
 
 .item3 {
-    grid-row-start: 1;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 2px;
     text-align: center;
     border: 1px solid black;
     padding: 4px;
-    padding-bottom: 8px;
+    align-items: center;
+    justify-items: center;
 }
 
+
+
 .item3>input {
-    padding: 0px;
-    outline: 0;
+
     border: 1px solid transparent;
     border-bottom: 1px solid #ababab;
-    border-radius: 0;
-    background-position: 100% center
+    transition: .15s ease;
+}
+
+.item3>input:focus {
+    outline: 0;
+    transition: .15s ease;
+    border-bottom: 1px solid black;
 }
 
 .item3>button {
@@ -223,7 +233,7 @@ body {
 
     background-color: white;
     grid-template-columns: 1fr;
-    
+
     display: grid;
     cursor: pointer;
     align-items: start;
@@ -232,11 +242,13 @@ body {
     overflow: hidden;
 
 }
+
 .hidden {
     display: none;
     height: 0;
     opacity: 0;
 }
+
 .project-card-preview {
     background-color: white;
     grid-template-columns: 1fr auto auto auto;
@@ -246,11 +258,12 @@ body {
 }
 
 .project-card-details {
-    display:grid;
+    display: grid;
     justify-items: start;
 
     border-top: #ababab 1px solid;
 }
+
 .project-card-details>p {
     padding: 0;
     margin: 0;
