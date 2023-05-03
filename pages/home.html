@@ -5,24 +5,44 @@
     </head>
 
     <body>
+        <script src="../codes/pages/projects/home.js"></script>
+
+        <div id="popup">
+            <div id="popup_content">
+                <div id="div_x"><button type="button" id="btn_x" onclick="close_popup()"><img src="../imgs/cross.png" alt="Close window"/></button></div>
+                <div id="err_type">Alert</p></div>
+                <div id="text">There is <span id="bolded">no project</span> selected.</div>
+                <div id="div_close"><button type="button" id="btn_close" onclick="close_popup()">Close</button></div>
+            </div>
+        </div>
+
         <div class="content-wrapper">
             <header>
                 <div id="menu">
-                    <div id="logo"><img src="../imgs/logo_header.png" loading="lazy"/></div>
-                    <div id="separator"><img src="../imgs/separador.png" loading="lazy"/></div>
+                    <div id="logo"><img src="../imgs/logo_header.png" alt="Accenture logo" loading="lazy"/></div>
+                    <div id="separator"><img src="../imgs/separador.png" alt="Separator" loading="lazy"/></div>
                     <div id="title">Carbon Footprint Calculator</div>
-                    <div id="btn_home"><nav><a href="home.html">Home</a></nav></div>
-                    <div id="btn_projects"><nav><a href="projects.html">Projects</a></nav></div>
-                    <div id="btn_calculator">Calculator</div>
-                    <div id="btn_results">Results</div>
+                    <div id="btn_home"><a href="home.html">Home</a>
+                    <img src="../imgs/nav_selected.png" alt="Navi selected link"></div>
+                    <div id="btn_projects"><a href="projects.html">Projects</a></div>
+                    <div id="btn_calculator"><a href="#" onclick="show_popup()">Calculator</a></div>
+                    <div id="btn_results"><a href="results.html">Results</a></div>
                 </div>
             </header>
 
             <div id="main">
                 <div id="name">Carbon Footprint Calculator</div>
                 <div id="slogan">"Let there be change."</div>
-                <div id="getstarted"><button id="btn_get_started" type="button">Get Started!</button></div>
+                <div id="getstarted">
+                    <a href="projects.html">
+                        <button id="btn_get_started" type="button">
+                            Get Started!
+                        </button>
+                    </a>
+                </div>
             </div>
+
+            
         </div>
 
         <div class="text-wrapper">
