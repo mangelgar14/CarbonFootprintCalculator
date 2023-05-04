@@ -3,7 +3,6 @@ header{
     height: 71px;
     grid-template-columns: repeat(22, 1fr);
     background-image: url("../../imgs/header_bg.png");
-    background-image: url("../../../imgs/header_bg.png");
     background-size: cover;
     background-repeat: no-repeat;
 }
