@@ -50,33 +50,11 @@
     </div>
   </div>
   <div class="add-buttons">
-    <button class="add-project-button card-click">
-      <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="48" height="48" rx="24" fill="url(#paint0_linear_460_2310)" />
-        <g clip-path="url(#clip0_460_2310)">
-          <g clip-path="url(#clip1_460_2310)">
-            <path
-              d="M33.3332 25.3334H25.3332V33.3334H22.6665V25.3334H14.6665V22.6667H22.6665V14.6667H25.3332V22.6667H33.3332V25.3334Z"
-              fill="white" />
-          </g>
-        </g>
-        <defs>
-          <linearGradient id="paint0_linear_460_2310" x1="24" y1="0" x2="24" y2="48" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#A100FF" />
-            <stop offset="0.0001" stop-color="#A100FF" stop-opacity="0.95" />
-            <stop offset="1" stop-color="#A100FF" stop-opacity="0.65" />
-          </linearGradient>
-          <clipPath id="clip0_460_2310">
-            <rect width="32" height="32" fill="white" transform="translate(8 8)" />
-          </clipPath>
-          <clipPath id="clip1_460_2310">
-            <rect width="32" height="32" fill="white" transform="translate(8 8)" />
-          </clipPath>
-        </defs>
-      </svg>
+    <button id="add_project_button" class="add-project-button" onclick="newProject()">
+      <img src="../imgs/plus.svg" alt="Icon of a plus sign">
       Add new project</button>
 
-    <button class="add-version-button">
+    <button id="add_version_button" class=" add-version-button disabled" disabled onclick="newVersion()">
       <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="48" height="48" rx="24" fill="url(#paint0_linear_460_2310)" />
         <g clip-path="url(#clip0_460_2310)">
@@ -100,137 +78,51 @@
           </clipPath>
         </defs>
       </svg>
-      Add new project</button>
+      Add new version</button>
   </div>
   <ul class="projects-field">
     <div class="no-projects hidden">
       <p class="no-projects1">This account has no projects created yet</p>
       <p class="no-projects2">To create a project select the “Add Project Button” at the top of these messages.</p>
     </div>
-    <li class="project-card">
-      <div class="project-card-preview ">
-        <div class="project-card-text">
-          <p class="p1">Project Name</p>
-          <p class="p2">Client name</p>
-          <p class="p3">01/01/2000</p>
+    <li class="project-field-item">
+      <div class="project-card ">
+        <div class="project-card-preview ">
+          <div class="project-card-text">
+            <p class="p1">Project Name</p>
+            <p class="p2">Client name</p>
+            <p class="p3">01/01/2000</p>
+          </div>
+          <div class="project-card-icon"><img class="project-card-arrow " src="../imgs/arrow.svg"
+              alt="Arrow pointing down">
+          </div>
         </div>
-        <div class="project-card-icon"><svg class="project-card-arrow " width="46" height="26" viewBox="0 0 46 26"
-            fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M20.8787 24.2444C22.0503 25.416 23.9497 25.416 25.1213 24.2444L44.2132 5.15254C45.3848 3.98097 45.3848 2.08148 44.2132 0.909903C43.0416 -0.261671 41.1421 -0.261671 39.9706 0.909903L23 17.8805L6.02944 0.909903C4.85786 -0.261671 2.95837 -0.261671 1.7868 0.909903C0.615223 2.08148 0.615223 3.98097 1.7868 5.15254L20.8787 24.2444ZM20 18V22.1231H26V18H20Z"
-              fill="#A100FF" fill-opacity="0.59" />
-          </svg>
+        <div class="project-card-details hidden">
+          <div class="project-card-details-content">
+            <p class="desc">Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
+              Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
+              Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
+            </p>
+            <p class="">Lorem ipsum dolor sit amet </p></br>
+          </div>
+
+          <div > <button onclick="alert('edit')" class="project-card-details-button"><img
+                src="../imgs/edit_icon.svg" alt="Icon of a pen">
+            </button><button class="project-card-details-button" onclick="alert('delete')"><img
+                src="../imgs/delete_icon.svg" alt="Icon of a trash can"></button>
+
+          </div>
+
+
         </div>
       </div>
-      <div class="project-card-details hidden">
-        <p class="desc">Lorem ipsum dolor sit amet description long enough to be used as a test for components' size 
-          Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
-          Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
-        </p></br>
-        <p class="">Lorem ipsum dolor sit amet</p>
-
+      <div class="project-card-buttons">
+        <button class="configure-button card-click" onclick="configure()">Configure</button>
+        <button class="results-button card-click" onclick="results()">Results <img src="../imgs/arrow_right.svg"
+            alt="Arrow pointing right"></button>
       </div>
-
     </li>
-    <li class="project-card">
-      <div class="project-card-preview ">
-        <div class="project-card-text">
-          <p class="p1">Project Name</p>
-          <p class="p2">Client name</p>
-          <p class="p3">01/01/2000</p>
-        </div>
-        <div class="project-card-icon"><svg class="project-card-arrow " width="46" height="26" viewBox="0 0 46 26"
-            fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M20.8787 24.2444C22.0503 25.416 23.9497 25.416 25.1213 24.2444L44.2132 5.15254C45.3848 3.98097 45.3848 2.08148 44.2132 0.909903C43.0416 -0.261671 41.1421 -0.261671 39.9706 0.909903L23 17.8805L6.02944 0.909903C4.85786 -0.261671 2.95837 -0.261671 1.7868 0.909903C0.615223 2.08148 0.615223 3.98097 1.7868 5.15254L20.8787 24.2444ZM20 18V22.1231H26V18H20Z"
-              fill="#A100FF" fill-opacity="0.59" />
-          </svg>
-        </div>
-      </div>
-      <div class="project-card-details hidden">
-        <p class="desc">Lorem ipsum dolor sit amet description long enough to be used as a test for components' size 
-          Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
-          Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
-        </p></br>
-        <p class="">Lorem ipsum dolor sit amet</p>
 
-      </div>
-
-    </li>
-    <li class="project-card">
-      <div class="project-card-preview ">
-        <div class="project-card-text">
-          <p class="p1">Project Name</p>
-          <p class="p2">Client name</p>
-          <p class="p3">01/01/2000</p>
-        </div>
-        <div class="project-card-icon"><svg class="project-card-arrow " width="46" height="26" viewBox="0 0 46 26"
-            fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M20.8787 24.2444C22.0503 25.416 23.9497 25.416 25.1213 24.2444L44.2132 5.15254C45.3848 3.98097 45.3848 2.08148 44.2132 0.909903C43.0416 -0.261671 41.1421 -0.261671 39.9706 0.909903L23 17.8805L6.02944 0.909903C4.85786 -0.261671 2.95837 -0.261671 1.7868 0.909903C0.615223 2.08148 0.615223 3.98097 1.7868 5.15254L20.8787 24.2444ZM20 18V22.1231H26V18H20Z"
-              fill="#A100FF" fill-opacity="0.59" />
-          </svg>
-        </div>
-      </div>
-      <div class="project-card-details hidden">
-        <p class="desc">Lorem ipsum dolor sit amet description long enough to be used as a test for components' size 
-          Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
-          Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
-        </p></br>
-        <p class="">Lorem ipsum dolor sit amet</p>
-
-      </div>
-
-    </li>
-    <li class="project-card">
-      <div class="project-card-preview ">
-        <div class="project-card-text">
-          <p class="p1">Project Name</p>
-          <p class="p2">Client name</p>
-          <p class="p3">01/01/2000</p>
-        </div>
-        <div class="project-card-icon"><svg class="project-card-arrow " width="46" height="26" viewBox="0 0 46 26"
-            fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M20.8787 24.2444C22.0503 25.416 23.9497 25.416 25.1213 24.2444L44.2132 5.15254C45.3848 3.98097 45.3848 2.08148 44.2132 0.909903C43.0416 -0.261671 41.1421 -0.261671 39.9706 0.909903L23 17.8805L6.02944 0.909903C4.85786 -0.261671 2.95837 -0.261671 1.7868 0.909903C0.615223 2.08148 0.615223 3.98097 1.7868 5.15254L20.8787 24.2444ZM20 18V22.1231H26V18H20Z"
-              fill="#A100FF" fill-opacity="0.59" />
-          </svg>
-        </div>
-      </div>
-      <div class="project-card-details hidden">
-        <p class="desc">Lorem ipsum dolor sit amet description long enough to be used as a test for components' size 
-          Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
-          Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
-        </p></br>
-        <p class="">Lorem ipsum dolor sit amet</p>
-
-      </div>
-
-    </li>    <li class="project-card">
-      <div class="project-card-preview ">
-        <div class="project-card-text">
-          <p class="p1">Project Name</p>
-          <p class="p2">Client name</p>
-          <p class="p3">01/01/2000</p>
-        </div>
-        <div class="project-card-icon"><svg class="project-card-arrow " width="46" height="26" viewBox="0 0 46 26"
-            fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M20.8787 24.2444C22.0503 25.416 23.9497 25.416 25.1213 24.2444L44.2132 5.15254C45.3848 3.98097 45.3848 2.08148 44.2132 0.909903C43.0416 -0.261671 41.1421 -0.261671 39.9706 0.909903L23 17.8805L6.02944 0.909903C4.85786 -0.261671 2.95837 -0.261671 1.7868 0.909903C0.615223 2.08148 0.615223 3.98097 1.7868 5.15254L20.8787 24.2444ZM20 18V22.1231H26V18H20Z"
-              fill="#A100FF" fill-opacity="0.59" />
-          </svg>
-        </div>
-      </div>
-      <div class="project-card-details hidden">
-        <p class="desc">Lorem ipsum dolor sit amet description long enough to be used as a test for components' size 
-          Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
-          Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
-        </p></br>
-        <p class="">Lorem ipsum dolor sit amet</p>
-
-      </div>
-
-    </li>
   </ul>
   <main>
 

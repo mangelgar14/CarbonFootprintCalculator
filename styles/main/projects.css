@@ -125,9 +125,7 @@ body {
     padding: 1em;
 }
 
-.card-click {
-    cursor: pointer;
-}
+
 
 .add-project-button {
     background: #FFFFFF;
@@ -173,6 +171,7 @@ body {
     justify-items: center;
     grid-template-columns: 1.5em auto;
     padding: 1em;
+
 }
 
 .add-project-button:hover,
@@ -182,10 +181,22 @@ body {
     outline: 1px black solid;
 }
 
+
 .add-project-button:active,
 .add-version-button:active,
 .add-project-button-np:active {
     background: white;
+}
+
+.disabled {
+    filter: grayscale(100%);
+    opacity: .5;
+}
+
+.disabled:hover {
+    background-color: white;
+    filter: grayscale(100%);
+    outline: 0;
 }
 
 .projects-field {
@@ -226,6 +237,13 @@ body {
     color: #B3B2B5;
 }
 
+.project-field-item {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+}
+
 .project-card {
     border: 1px black solid;
     border-radius: 25px;
@@ -243,10 +261,47 @@ body {
 
 }
 
+.project-card-buttons {}
+
+.configure-button {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 25px;
+    margin-left: 15px;
+    margin-right: 15px;
+    border: 0;
+    background: linear-gradient(180deg, #A100FF 0%, rgba(161, 0, 255, 0.95) 0.01%, rgba(161, 0, 255, 0.65) 100%);
+    border-radius: 999px;
+    color: white;
+}
+
+.results-button {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    column-gap: 5px;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 2px solid #A100FF;
+    background: white;
+    border-radius: 999px;
+
+}
+
 .hidden {
     display: none;
     height: 0;
     opacity: 0;
+}
+
+.card-click {
+    cursor: pointer;
 }
 
 .project-card-preview {
@@ -259,14 +314,45 @@ body {
 
 .project-card-details {
     display: grid;
-    justify-items: start;
-
+    gap: 4px;
+    grid-template-columns: auto auto;
     border-top: #ababab 1px solid;
+    align-items: end;
+}
+
+.project-card-details-content {}
+
+.project-card-details-content-summary {}
+
+.project-card-details-button {
+    padding: 0;
+    background-color: white;
+    border: 0;
+    margin: 1px;
+}
+
+.project-card-details-button>img {
+    border-radius: 50%;
+    transition: .1s ease;
+   
+}
+
+.project-card-details-button>img:hover {
+    outline: 1px #a100ff ridge;
+    margin: 1px;
+    transition: .3s ease;
+
 }
 
 .project-card-details>p {
     padding: 0;
     margin: 0;
+}
+
+.details-delete-button {
+    float: right;
+    right: 0px;
+
 }
 
 .project-card-text {

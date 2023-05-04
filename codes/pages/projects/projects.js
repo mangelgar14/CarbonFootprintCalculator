@@ -9,13 +9,13 @@ function projects() {
 
     noProjects[0].classList.add('hidden');
     versionButton[0].classList.remove('hidden');
-    let listProjects = document.querySelectorAll('.project-card');
+    let listProjects = document.querySelectorAll('.project-field-item');
     listProjects.forEach(listProject => {
         listProject.classList.remove('hidden');
     })
 }
 function noprojects() {
-    let listProjects = document.querySelectorAll('.project-card');
+    let listProjects = document.querySelectorAll('.project-field-item');
     let versionButton = document.querySelectorAll('.add-version-button');
     let noProjects = document.querySelectorAll('.no-projects');
     let projectButton = document.querySelectorAll('.add-project-button');
@@ -28,4 +28,16 @@ function noprojects() {
     listProjects.forEach(listProject => {
         listProject.classList.add('hidden');
     })
+}
+function configure(){
+alert("configure")
+}
+function results(){
+    alert("results")
+}
+function newVersion(){
+    alert("New version")
+}
+function newProject(){
+    alert("New project")
 }
