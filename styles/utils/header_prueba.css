@@ -3,11 +3,14 @@ header{
     height: 71px;
     grid-template-columns: repeat(22, 1fr);
     background-image: url("../../imgs/header_bg.png");
+    background-image: url("../../../imgs/header_bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 #menu{
     display: grid;
-    grid-template-columns: repeat(22, 1fr);
+    grid-template-columns: repeat(22, auto);
     grid-column: 1 / 25;
 
 } 
@@ -21,14 +24,14 @@ header{
 #separator{
     grid-column: 3 / 4;
     align-self: center;
-    justify-self: center;
+    justify-self: start;
 
 }
 
 #title{
     grid-column: 4 / 9;
     align-self: center;
-    justify-self: center;
+    justify-self: start;
 
     font-family: 'Graphik';
     font-style: normal;
