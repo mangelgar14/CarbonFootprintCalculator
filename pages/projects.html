@@ -54,7 +54,7 @@
       <img src="../imgs/plus.svg" alt="Icon of a plus sign">
       Add new project</button>
 
-    <button id="add_version_button" class=" add-version-button disabled" disabled onclick="newVersion()">
+    <button id="add_version_button" class=" add-version-button" disabled onclick="newVersion()">
       <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="48" height="48" rx="24" fill="url(#paint0_linear_460_2310)" />
         <g clip-path="url(#clip0_460_2310)">
@@ -103,11 +103,14 @@
               Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
               Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
             </p>
-            <p class="">Lorem ipsum dolor sit amet </p></br>
+            <ul class="project-card-details-summary">
+              <li>Lorem ipsum dolor sit amet </li>
+              <li>Lorem ipsum dolor sit amet</li>
+            </ul></br>
           </div>
 
-          <div > <button onclick="alert('edit')" class="project-card-details-button"><img
-                src="../imgs/edit_icon.svg" alt="Icon of a pen">
+          <div> <button onclick="alert('edit')" class="project-card-details-button"><img src="../imgs/edit_icon.svg"
+                alt="Icon of a pen">
             </button><button class="project-card-details-button" onclick="alert('delete')"><img
                 src="../imgs/delete_icon.svg" alt="Icon of a trash can"></button>
 

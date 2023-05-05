@@ -177,10 +177,17 @@ body {
 .add-project-button:hover,
 .add-version-button:hover,
 .add-project-button-np:hover {
+    cursor: pointer;
     background: #fafafa;
     outline: 1px black solid;
 }
-
+.add-project-button:disabled,
+.add-version-button:disabled{
+    filter: grayscale(100%);
+    opacity: .5;
+    cursor: auto;
+    outline: 0;
+}
 
 .add-project-button:active,
 .add-version-button:active,
@@ -188,10 +195,6 @@ body {
     background: white;
 }
 
-.disabled {
-    filter: grayscale(100%);
-    opacity: .5;
-}
 
 .disabled:hover {
     background-color: white;
@@ -211,7 +214,7 @@ body {
     width: 80%;
 }
 
-.projects-field>p {
+.projects-field > p {
     text-align: center;
     justify-content: center;
     margin: 0;
@@ -247,21 +250,18 @@ body {
 .project-card {
     border: 1px black solid;
     border-radius: 25px;
-    padding: 15px;
+
 
     background-color: white;
     grid-template-columns: 1fr;
 
     display: grid;
-    cursor: pointer;
     align-items: start;
 
     transition: 400ms;
     overflow: hidden;
 
 }
-
-.project-card-buttons {}
 
 .configure-button {
     font-weight: bold;
@@ -298,6 +298,7 @@ body {
     display: none;
     height: 0;
     opacity: 0;
+
 }
 
 .card-click {
@@ -306,14 +307,19 @@ body {
 
 .project-card-preview {
     background-color: white;
+    padding: 15px;
     grid-template-columns: 1fr auto auto auto;
     display: grid;
     align-items: center;
     justify-items: stretch;
+    cursor: pointer;
 }
 
 .project-card-details {
     display: grid;
+    padding: 15px;
+    padding-top: 0;
+    padding-bottom: 0;
     gap: 4px;
     grid-template-columns: auto auto;
     border-top: #ababab 1px solid;
@@ -322,7 +328,7 @@ body {
 
 .project-card-details-content {}
 
-.project-card-details-content-summary {}
+.project-card-details-summary  {    padding-left: 15px;} 
 
 .project-card-details-button {
     padding: 0;
