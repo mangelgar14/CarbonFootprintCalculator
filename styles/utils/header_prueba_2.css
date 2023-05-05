@@ -1,0 +1,74 @@
+header{
+    display: grid;
+    height: 71px;
+    grid-template-columns: repeat(22, 1fr);
+    background-image: url("../../imgs/header_bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#menu{
+    display: grid;
+    grid-template-columns: repeat(22, auto);
+    grid-column: 1 / 25;
+
+    font-family: 'Graphik';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #ffffff;
+} 
+
+#logo{
+    grid-column: 1 / 3;
+    align-self: center;
+    justify-self: center;
+}
+
+#separator{
+    grid-column: 3 / 4;
+    align-self: center;
+    justify-self: start;
+
+}
+
+#title{
+    grid-column: 4 / 9;
+    align-self: center;
+    justify-self: start;
+    font-size: 18px;
+
+}
+.header-menu-button{
+    display: grid;
+    justify-items: center;
+    align-self: center;
+    justify-self: center;
+}
+#btn_home{
+    grid-column: 15 / 17;
+}
+
+#btn_projects{
+    grid-column: 17 / 19;
+}
+
+#btn_calculator{
+    grid-column: 19 / 21;
+}
+
+#btn_results{
+    grid-column: 21 / 23;
+
+}
+
+a:link{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a:visited{
+    color: #ffffff;
+    text-decoration: none;
+}

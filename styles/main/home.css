@@ -1,4 +1,4 @@
-@import url("../utils/header_prueba.css");
+@import url("../utils/header_prueba_2.css");
 
 /* Fuentes */
 @font-face {
@@ -234,12 +234,3 @@ body .content-wrapper{
     cursor: pointer;    
 }
 
-#btn_home{
-    display: grid;
-    justify-items: center;
-}
-
-#btn_home>img{
-    width: 100%;
-    margin-top: 5px;
-}
