@@ -165,10 +165,6 @@ body .content-wrapper{
     background: none;
 }
 
-#btn_x:hover{
-    cursor: pointer;
-}
-
 #err_type{
     grid-row: 2 / 3;
 
@@ -230,16 +226,16 @@ body .content-wrapper{
     color: #FFFFFF;
 }
 
-#btn_close:hover{
+#btn_close:hover,
+#btn_x:hover{
     cursor: pointer;    
 }
 
 #btn_home{
-    display: grid;
-    justify-items: center;
+    margin-top: 1.5rem;
 }
 
 #btn_home>img{
     width: 100%;
-    margin-top: 5px;
+    margin-top: 1rem;
 }
