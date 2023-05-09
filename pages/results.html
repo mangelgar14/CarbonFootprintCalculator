@@ -2,7 +2,8 @@
 
 <head>
     <link rel="icon" type="image/x-icon" href="../imgs/favicon.ico" />
-    <link href="../styles/main/results.css" type="text/css" rel="stylesheet" />
+    <link href="../styles/main/home2.css" type="text/css" rel="stylesheet" />
+    <title>Results</title>
 </head>
 
 <body>
@@ -19,135 +20,153 @@
             <div id="btn_results">Results</div>
         </div>
     </header>
-    <main id="main">
-        <div id="back"><button id="btn_back" type="button">Back</button></div>
-    </main>
-        <div id="position_table1">
-            <table id="tablas" border="1">
-                <tr>
-                    <th colspan="2">Servers</th>
-                </tr>
-                <tr>
-                    <th id="sinborde_titulo">60 Cloud</th>
-                    <th id="sinborde_titulo">81 Premise</th>
-                </tr>
-                <td id="sinborde_lista">
-                    <ul>
-                        <li>35 Google Cloud Platform</li>
-                    </ul>
-                    <ul>
-                        <li>20 Azure</li>
-                    </ul>
-                    <ul>
-                        <li>5 AWS</li>
-                    </ul>
-                </td>
-                <td id="sinborde_lista">
-                    <ul>
-                        <li>51 Algeria</li>
-                    </ul>
-                    <ul>
-                        <li>23 India</li>
-                    </ul>
-                    <ul>
-                        <li>5 Spain</li>
-                    </ul>
-                    <ul>
-                        <li>2 Morocco</li>
-                    </ul>
-                </td>
-                <tr>
-                    <td id="separador" colspan="2"></td>
-                </tr>
-
-                <tr>
-                    <th id="sinborde_titulo">Emissions Consumption</th>
-                    <th>Energy Consumption</th>
-                </tr>
-                <td id="sinborde_lista">451 gCO2e/kWh</td>
-                <tr>
-                    <th id="sinborde_titulo">Embedded emissions</th>
-                </tr>
-                <td id="sinborde_lista">6024 gCO2e/day</td>
-                <tr>
-                    <th colspan="2" id="carbon_foot">Total Carbon footprint</th>
-                </tr>
-                <tr>
-                    <td id="separador_derecha">1063 gCO2e/day</tdid="separador_derecha">
-                    <td id="separador_derecha">75 TCO2e/year</td>
-                </tr>
-            </table>
+    <html class="main">
+        <div id="text_button">
+            <div id="back"><button id="btn_back" type="button">Back</button></div>
+            <div id="texto_results">
+                <h1>Results</h1>
+            </div>
         </div>
-        <div id="position_table2">
-            <table id="tablas" border="1">
-                <tr>
-                    <th colspan="2">Software</th>
-                </tr>
-                <tr>
-                    <th id="sinborde_titulo">60 Cloud</th>
-                    <th id="sinborde_titulo">81 Premise</th>
-                </tr>
-                <td id="sinborde_lista">
-                    <ul>
-                        <li>35 Google Cloud Platform</li>
-                    </ul>
-                    <ul>
-                        <li>20 Azure</li>
-                    </ul>
-                    <ul>
-                        <li>5 AWS</li>
-                    </ul>
-                </td>
-                <td id="sinborde_lista">
-                    <ul>
-                        <li>51 Algeria</li>
-                    </ul>
-                    <ul>
-                        <li>23 India</li>
-                    </ul>
-                    <ul>
-                        <li>5 Spain</li>
-                    </ul>
-                    <ul>
-                        <li>2 Morocco</li>
-                    </ul>
-                </td>
-                <tr>
-                    <td id="separador" colspan="2"></td>
-                </tr>
+        <div class="position_tables">
+            <div id="tabla1">
+                <div id="tr1">
+                    <div id="th1">
+                        Servers
+                    </div>
+                </div>
+                <!--<hr>-->
+                <div id="tr2">
+                    <div id="cloud">60 cloud</div>
+                    <div id="premise">81 Premise</div>
+                </div>
+                <div id="position_lista">
+                    <div id="sinborde_lista">
+                        <ul>
+                            <li>35 Google Cloud Platform</li>
+                        </ul>
+                        <ul>
+                            <li>20 Azure</li>
+                        </ul>
+                        <ul>
+                            <li>5 AWS</li>
+                        </ul>
+                    </div>
+                    <div id="sinborde_lista">
+                        <ul>
+                            <li>51 Algeria</li>
+                        </ul>
+                        <ul>
+                            <li>23 India</li>
+                        </ul>
+                        <ul>
+                            <li>5 Spain</li>
+                        </ul>
+                        <ul>
+                            <li>2 Morocco</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
 
-                <tr>
-                    <th id="sinborde_titulo">Emissions Consumption</th>
-                    <th>Energy Consumption</th>
-                </tr>
-                <td id="sinborde_lista">451 gCO2e/kWh</td>
-                <tr>
-                    <th id="sinborde_titulo">Embedded emissions</th>
-                </tr>
-                <td id="sinborde_lista">6024 gCO2e/day</td>
-                <tr>
-                    <th colspan="2" id="carbon_foot">Total Carbon footprint</th>
-                </tr>
-                <tr>
-                    <td id="separador_derecha">1063 gCO2e/day</tdid="separador_derecha">
-                    <td id="separador_derecha">75 TCO2e/year</td>
-                </tr>
-            </table>
-        </div>
-        <div id="download"><button id="btn_download" type="button">Download</button></div>
-        <div class="text-wrapper">
-            <div id="didyouknow">
-                <div id="title_know">Did you know?</div>
-                <div id="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Saepe impedit accusantium minima doloribus optio quis! Sunt, ex.
-                    Recusandae fuga voluptas dignissimos eligendi.
-                    Est iure quidem cum, laborum inventore ipsam totam.
+                <div id="tr3">
+                    <div id="separador"></div>
+                </div>
+                <div id="tr4">
+                    <div id="sinborde_titulo1">Emissions Consumption</div>
+                    <div id="th2">Energy Consumption</div>
+                    <div id="borde_th2"></div>
+                </div>
+                <div id="datos">451 gCO2e/kWh</div>
+                <div id="tr5">
+                    <div id="sinborde_titulo">Embedded emissions</div>
+                </div>
+                <div id="datos">6024 gCO2e/day</div>
+                <div id="tr6">
+                    <div id="carbon_foot">Total Carbon Footprint</div>
+                </div>
+                <div id="tr7">
+                    <div id="separador_derecha">1063 gCO2e/day</div>
+                    <div id="separador_derecha">75 TCO2e/year</div>
+                </div>
+            </div>
+
+            <div id="tabla2">
+                <div id="tr1">
+                    <div id="th1">
+                        Software
+                    </div>
+                </div>
+                <!--<hr>-->
+                <div id="tr2">
+                    <div id="cloud">60 cloud</div>
+                    <div id="premise">81 premise</div>
+                </div>
+                <div id="position_lista">
+                    <div id="sinborde_lista">
+                        <ul>
+                            <li>35 Google Cloud Platform</li>
+                        </ul>
+                        <ul>
+                            <li>20 Azure</li>
+                        </ul>
+                        <ul>
+                            <li>5 AWS</li>
+                        </ul>
+                    </div>
+                    <div id="sinborde_lista">
+                        <ul>
+                            <li>51 Algeria</li>
+                        </ul>
+                        <ul>
+                            <li>23 India</li>
+                        </ul>
+                        <ul>
+                            <li>5 Spain</li>
+                        </ul>
+                        <ul>
+                            <li>2 Morocco</li>
+                        </ul>
+                    </div>
+                </div>
+                    <hr>
+                <div id="tr3">
+                    <div id="separador"></div>
+                </div>
+                <div id="tr4">
+                    <div id="sinborde_titulo2">Emissions Consumption</div>
+                    <div id="th2">Energy Consumption</div>
+                </div>
+                <div id="datos">451 gCO2e/kWh</div>
+                <div id="tr5">
+                    <div id="sinborde_titulo">Embedded emissions</div>
+                </div>
+                <div id="datos">6024 gCO2e/day</div>
+                <div id="tr6">
+                    <div id="carbon_foot">Total Carbon Footprint</div>
+                </div>
+                <div id="tr7">
+                    <div id="separador_derecha">1063 gCO2e/day</div>
+                    <div id="separador_derecha">75 TCO2e/year</div>
                 </div>
             </div>
         </div>
-    
-        
-    
-</body>
+
+    </hr>
+    <div id="download"><button id="btn_download" type="button">
+            <div id="text_download">Download</div>
+        </button></div>
+    <div class="text-wrapper">
+        <div id="didyouknow">
+            <div id="title_know">Did you know?</div>
+            <div id="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                Saepe impedit accusantium minima doloribus optio quis! Sunt, ex.
+                Recusandae fuga voluptas dignissimos eligendi.
+                Est iure quidem cum, laborum inventore ipsam totam.
+            </div>
+        </div>
+    </div>
+
+
+</div>
 
 </html>
