@@ -39,5 +39,28 @@ function newVersion(){
     alert("New version")
 }
 function newProject(){
-    alert("New project")
+    let popup = document.getElementById("popup");
+    document.getElementById('project-name').value="";
+    document.getElementById('client').value="";
+    document.getElementById('description').value="";
+    popup.style.visibility = "visible";
+
+}function newVersion(p){
+    let popup = document.getElementById("popup");
+    let projectName = document.getElementById('project-name');
+    let client = document.getElementById('client')
+    let description = document.getElementById('description');
+
+    projectName.value=p.querySelectorAll('.p1')[0].innerHTML;
+    client.value=p.querySelectorAll('.p2')[0].innerHTML;
+    console.log(p.querySelectorAll('.desc')[0].innerHTML)
+    description.value=p.querySelectorAll('.desc')[0].innerHTML;
+
+    popup.style.visibility = "visible";
 }
+function closePopup(){
+    let popup = document.getElementById("popup");
+    popup.style.visibility = "hidden";
+}
+
+
