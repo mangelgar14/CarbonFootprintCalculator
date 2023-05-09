@@ -1,0 +1,60 @@
+#popup{
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    width: 700;
+    height: 300;
+    background: rgba(235, 235, 235, 0.65);
+}
+
+#top{
+    display: grid;
+    grid-row: 1 / 1;
+    grid-template-columns: repeat(2, 1fr);
+    height: 91px;
+    background: linear-gradient(180deg, rgba(250, 4, 255, 0.62) 0%, #AE01FF 100%);
+    box-shadow: 0px 8px 4px rgba(0, 0, 0, 0.3);
+    font-family: 'Graphik';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 24px;
+    color: #FFFFFF;
+}
+
+#top_text{
+    display: grid;
+    grid-column: 1 / 1;
+    padding-left: 1rem;
+    align-self: center;
+}
+
+#top_cross{
+    display: grid;
+    grid-column: 2 / 2;
+    justify-self: end;
+    align-self: center;
+    padding-right: 2rem;
+}
+
+#popup_content{
+    display: grid;
+    grid-row: 2 / 2;
+
+    grid-template-rows: repeat(13, 1fr);
+}
+
+.q_text{
+    font-family: 'Graphik';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    color: #000000;
+}
+
+.q_input{
+    box-sizing: border-box;
+    border: 2px solid #B3B2B5;
+    border-radius: 185px;
+}

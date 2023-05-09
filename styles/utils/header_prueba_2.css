@@ -45,6 +45,7 @@ header{
     justify-items: center;
     align-self: center;
     justify-self: center;
+    row-gap: 0.5rem;
 }
 #btn_home{
     grid-column: 15 / 17;
