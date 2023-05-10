@@ -29,6 +29,13 @@ function noprojects() {
         listProject.classList.add('hidden');
     })
 }
+function editProject(p){
+    alert(p);
+}
+function deleteProject(p){
+
+}
+
 function configure(){
 alert("configure")
 }
@@ -53,8 +60,8 @@ function newProject(){
 
     projectName.value=p.querySelectorAll('.p1')[0].innerHTML;
     client.value=p.querySelectorAll('.p2')[0].innerHTML;
-    console.log(p.querySelectorAll('.desc')[0].innerHTML)
-    description.value=p.querySelectorAll('.desc')[0].innerHTML;
+    
+    description.value=p.querySelectorAll('.desc')[0].innerHTML.replace(/(?:\r\n|\r|\n|\t|               )/g, '').substring(1);
 
     popup.style.visibility = "visible";
 }

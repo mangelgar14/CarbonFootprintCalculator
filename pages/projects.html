@@ -1,178 +1,248 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accenture</title>
+    <script src="../../dist_cookie/amazon-cognito-auth.min.js"></script>
+    <script type="module" src="../codes/pages/projects/control.js"></script>
+    <script src="../codes/pages/projects/projects.js"></script>
+    <link rel="stylesheet" type="text/css" href="../styles/main/projects.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="icon" type="image/x-icon" href="../imgs/favicon.ico" />
+  </head>
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Accenture</title>
-  <script src="../../dist_cookie/amazon-cognito-auth.min.js"></script>
-  <script type="module" src="../codes/pages/projects/control.js"></script>
-  <script src="../codes/pages/projects/projects.js"></script>
-  <link rel="stylesheet" type="text/css" href="../styles/main/projects.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="icon" type="image/x-icon" href="../imgs/favicon.ico">
-</head>
-
-<body>
-  <div id="popup">
-    <form id="new_project_popup" method="post" action="/newProject">
-      <div class="popup-header">Create project<img src="../imgs/cross_white.svg" alt="Close window"
-          onclick="closePopup()" />
-      </div>
-      <div class="popup-content">
-        <div class="popup-content-top">
-          <label for="project-name">Project Name</label>
-          <label for="client">Client Name</label>
-          <input id="project-name" type="text" name="project-name" required>
-          <input type="text" id="client" name="client" required>
+  <body>
+    <div id="popup">
+      <form id="new_project_popup" method="post" action="/newProject">
+        <div class="popup-header">
+          Create project<img
+            src="../imgs/cross_white.svg"
+            alt="Close window"
+            onclick="closePopup()"
+          />
         </div>
-        <div class="popup-content-mid">
-          <label for="description">Description</label>
-          <textarea rows="6" name="description" id="description"></textarea>
+        <div class="popup-content">
+          <div class="popup-content-top">
+            <label for="project-name">Project Name</label>
+            <label for="client">Client Name</label>
+            <input id="project-name" type="text" name="project-name" required />
+            <input type="text" id="client" name="client" required />
+          </div>
+          <div class="popup-content-mid">
+            <label for="description">Description</label>
+            <textarea rows="6" name="description" id="description"></textarea>
+          </div>
+          <div class="popup-content-bot">
+            <button
+              type="button"
+              class="button-white-bg"
+              onclick="closePopup()"
+            >
+              Cancel
+            </button>
+            <input type="submit" class="button-purple-bg" value="Save" />
+          </div>
         </div>
-        <div class="popup-content-bot">
-          <button type="button" class="button-white-bg" onclick="closePopup()">Cancel</button>
-          <input type="submit" class="button-purple-bg" value="Save"></submit>
-        </div>
-      </div>
-    </form>
-  </div>
-  <header>
-    <div id="menu">
-      <div id="logo"><img src="../imgs/logo_header.png" loading="lazy" /></div>
-      <div id="separator"><img src="../imgs/separador.png" loading="lazy" /></div>
-      <div id="title">Carbon Footprint Calculator</div>
-      <div id="btn_home" class="header-menu-button">
-        <a href="home.html">Home</a>
-      </div>
-      <div id="btn_projects" class="header-menu-button">
-        <a href="projects.html">Projects</a> <img id="selected_img" src="../imgs/nav_selected.png"
-          alt="Navi selected link">
-
-      </div>
-      <div id="btn_calculator" class="header-menu-button">Calculator</div>
-      <div id="btn_results" class="header-menu-button">Results</div>
+      </form>
     </div>
-  </header>
-  <noscript><br><strong>We are sorry but this site does not work properly without JavaScript enabled. Please enable
-      JavaScript to continue.</strong><br></noscript>
-  <div class="dev-nav"><button id="noprojects-button" onclick="noprojects()">No projects</button><button
-      onclick="projects()">Projects</button></div>
-  <div class="grid-container">
-    <div class="item1">
-      <p>Project's Folder</p>
-    </div>
-    <div class="item2">Order by:
-      <select>
-        <option>Date</option>
-        <option>Project name</option>
-        <option>Client name</option>
-      </select>
-    </div>
-    <div class="item3">
-      <input type="text" placeholder="">
-      <button type="submit"><i class="fa fa-search"></i></button>
-    </div>
-  </div>
-  <div class="add-buttons">
-    <button id="add_project_button" class="add-project-button" onclick="newProject()">
-      <img src="../imgs/plus.svg" alt="Icon of a plus sign">
-      Add new project</button>
-
-    <button id="add_version_button" class=" add-version-button" disabled>
-      <img src="../imgs/plus.svg">
-      Add new version</button>
-  </div>
-  <ul id="projects-field">
-    <div class="no-projects hidden">
-      <p class="no-projects1">This account has no projects created yet</p>
-      <p class="no-projects2">To create a project select the “Add Project Button” at the top of these messages.</p>
-    </div>
-    <li class="project-field-item">
-      <div class="project-card ">
-        <div class="project-card-preview ">
-          <div class="project-card-text">
-            <p class="p1">Project Name</p>
-            <p class="p2">Client name</p>
-            <p class="p3">01/01/2000</p>
-          </div>
-          <div class="project-card-icon"><img class="project-card-arrow " src="../imgs/arrow.svg"
-              alt="Arrow pointing down">
-          </div>
+    <header>
+      <div id="menu">
+        <div id="logo">
+          <img src="../imgs/logo_header.png" loading="lazy" />
         </div>
-        <div class="project-card-details hidden">
-          <div class="project-card-details-content">
-            <p class="desc">Lorem ipsum dolor sit amet description long enough to be used as a test for components' size Lorem ipsum dolor sit amet description long enough to be used as a test for components' size Lorem ipsum dolor sit amet description long enough to be used as a test for components' size
-            </p>
-            <ul class="project-card-details-summary">
-              <li>Lorem ipsum dolor sit amet </li>
-              <li>Lorem ipsum dolor sit amet</li>
-            </ul></br>
-          </div>
-
-          <div> <button onclick="alert('edit')" class="project-card-details-button"><img src="../imgs/edit_icon.svg"
-                alt="Icon of a pen">
-            </button><button class="project-card-details-button" onclick="alert('delete')"><img
-                src="../imgs/delete_icon.svg" alt="Icon of a trash can"></button>
-
-          </div>
-
-
+        <div id="separator">
+          <img src="../imgs/separador.png" loading="lazy" />
+        </div>
+        <div id="title">Carbon Footprint Calculator</div>
+        <div id="btn_home" class="header-menu-button">
+          <a href="home.html">Home</a>
+        </div>
+        <div id="btn_projects" class="header-menu-button">
+          <a href="projects.html">Projects</a>
+          <img
+            id="selected_img"
+            src="../imgs/nav_selected.png"
+            alt="Navi selected link"
+          />
+        </div>
+        <div id="btn_calculator" class="header-menu-button">
+          <a href="#" onclick="show_popup()">Calculator</a>
+        </div>
+        <div id="btn_results" class="header-menu-button">
+          <a href="results.html">Results</a>
         </div>
       </div>
-      <div class="project-card-buttons">
-        <button class="button-purple-bg click" onclick="configure()">Configure</button>
-        <button class="button-white-bg click" onclick="results()">Results <img src="../imgs/arrow_right.svg"
-            alt="Arrow pointing right"></button>
+    </header>
+    <noscript
+      ><br /><strong
+        >We are sorry but this site does not work properly without JavaScript
+        enabled. Please enable JavaScript to continue.</strong
+      ><br
+    /></noscript>
+    <div class="dev-nav">
+      <button id="noprojects-button" onclick="noprojects()">No projects</button
+      ><button onclick="projects()">Projects</button>
+    </div>
+    <div class="grid-container">
+      <div class="item1">
+        <p>Project's Folder</p>
       </div>
-    </li>
-    <li class="project-field-item">
-      <div class="project-card ">
-        <div class="project-card-preview ">
-          <div class="project-card-text">
-            <p class="p1">Manhattan Project</p>
-            <p class="p2">USACE</p>
-            <p class="p3">1/8/1945</p>
+      <div class="item2">
+        Order by:
+        <select>
+          <option>Date</option>
+          <option>Project name</option>
+          <option>Client name</option>
+        </select>
+      </div>
+      <div class="item3">
+        <input type="text" placeholder="" />
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+    <div class="add-buttons">
+      <button
+        id="add_project_button"
+        class="add-project-button"
+        onclick="newProject()"
+      >
+        <img src="../imgs/plus.svg" alt="Icon of a plus sign" />
+        Add new project
+      </button>
+
+      <button id="add_version_button" class="add-version-button" disabled>
+        <img src="../imgs/plus.svg" />
+        Add new version
+      </button>
+    </div>
+    <ul id="projects-field">
+      <div class="no-projects hidden">
+        <p class="no-projects1">This account has no projects created yet</p>
+        <p class="no-projects2">
+          To create a project select the “Add Project Button” at the top of
+          these messages.
+        </p>
+      </div>
+      <li class="project-field-item">
+        <div class="project-card">
+          <div class="project-card-preview">
+            <div class="project-card-text">
+              <p class="p1">Project Name</p>
+              <p class="p2">Client name</p>
+              <p class="p3">01/01/2000</p>
+            </div>
+            <div class="project-card-icon">
+              <img
+                class="project-card-arrow"
+                src="../imgs/arrow.svg"
+                alt="Arrow pointing down"
+              />
+            </div>
           </div>
-          <div class="project-card-icon"><img class="project-card-arrow " src="../imgs/arrow.svg"
-              alt="Arrow pointing down">
+          <div class="project-card-details hidden">
+            <div class="project-card-details-content">
+              <p class="desc">
+                Lorem ipsum dolor sit amet description long enough to be used as
+                a test for components' size Lorem ipsum dolor sit amet
+                description long enough to be used as a test for components'
+                size Lorem ipsum dolor sit amet description long enough to be
+                used as a test for components' size
+              </p>
+              <ul class="project-card-details-summary">
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>Lorem ipsum dolor sit amet</li>
+              </ul>
+            </div>
+
+            <div>
+              <button
+                class="project-card-details-button edit-project"
+              >
+                <img src="../imgs/edit_icon.svg" alt="Icon of a pen" /></button
+              ><button
+                class="project-card-details-button delete-project"
+                onclick="alert('delete')"
+              >
+                <img src="../imgs/delete_icon.svg" alt="Icon of a trash can" />
+              </button>
+            </div>
           </div>
         </div>
-        <div class="project-card-details hidden">
-          <div class="project-card-details-content">
-            <p class="desc">Descripción muy muy chula de un projecto muy interesante </p>
-            <ul class="project-card-details-summary">
-              <li>Lorem ipsum dolor sit amet </li>
-              <li>Lorem ipsum dolor sit amet</li>
-            </ul></br>
-          </div >
-
-          <div class="project-card-details-buttons">
-             <button onclick="alert('edit')" class="project-card-details-button"><img src="../imgs/edit_icon.svg"
-                alt="Icon of a pen">
-            </button><button class="project-card-details-button" onclick="alert('delete')"><img
-                src="../imgs/delete_icon.svg" alt="Icon of a trash can"></button>
-
-          </div>
-
-
+        <div class="project-card-buttons">
+          <button class="button-purple-bg click" onclick="configure()">
+            Configure
+          </button>
+          <button class="button-white-bg click" onclick="results()">
+            Results
+            <img src="../imgs/arrow_right.svg" alt="Arrow pointing right" />
+          </button>
         </div>
-      </div>
-      <div class="project-card-buttons">
-        <button class="button-purple-bg click" onclick="configure()">Configure</button>
-        <button class="button-white-bg click" onclick="results()">Results <img src="../imgs/arrow_right.svg"
-            alt="Arrow pointing right" onmouseover="this.src='../imgs/arrow_right_white.svg';" onmouseout="this.src='LibraryTransparent.png'"></button>
-      </div>
-    </li>
-  </ul>
-  <main>
+      </li>
+      <li class="project-field-item">
+        <div class="project-card">
+          <div class="project-card-preview">
+            <div class="project-card-text">
+              <p class="p1">Manhattan Project</p>
+              <p class="p2">USACE</p>
+              <p class="p3">1/8/1945</p>
+            </div>
+            <div class="project-card-icon">
+              <img
+                class="project-card-arrow"
+                src="../imgs/arrow.svg"
+                alt="Arrow pointing down"
+              />
+            </div>
+          </div>
+          <div class="project-card-details hidden">
+            <div class="project-card-details-content">
+              <p class="desc">
+                Descripción muy muy chula de un projecto muy interesante
+              </p>
+              <ul class="project-card-details-summary">
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>Lorem ipsum dolor sit amet</li>
+              </ul>
+            </div>
 
-  </main>
+            <div class="project-card-details-buttons">
+              <button
+                class="project-card-details-button edit-project"
+              >
+                <img src="../imgs/edit_icon.svg" alt="Icon of a pen" /></button
+              ><button
+                class="project-card-details-button"
+                onclick="alert('delete')"
+              >
+                <img src="../imgs/delete_icon.svg" alt="Icon of a trash can" />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="project-card-buttons">
+          <button class="button-purple-bg click" onclick="configure()">
+            Configure
+          </button>
+          <button class="button-white-bg click" onclick="results()">
+            Results
+            <img
+              src="../imgs/arrow_right.svg"
+              alt="Arrow pointing right"
+              onmouseover="this.src='../imgs/arrow_right_white.svg';"
+              onmouseout="this.src='LibraryTransparent.png'"
+            />
+          </button>
+        </div>
+      </li>
+    </ul>
+    <main></main>
 
-  <nav>
-  </nav>
+    <nav></nav>
 
-  <script type="module" src="./codes/index.js"></script>
-</body>
-
+    <script type="module" src="./codes/index.js"></script>
+  </body>
 </html>
