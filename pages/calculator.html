@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <link rel="stylesheet" href="../styles/main/calculator.css">
+        <link rel="icon" type="image/x-icon" href="../imgs/favicon.ico"/>
+    </head>
+
+    <body>
+        <header>
+            <div id="menu">
+                <div id="logo"><img src="../imgs/logo_header.png" alt="Accenture logo" loading="lazy"/></div>
+                <div id="separator"><img src="../imgs/separador.png" alt="Separator" loading="lazy"/></div>
+                <div id="title">Carbon Footprint Calculator</div>
+                <div id="btn_home" class="header-menu-button"><a href="home.html">Home</a></div>
+                <div id="btn_projects" class="header-menu-button"><a href="projects.html">Projects</a></div>
+                <div id="btn_calculator" class="header-menu-button">
+                    <a href="calculator.html">Calculator</a>
+                    <img id="selected_img" src="../imgs/nav_selected.png" alt="Navi selected link">
+                </div>
+                <div id="btn_results" class="header-menu-button"><a href="results.html">Results</a></div>
+            </div>  
+        </header>
+
+        
+            <div id="top">
+                <a href="projects.html">
+                    <button id="btn_back">Back</button>
+                </a>
+                <div id="top_text">Project's name</div>
+            </div>
+
+        <div id="mid">
+            <div id="container">
+                <div class="div_table">    
+                    <div class="btn_container">
+                        <button onclick="show_table(0)">Servers</button>
+                        <button onclick="show_table(1)">Software</button>
+                    </div>
+                    <div class="table">
+                        <table id="table_server">
+                            <tr class="table_header">
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Provider/Servers</th>
+                                <th>Location</th>
+                                <th>Energy Comsumption</th>
+                                <th>Comsumption Emissions</th>
+                                <th>Embedded Emissions</th>
+                                <th>Carbon Footprint</th>
+                                <th></th>
+                            </tr>
+                            <tr class="table_data">
+                                <td>01/01/2000</td>
+                                <td>Cloud</td>
+                                <td>AWS</td>
+                                <td>us-central</td>
+                                <td>1522</td>
+                                <td>555</td>
+                                <td>1222</td>
+                                <td>2679</td>
+                                <td>
+                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
+                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
+                                </td>  
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="table">
+                        <table id="table_software">
+                            <tr class="table_header">
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Provider/Servers</th>
+                                <th>Location</th>
+                                <th>Energy Comsumption</th>
+                                <th>Comsumption Emissions</th>
+                                <th>Embedded Emissions</th>
+                                <th>Carbon Footprint</th>
+                                <th></th>
+                            </tr>
+                            <tr class="table_data">
+                                <td>01/01/2000</td>
+                                <td>Cloud</td>
+                                <td>AWS</td>
+                                <td>us-central</td>
+                                <td>1522</td>
+                                <td>555</td>
+                                <td>1222</td>
+                                <td>2679</td>
+                                <td>                                    
+                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
+                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
+                                </td>  
+                            </tr>
+                            <tr class="table_data">
+                                <td>01/01/2000</td>
+                                <td>Cloud</td>
+                                <td>AWS</td>
+                                <td>us-central</td>
+                                <td>1522</td>
+                                <td>555</td>
+                                <td>1222</td>
+                                <td>2679</td>
+                                <td>                                    
+                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
+                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
+                                </td>  
+                            </tr>
+                            <tr class="table_data">
+                                <td>01/01/2000</td>
+                                <td>Cloud</td>
+                                <td>AWS</td>
+                                <td>us-central</td>
+                                <td>1522</td>
+                                <td>555</td>
+                                <td>1222</td>
+                                <td>2679</td>
+                                <td>                                    
+                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
+                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
+                                </td>  
+                            </tr>
+                            <tr class="table_data">
+                                <td>01/01/2000</td>
+                                <td>Cloud</td>
+                                <td>AWS</td>
+                                <td>us-central</td>
+                                <td>1522</td>
+                                <td>555</td>
+                                <td>1222</td>
+                                <td>2679</td>
+                                <td>
+                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
+                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
+                                </td>  
+                            </tr>
+                            <tr class="table_data">
+                                <td>01/01/2000</td>
+                                <td>Cloud</td>
+                                <td>AWS</td>
+                                <td>us-central</td>
+                                <td>1522</td>
+                                <td>555</td>
+                                <td>1222</td>
+                                <td>2679</td>
+                                <td>
+                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
+                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
+                                </td>  
+                            </tr>
+                            <tr class="table_data">
+                                <td>01/01/2000</td>
+                                <td>Cloud</td>
+                                <td>AWS</td>
+                                <td>us-central</td>
+                                <td>1522</td>
+                                <td>555</td>
+                                <td>1222</td>
+                                <td>2679</td>
+                                <td>
+                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
+                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
+                                </td>  
+                            </tr>
+                            <tr class="table_data">
+                                <td>01/01/2000</td>
+                                <td>Cloud</td>
+                                <td>AWS</td>
+                                <td>us-central</td>
+                                <td>1522</td>
+                                <td>555</td>
+                                <td>1222</td>
+                                <td>2679</td>
+                                <td>
+                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
+                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
+                                </td>  
+                            </tr>
+                            <tr class="table_data">
+                                <td>01/01/2000</td>
+                                <td>Cloud</td>
+                                <td>AWS</td>
+                                <td>us-central</td>
+                                <td>1522</td>
+                                <td>555</td>
+                                <td>1222</td>
+                                <td>2679</td>
+                                <td>
+                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
+                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
+                                </td>  
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="btn_add">
+                <button id="btn_add_cfg">
+                    <img src="../imgs/plus.svg" alt="Icon of a plus sign">
+                    Add new configuration
+                </button>
+            </div>  
+        </div>  
+
+        <footer>
+            <div id="bottom">
+                <button id="btn_save">Save</button>
+                <a id="btn_view_result" href="results.html">
+                    <div id="btn_view_result_text">View Result</div> 
+                    <img src="../imgs/arrow_right_purple.png" alt="Arrow pointing right">
+                </a>    
+            </div>
+        </footer>
+
+        <script src="../codes/pages/projects/calculator.js"></script>
+    </body>
+
+    
+
+</html>

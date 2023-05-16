@@ -1,0 +1,254 @@
+@import url("../utils/header.css");
+
+body, html{
+    width: 100%;
+    min-height: 100%;
+    margin: 0px;
+}
+
+
+#top{
+    display: grid;
+    grid-template-columns: repeat(22, auto);
+    padding-bottom: 2rem;
+}
+
+#btn_back{
+    display: grid;
+    grid-column: 1 / 1;
+    align-content: center;
+    margin-left: 1rem;
+    margin-top: 1rem;
+
+    width: 120px;
+    height: 40px;   
+    background: #FFFFFF;
+    border: 1px solid rgba(161, 0, 255, 0.95);
+    border-radius: 999px;
+
+    font-family: 'Graphik';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 110%;
+    letter-spacing: -0.02em;
+    color: #A100FF;
+    vertical-align: middle;
+}
+
+#btn_back:active{
+    background: #a100ff;
+    color: white;
+}
+
+#top_text{
+    display: grid;
+    grid-column: 2 / 23;
+    font-family: 'Graphik';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 64px;
+    color: #BE82FF;
+}
+
+#mid{
+    position: absolute;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    justify-self: center;
+    width: 80%;
+    min-height: 25%;
+    max-height: 90%;
+    margin-left: 10%;
+    justify-items: center;
+    align-content: center;
+}
+
+#container{
+    box-sizing: border-box;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    width: 90%;
+    justify-items: center;
+    align-content: center;
+    overflow-y: auto;
+
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+}
+
+.btn_container button{
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: transparent;
+    height: 2rem;
+    font-family: 'Graphik';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 110%;
+    letter-spacing: -0.02em;
+}
+
+#div_tabla{
+    display: grid;
+    grid-column: 1 / 1;
+    grid-template-rows: repeat(12, auto);
+    height: 95%;
+    align-content: center;
+    justify-self: center;
+    margin-top: 1rem;
+}
+
+table{
+    background-color: #5c5c5c;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.table_header{
+    background-color: #A100FF;
+    color: white;
+    font-family: 'Graphik';
+}
+
+.table_data{
+    background-color: white;
+    text-align: center;
+}
+
+th{
+    width: 75px;
+}
+
+td button{
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+#btn_add{
+    display: grid;
+    grid-row: 2 / 2;
+    margin-top: 1rem;
+    height: 3.5rem;
+    width: 70%;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+
+    
+}
+
+#btn_add button{
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.5rem;
+    cursor: pointer;
+    border: none; 
+    background: transparent;
+
+    color: #A100FF;
+    text-align: center;
+    font-family: 'Graphik';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+}
+
+#btn_add button img{
+    padding-top: 0.22rem;
+}
+
+#btn_add_cfg:active{
+    background: #f5f5f5;
+    border-radius: 20px;
+}
+
+footer{
+    display: grid;
+    grid-template-rows: repeat(13, 1fr);
+}
+
+#bottom{
+    display: grid;
+    grid-row: 13 / 13;
+
+    justify-content: end;
+}
+
+#btn_save{
+    position: relative;
+    display: grid;
+    grid-column: 1 / 1;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 32px;
+    background: #a100ff;
+    border: none;
+    border-radius: 999px;
+    margin-right: 2rem;
+
+    font-family: 'Graphik';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 110%;
+    letter-spacing: -0.02em;
+    color: white;
+    vertical-align: middle;
+}
+
+#btn_save:active{
+    background: #460073;
+}
+
+#btn_view_result{
+    display: grid;
+    grid-column: 2 / 2;
+    grid-template-columns: repeat(2, auto);
+    column-gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    width: 110px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+    margin-right: 2rem;
+    cursor: pointer;
+
+    font-family: 'Graphik';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 110%;
+    letter-spacing: -0.02em;
+    color: #A100FF;
+    vertical-align: middle;
+}
+
+#btn_view_result:active{
+    background: #dfdfdf;
+}
+
+#bottom #btn_view_results #btn_view_results_text{
+    display: grid;
+    grid-column: 1 / 1;
+}
+
+#bottom #btn_view_results img{
+    display: grid;
+    grid-column: 2 / 2;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
