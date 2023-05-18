@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Accenture</title>
   <script src="../../dist_cookie/amazon-cognito-auth.min.js"></script>
-  <script type="module" src="../codes/pages/projects/control.js"></script>
+  <script type="module" src="../codes/pages/projects/projects.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../codes/pages/projects/projects.js"></script>
   <link rel="stylesheet" type="text/css" href="../styles/main/projects.css" />

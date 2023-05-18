@@ -15,21 +15,21 @@ function selectProjectById($idProject)
 function deleteProject($idProject)
 {
     $db = getConnection();
-    $sentence = $db->prepare("DELETE * FROM projects where id =  ?");
+    $sentence = $db->prepare("DELETE FROM projects where id =  ?");
     return $sentence->execute([$idProject]);
 }
 function editProject($idProject, $name, $client, $description)
 {
-    $db = getConnection();
-    $sentence = $db->prepare(" UPDATE proejcts SET name = ?, client = ?, description = ?, date = curdate() WHERE id = ?");
+    $db = getConnection();   
+    $sentence = $db->prepare("UPDATE projects SET name = ?, client = ?, description = ?, lastModified = curdate() WHERE id = ?");
     return $sentence->execute([$name, $client, $description, $idProject]);
 }
 function insertProject($name, $client, $description)
 {
+
     $db = getConnection();
-    $lastModified = date("d/M/y");
-    $sentence = $db->prepare("INSERT INTO projects (name,client,description,lastModified) VALUES (?,?,?,?)");
-    return $sentence->execute([$name, $client, $description, $lastModified ]);
+    $sentence = $db->prepare("INSERT INTO projects (name,client,description,lastModified) VALUES (?,?,?,curdate())");
+    return $sentence->execute([$name, $client, $description]);
 }
 
 function getConnection()

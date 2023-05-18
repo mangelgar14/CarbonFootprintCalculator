@@ -1,18 +1,12 @@
 <?php
 
-$payload = json_decode(file_get_contents("php://input"));
-if(!$payload){
-    http_response_code(500);
-    exit;
-}
-
-$idProject = $payload->idProject;
-$name = $payload->name;
-$client = $payload->client;
-$description =$payload->description;
+$idProject = htmlspecialchars($_POST["idProject"]);
+$name = htmlspecialchars($_POST["projectName"]);
+$client = htmlspecialchars($_POST["client"]);
+$description = htmlspecialchars($_POST["description"]);
 
 include_once "queries.php";
-$response = editProject($name,$client,$description,$idProject);
+$response = editProject($idProject,$name,$client,$description);
 
 echo json_encode($response);
 

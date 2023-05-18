@@ -34,11 +34,11 @@ echo "<li class=\"new-project-field-item\" id=\"$id\">
 
         <div class=\"project-card-details-buttons\">
           <button
-            class=\"project-card-details-button edit-project\"
+            class=\"project-card-details-button edit-project\" onclick=\"editProject($id)\"
           >
             <img src=\"../imgs/edit_icon.svg\" alt=\"Icon of a pen\" /></button
           ><button
-            class=\"project-card-details-button delete-project\" 
+            class=\"project-card-details-button delete-project\"  onclick=\"deleteProject($id)\"
           >
             <img src=\"../imgs/delete_icon.svg\" alt=\"Icon of a trash can\" />
           </button>
