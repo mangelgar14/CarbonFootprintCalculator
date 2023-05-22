@@ -1,6 +1,6 @@
 var hasProjects = false;
 var project = null;
-var closed = true;
+var pClosed = true;
 window.onload = loader();
 function loader() {
   document
@@ -11,7 +11,7 @@ function loader() {
   document
     .getElementById("btn_delete")
     .addEventListener("click", () => dbDeleteProject(project));
-  reset();
+  dbFetchProjects();
 
   /* Abrir Cerrar projectos */
   /* Hover boton blanco -> flecha blanca */
@@ -21,18 +21,15 @@ function loader() {
   });
   /* Add new project Button */
 }
-function reset() {
-  /* Clear projects */
+function clearProjects() {
   let htmlProjects = document
     .getElementById("projects-field")
     .querySelectorAll(".project-field-item");
   htmlProjects.forEach((project) => {
     project.remove();
   });
-  fetchProjects();
   project = null;
-  closed = true;
-
+  pClosed = true;
 }
 function newHtmlProject(project) {
   $.ajax({
@@ -50,60 +47,44 @@ function newHtmlProject(project) {
       let listProjects = document
         .getElementById("projects-field")
         .getElementsByClassName("new-project-field-item");
-      for (const project of listProjects) {
-        configureNewProject(project);
+      for (const p of listProjects) {
+        p.classList.add("project-field-item");
+        p.classList.remove("new-project-field-item");
+
+        /* project card configuration */
+        let card = p.querySelector(".new-project-card");
+        openClose(card);
+        card.classList.add("project-card");
+        card.classList.remove("new-project-card");
       }
       closePopup();
     },
   });
 }
-function configureNewProject(newProjectItem) {
-  newProjectItem.classList.add("project-field-item");
-  newProjectItem.classList.remove("new-project-field-item");
-
-  /* project card configuration */
-  let card = newProjectItem.querySelector(".new-project-card");
-  openClose(card);
-  card.classList.add("project-card");
-  card.classList.remove("new-project-card");
-
-  /* Configure & results configuration */
-  let buttons = newProjectItem
-    .querySelector(".project-card-buttons")
-    .querySelectorAll("button");
-  buttons[0].addEventListener("click", () => configure());
-  buttons[1].addEventListener("click", () => results());
-  hoverWhiteArrow(buttons[1]);
+function addProjectControl() {
+    document.getElementById("add_version_button").disabled = pClosed;
+    document.getElementById("add_project_button").disabled = !pClosed;
 }
-function addProjectControl(closed) {
-  if (closed) {
-    document.getElementById("add_version_button").disabled = true;
-    document.getElementById("add_project_button").disabled = false;
-  } else {
-    document.getElementById("add_version_button").disabled = false;
-    document.getElementById("add_project_button").disabled = true;
-  }
-}
-
 function openClose(listProject) {
   listProject
     .querySelector(".project-card-preview")
     .addEventListener("click", () => {
-
       if (project != listProject.parentNode.id) {
-        if (!closed) {
-          document
-            .getElementById(project)
-            .querySelectorAll(".project-card-arrow")[0]
-            .classList.remove("arrow");
-          document
-            .getElementById(project)
-            .querySelectorAll(".project-card-details")[0]
-            .classList.toggle("hidden");
+        if (!pClosed) {
+          if (project != null) {
+            document
+              .getElementById(project)
+              .querySelectorAll(".project-card-arrow")[0]
+              .classList.remove("arrow");
+            document
+              .getElementById(project)
+              .querySelectorAll(".project-card-details")[0]
+              .classList.toggle("hidden");
+          }
         }
-        closed = false;
+        pClosed = false;
       } else {
-        closed = !closed;
+        pClosed = !pClosed;
       }
 
       listProject
@@ -113,37 +94,31 @@ function openClose(listProject) {
         .querySelectorAll(".project-card-details")[0]
         .classList.toggle("hidden");
 
-      addProjectControl(closed);
+      addProjectControl(pClosed);
       project = listProject.parentNode.id;
     });
 }
-function hoverWhiteArrow(button) {
-  button.addEventListener("mouseover", () => {
-    button.querySelector("img").src = "../imgs/arrow_right_white.svg";
-  });
-  button.addEventListener("mouseout", () => {
-    button.querySelector("img").src = "../imgs/arrow_right.svg";
-  });
-}
-function fetchProjects() {
+function dbFetchProjects() {
   $.ajax({
-    url: "../../../connections/fetchProjects.php",
+    url: "../../../connections/FetchProjects.php",
     type: "GET",
     success: function (result) {
-      
-      projects = JSON.parse(result);
-      projects.forEach((project) => {
-        newHtmlProject(project);
-      });
-      try{projects()}catch(e){}
-      openCloseCards();
+      var projectsResult = JSON.parse(result);
+      if (projectsResult.length > 0) {
+        hasProjects = true;
+        projectsResult.forEach((project) => {
+          newHtmlProject(project);
+        });
+      } else {
+        hasProjects = false;
+      }
+      if (hasProjects) hasProjectsStyle();
+      else hasNoProjectsStyle();
     },
-    error: function (error) {
-      noprojects();
-    },
+    error: function (error) {},
   });
 }
-function fetchProject(idProject) {
+function dbFetchProject(idProject) {
   $.ajax({
     url: "../../../connections/fetchProjectById.php",
     type: "POST",
@@ -162,9 +137,9 @@ function fetchProject(idProject) {
     },
   });
 }
-function insertProject(name, client, description) {
+function dbInsertProject(name, client, description) {
   $.ajax({
-    url: "../../../connections/insertProject.php",
+    url: "../../../connections/InsertProject.php",
     type: "POST",
     data: {
       projectName: name,
@@ -172,8 +147,9 @@ function insertProject(name, client, description) {
       description: description,
     },
     success: function (result) {
-      reset();
-      addProjectControl(closed);
+      clearProjects();
+      dbFetchProjects();
+      addProjectControl(pClosed);
     },
     error: function (err) {
       console.log(err);
@@ -191,7 +167,8 @@ function dbEditProject(idProject, name, client, description) {
       description: description,
     },
     success: function (result) {
-      reset();
+      clearProjects();
+      dbFetchProjects();
     },
   });
 }
@@ -203,25 +180,20 @@ function dbDeleteProject(idProject) {
       idProject: idProject,
     },
     success: function (result) {
-      reset();
-      addProjectControl(closed);
+      clearProjects();
+      dbFetchProjects();
+      addProjectControl(pClosed);
     },
   });
 }
-function closePopup() {
-  let popup = document.getElementById("popup");
-  let projectPopup = document.getElementById("project_popup");
-  let warningPopup = document.getElementById("warning_popup");
 
-  popup.classList.add("hidden");
-  projectPopup.classList.add("hidden");
-  warningPopup.classList.add("hidden");
+function gotoConfigure(id) {
+  alert("configure "+id);
 }
-function configure() {
-  alert("configure");
+function gotoResults(id) {
+  alert("results"+id);
 }
-
-function projects() {
+function hasProjectsStyle() {
   let versionButton = document.querySelectorAll(".add-version-button");
   let projectButton = document.querySelectorAll(".add-project-button-np");
 
@@ -235,9 +207,8 @@ function projects() {
   listProjects.forEach((listProject) => {
     listProject.classList.remove("hidden");
   });
-  hasProjects = true;
 }
-function noprojects() {
+function hasNoProjectsStyle() {
   let listProjects = document.querySelectorAll(".project-field-item");
   let versionButton = document.querySelectorAll(".add-version-button");
   let noProjects = document.querySelectorAll(".no-projects");
@@ -254,9 +225,7 @@ function noprojects() {
   hasProjects = false;
 }
 function editProject(idProject) {
-  console.log("id:" + idProject);
-
-  fetchProject(idProject);
+  dbFetchProject(idProject);
 
   let newProjectButton = document.getElementById("save-project-button");
   newProjectButton.replaceWith(newProjectButton.cloneNode(true));
@@ -264,9 +233,6 @@ function editProject(idProject) {
   newProjectButton.addEventListener("click", () =>
     saveEditProjectButton(idProject)
   );
-}
-function deleteProject() {
-  showWarningPopup(project);
 }
 function newProject() {
   let newProjectButton = document.getElementById("save-project-button");
@@ -276,21 +242,16 @@ function newProject() {
   showProjectPopup();
 }
 function newVersion(p) {
-  fetchProject(p);
+  dbFetchProject(p);
 
   showProjectPopup();
 }
-
-function results() {
-  alert("results");
-}
-
 function saveProjectButton() {
   let pName = document.getElementById("project-name").value;
   let cli = document.getElementById("client").value;
   let desc = document.getElementById("description").value;
 
-  insertProject(pName, cli, desc);
+  dbInsertProject(pName, cli, desc);
   closePopup();
   document.getElementById("project-name").value = "";
   document.getElementById("client").value = "";
@@ -308,12 +269,6 @@ function saveEditProjectButton(idProject) {
   document.getElementById("description").value = "";
 }
 
-function openCloseCards() {
-  let listProjects = document.querySelectorAll(".project-field-item");
-  listProjects.forEach((listProject) => {
-    openClose(listProject);
-  });
-}
 function showWarningPopup(idProject) {
   let warningPopup = document.getElementById("warning_popup");
   let projectPopup = document.getElementById("project_popup");
@@ -330,5 +285,14 @@ function showProjectPopup() {
 
   popup.classList.remove("hidden");
   projectPopup.classList.remove("hidden");
+  warningPopup.classList.add("hidden");
+}
+function closePopup() {
+  let popup = document.getElementById("popup");
+  let projectPopup = document.getElementById("project_popup");
+  let warningPopup = document.getElementById("warning_popup");
+
+  popup.classList.add("hidden");
+  projectPopup.classList.add("hidden");
   warningPopup.classList.add("hidden");
 }

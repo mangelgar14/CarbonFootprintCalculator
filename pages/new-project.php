@@ -38,7 +38,7 @@ echo "<li class=\"new-project-field-item\" id=\"$id\">
           >
             <img src=\"../imgs/edit_icon.svg\" alt=\"Icon of a pen\" /></button
           ><button
-            class=\"project-card-details-button delete-project\"  onclick=\"deleteProject($id)\"
+            class=\"project-card-details-button delete-project\"  onclick=\"showWarningPopup($id)\"
           >
             <img src=\"../imgs/delete_icon.svg\" alt=\"Icon of a trash can\" />
           </button>
@@ -46,16 +46,19 @@ echo "<li class=\"new-project-field-item\" id=\"$id\">
       </div>
     </div>
     <div class=\"project-card-buttons\">
-      <button class=\"button-purple-bg\" >
+      <button class=\"button-purple-bg\" 
+      onclick=\"gotoConfigure($id)\">
         Configure
       </button>
-      <button class=\"button-white-bg button-with-image\">
+      <button class=\"button-white-bg button-with-image\"
+      onclick=\"gotoResults($id)\"
+      onmouseover=\"this.querySelector('img').src='../imgs/arrow_right_white.svg'\"  
+      onmouseout=\"this.querySelector('img').src='../imgs/arrow_right.svg'\"  >
         Results
         <img
           src=\"../imgs/arrow_right.svg\"
           alt=\"Arrow pointing right\"
-          onmouseover=\"this.src=\'../imgs/arrow_right_white.svg\';\"
-          onmouseout=\"this.src=\'LibraryTransparent.png\'\"
+
         />
       </button>
     </div>
