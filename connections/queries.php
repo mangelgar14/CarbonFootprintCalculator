@@ -2,7 +2,13 @@
 function selectAllProjects()
 {
     $db = getConnection();
-    $sentence = $db->query("SELECT id,name,client,description,lastModified FROM projects ;");
+    $sentence = $db->query("SELECT id,name,client,description,lastModified FROM projects ORDER BY lastModified;");
+    return $sentence->fetchAll();
+}
+function selectAllProjectsOrder($order)
+{
+    $db = getConnection();
+    $sentence = $db->query("SELECT id,name,client,description,lastModified FROM projects ORDER BY ?;");
     return $sentence->fetchAll();
 }
 function selectProjectById($idProject)
@@ -20,7 +26,7 @@ function deleteProject($idProject)
 }
 function editProject($idProject, $name, $client, $description)
 {
-    $db = getConnection();   
+    $db = getConnection();
     $sentence = $db->prepare("UPDATE projects SET name = ?, client = ?, description = ?, lastModified = curdate() WHERE id = ?");
     return $sentence->execute([$name, $client, $description, $idProject]);
 }
