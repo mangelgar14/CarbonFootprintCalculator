@@ -1,7 +1,8 @@
 <?php
 $servername = "localhost";
-$database = "base de datos";
-$username = "usuario";
-$password = "contraseña";
+$database = "CarbonFootprintCalculator";
+$username = "root";
+$password = "root";
 
 $connection = mysqli_connect($servername, $username, $password, $database);
+?>
