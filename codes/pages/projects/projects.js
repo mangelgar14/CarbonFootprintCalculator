@@ -4,7 +4,8 @@ var pClosed = true;
 window.onload = loader();
 function loader() {
   document
-    .getElementById("add_version_button").addEventListener("click", () => {
+    .getElementById("add_version_button")
+    .addEventListener("click", () => {
       newVersion(project);
     });
   document
@@ -12,14 +13,7 @@ function loader() {
     .addEventListener("click", () => dbDeleteProject(project));
   dbFetchProjects();
 
-  /* ir a resultados / calculadora */
-  document
-    .getElementById("btn_results")
-    .addEventListener("click", () => gotoResults(project));
-  document
-    .getElementById("btn_calculator")
-    .addEventListener("click", () => gotoConfigure(project));
-
+  /* Abrir Cerrar projectos */
   /* Hover boton blanco -> flecha blanca */
   let whiteButtons = document.querySelectorAll(".button-with-image");
   whiteButtons.forEach((button) => {
@@ -68,8 +62,8 @@ function newHtmlProject(project) {
   });
 }
 function addProjectControl() {
-  document.getElementById("add_version_button").disabled = pClosed;
-  document.getElementById("add_project_button").disabled = !pClosed;
+    document.getElementById("add_version_button").disabled = pClosed;
+    document.getElementById("add_project_button").disabled = !pClosed;
 }
 function openClose(listProject) {
   listProject
@@ -92,11 +86,7 @@ function openClose(listProject) {
       } else {
         pClosed = !pClosed;
       }
-      if(pClosed){
-        project = null;
-      }else{
-        project = listProject.parentNode.id;
-      }
+
       listProject
         .querySelectorAll(".project-card-arrow")[0]
         .classList.toggle("arrow");
@@ -105,6 +95,7 @@ function openClose(listProject) {
         .classList.toggle("hidden");
 
       addProjectControl(pClosed);
+      project = listProject.parentNode.id;
     });
 }
 function dbFetchProjects() {
@@ -196,7 +187,12 @@ function dbDeleteProject(idProject) {
   });
 }
 
-
+function gotoConfigure(id) {
+  alert("configure "+id);
+}
+function gotoResults(id) {
+  alert("results"+id);
+}
 function hasProjectsStyle() {
   let versionButton = document.querySelectorAll(".add-version-button");
   let projectButton = document.querySelectorAll(".add-project-button-np");
@@ -299,20 +295,4 @@ function closePopup() {
   popup.classList.add("hidden");
   projectPopup.classList.add("hidden");
   warningPopup.classList.add("hidden");
-}
-function gotoConfigure(id) {
-  if (id != null) {
-    sessionStorage.setItem("project", id);
-    location.href = "calculator.html";
-  } else {
-    alert("You must select a project first");
-  }
-}
-function gotoResults(id) {
-  if ((id != null)) {
-    sessionStorage.setItem("project", id);
-    location.href = "results.html";
-  } else {
-    alert("You must select a project first");
-  }
 }

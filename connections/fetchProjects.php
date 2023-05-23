@@ -1,4 +1,4 @@
 <?php
 include_once "queries.php";
-$products = selectAllProjectsOrder("date");
+$products = selectAllProjects();
 echo json_encode($products);
