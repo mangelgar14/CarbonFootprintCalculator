@@ -118,18 +118,22 @@ function save_cloud(){
 
 function save_premise(){
     let combo1 = document.getElementById("combo_premise1");
-    let power_consumption = combo1.option[combo1.selectedIndex].value;
+    let power_consumption = combo1.options[combo1.selectedIndex].text;
 
     let combo2 = document.getElementById("combo_premise2");
     let cpu = combo2.options[combo2.selectedIndex].text;
 
     let combo3 = document.getElementById("combo_premise3");
-    let renewable_energy = combo3.options[combo3.selectedIndex].value;
+    let renewable_energy = combo3.options[combo3.selectedIndex].text;
 
     let combo4 = document.getElementById("combo_premise3");
-    let country = combo4.options[combo4.selectedIndex].value;
+    let country = combo4.options[combo4.selectedIndex].text;
 
-    let btns = document.querySelector("input[name=btn_radio]:checked").value;
+    let btns;
+    if(document.querySelector("input[name=btn_radio]:checked") != null)
+        btns = document.querySelector("input[name=btn_radio]:checked").value;
+    else
+        btns = 0;
 
     let answer1 = document.getElementById("premise_answer1").value;
     let answer2 = document.getElementById("premise_answer2").value;
@@ -139,6 +143,7 @@ function save_premise(){
     let valido = true;
 
     if(answer1 == ""){
+        alert("aqui");  
         valido = false;
         document.getElementById("premise_answer1").classList.add("error");
     }
