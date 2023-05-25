@@ -1,6 +1,17 @@
 <?php
 
 $id = htmlspecialchars($_POST["id"]);
+$provider = htmlspecialchars($_POST["provider"]);
+$region = htmlspecialchars($_POST["region"]);
+$vCPU_hours = htmlspecialchars($_POST["vCPU_hours"]);
+$vGPU_hours = htmlspecialchars($_POST["vGPU_hours"]);
+$software_utilization = htmlspecialchars($_POST["software_utilization"]);
+$hours_used = htmlspecialchars($_POST["hours_used"]);
+$renewable_energy = htmlspecialchars($_POST["renewable_energy"]);
+$checked_btn = htmlspecialchars($_POST["checked_btn"]);
+$consumed_renewable_energy = htmlspecialchars($_POST["consumed_renewable_energy"]);
+$country = htmlspecialchars($_POST["country"]);
+
 $funcion = htmlspecialchars($_POST["funcion"]);
 
 echo "<div id=\"popup\">
