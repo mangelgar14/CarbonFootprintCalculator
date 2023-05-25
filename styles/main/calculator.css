@@ -57,10 +57,10 @@ body, html{
     display: grid;
     grid-template-rows: repeat(2, 1fr);
     justify-self: center;
-    width: 80%;
+    width: 90%;
     min-height: 25%;
     max-height: 90%;
-    margin-left: 10%;
+    margin-left: 5%;
     justify-items: center;
     align-content: center;
 }
@@ -84,6 +84,7 @@ body, html{
     border: 1px solid black;
     border-radius: 10px 10px 0px 0px;
     background-color: transparent;
+    width: 7rem;
     height: 2rem;
     font-family: 'Graphik';
     font-style: normal;
@@ -91,6 +92,7 @@ body, html{
     font-size: 18px;
     line-height: 110%;
     letter-spacing: -0.02em;
+    border-bottom: none;
 }
 
 #div_tabla{
@@ -104,14 +106,32 @@ body, html{
 }
 
 table{
-    background-color: #5c5c5c;
+    border-collapse: collapse;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.first{
+    border-top: 1.5px solid black;
+    border-left: 1.5px solid black;
+    border-bottom: 1.5px solid black;
+}
+
+.middle{
+    border-top: 1.5px solid black;
+    border-bottom: 1.5px solid black;
+}
+
+.last{
+    border-top: 1.5px solid black;
+    border-right: 1.5px solid black;
+    border-bottom: 1.5px solid black;
 }
 
 .table_header{
     background-color: #A100FF;
     color: white;
     font-family: 'Graphik';
+    font-size: 16px;
 }
 
 .table_data{
@@ -120,7 +140,7 @@ table{
 }
 
 th{
-    width: 75px;
+    width: 98px;
 }
 
 td button{
@@ -389,6 +409,36 @@ button:hover{
     border-radius: 185px;
     text-align: center;
 }
+
+.question .q_input input:disabled{
+    border-radius: 10px;
+    background-color: #9fa19d;
+    border: 1px solid #9fa19d;
+}
+
+#combo_premise2:disabled{
+    border-radius: 10px;
+    height: 24px;
+    width: 197px;
+    background-color: #9fa19d;
+    border: 1px solid #9fa19d;
+}
+
+#question_group .q_input input[type="text"]{
+    border: none;
+    height: 20px;
+    width: 194px;
+    border-radius: 185px;
+    text-align: center;
+}
+
+#question_group .q_input input[type="text"]:disabled{
+    border-radius: 10px;
+    background-color: #9fa19d;
+    border: 1px solid #9fa19d;
+}
+
+
 
 .error{
     box-shadow: 0 0 3px #ff0000;
