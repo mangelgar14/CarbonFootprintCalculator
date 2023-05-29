@@ -1,9 +1,10 @@
 <?php
-/* PROEJCTS */
-function selectAllProjects()
+/* PROJECTS */
+function selectAllProjects($order)
 {
     $db = getConnection();
-    $sentence = $db->query("SELECT id,name,client,description,lastModified FROM projects ;");
+    
+    $sentence = $db->query("SELECT id,name,client,description,lastModified FROM projects ORDER BY $order ASC;");
     return $sentence->fetchAll();
 }
 function selectProjectById($idProject)
@@ -16,7 +17,7 @@ function selectProjectById($idProject)
 function deleteProject($idProject)
 {
     $db = getConnection();
-    $sentence = $db->prepare("DELETE FROM projects where id =  ?");
+    $sentence = $db->prepare("DELETE FROM projects where id = ?");
     return $sentence->execute([$idProject]);
 }
 function editProject($idProject, $name, $client, $description)
@@ -32,53 +33,57 @@ function insertProject($name, $client, $description)
     $sentence = $db->prepare("INSERT INTO projects (name,client,description,lastModified) VALUES (?,?,?,curdate())");
     return $sentence->execute([$name, $client, $description]);
 }
+function searchProjects($query,$order)
+{
+    $db = getConnection();
+    $sentence = $db->prepare("SELECT id,name,client,description,lastModified FROM projects WHERE name like ? or client like ? ORDER BY $order");
+    $query = '%' . $query . '%';
+    $sentence->execute([$query, $query]);
+    return $sentence->fetchAll();
+}
 /* CONFIGURATION */
-function fetchServerConfigurations($id)
+function fetchSerwareConfigurations($id)
 {
+    // Busca en la base de datos las configuraciones ASOCIADAS A UN PROYECTO
     $db = getConnection();
-    $sentence = $db->query("SELECT * FROM server WHERE id_project = $id ;");
+    $sentence = $db->prepare("SELECT * FROM serware WHERE id_project = ? ;");
+    $sentence->execute([$id]);
     return $sentence->fetchAll();
 }
-function fetchSoftwareConfigurations($id)
+function fetchSerwareConfigurationById($idSerware)
 {
+    // Busca en la base de datos las configuraciones ASOCIADAS A UN PROYECTO
     $db = getConnection();
-    $sentence = $db->query("SELECT * FROM software WHERE id_software = $id;");
-    return $sentence->fetchAll();
+    $sentence = $db->prepare("SELECT * FROM serware WHERE id_serware = ? ;");
+    $sentence->execute([$idSerware]);
+    return $sentence->fetchObject();
 }
-function insertServerConfiguration($id_project, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint)
+function fetchDataByConfigId($idSerware, $table)
 {
+    // Busca en la base de datos las configuraciones ASOCIADAS A UN PROYECTO
     $db = getConnection();
-    $sentence = $db->prepare("INSERT INTO server (id_project , lastModified , type, provider , location , energy_consumption, consumption_emissions , embedded_emissions , carbon_footprint) VALUES (?,curdate(),?,?,?,?,?,?,?)");
-    return $sentence->execute([$id_project, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint]);
+    $sentence = $db->prepare("SELECT * FROM ? WHERE id_serware = ? ;");
+    $sentence->execute([$table,$idSerware]);
+    return $sentence->fetchObject();
 }
-function insertSoftwareConfiguration($id_project, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint)
+function insertSerwareConfiguration($id_project,$serware, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint)
 {
     $db = getConnection();
-    $sentence = $db->prepare("INSERT INTO software (id_project , lastModified , type, provider , location , energy_consumption, consumption_emissions , embedded_emissions , carbon_footprint) VALUES (?,curdate(),?,?,?,?,?,?,?)");
-    return $sentence->execute([$id_project, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint]);
+    $sentence = $db->prepare("INSERT INTO serware (id_project ,serware, lastModified , type, provider , location , energy_consumption, consumption_emissions , embedded_emissions , carbon_footprint) VALUES (?,?,curdate(),?,?,?,?,?,?,?)");
+    return $sentence->execute([$id_project,$serware, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint]);
 }
-function editServerConfiguration($id, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint)
+
+function editSerwareConfiguration($id, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint)
 {
     $db = getConnection();
-    $sentence = $db->prepare("UPDATE server SET lastModified=curdate() , type=?, provider=? , location=? , energy_consumption=?, consumption_emissions=? , embedded_emissions=? , carbon_footprint=? where id_server = ?");
+    $sentence = $db->prepare("UPDATE serware SET lastModified=curdate() , type=?, provider=? , location=? , energy_consumption=?, consumption_emissions=? , embedded_emissions=? , carbon_footprint=? where id_serware = ?");
     return $sentence->execute([$type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint,$id]);
 }
-function editSoftwareConfiguration($id, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint)
+
+function deleteSerwareConfiguration($id)
 {
     $db = getConnection();
-    $sentence = $db->prepare("UPDATE software SET lastModified=curdate() , type=?, provider=? , location=? , energy_consumption=?, consumption_emissions=? , embedded_emissions=? , carbon_footprint=? where id_software = ?");
-    return $sentence->execute([$type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint,$id]);
-}
-function deleteServerConfiguration($id)
-{
-    $db = getConnection();
-    $sentence = $db->prepare("DELETE FROM server where id_server = ?");
-    return $sentence->execute([$id]);
-}
-function deleteSoftwareConfiguration($id)
-{
-    $db = getConnection();
-    $sentence = $db->prepare("DELETE FROM software where id_software = ?");
+    $sentence = $db->prepare("DELETE FROM serware where id_serware = ?");
     return $sentence->execute([$id]);
 }
 

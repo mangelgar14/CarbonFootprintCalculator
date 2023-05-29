@@ -1,5 +1,5 @@
 <?php
-$table = htmlspecialchars($_POST["table"]);
+$serware = htmlspecialchars($_POST["serware"]);
 $id_project = htmlspecialchars($_POST["id_project"]);
 $type = htmlspecialchars($_POST["type"]);
 $provider = htmlspecialchars($_POST["provider"]);
@@ -10,11 +10,6 @@ $embedded_emissions = htmlspecialchars($_POST["embedded_emissions"]);
 $carbon_footprint = htmlspecialchars($_POST["carbon_footprint"]);
 
 include_once "../queries.php";
-if ($table == 0) {
-    $response = insertServerConfiguration($id_project, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint);
-} else if ($table == 1) {
-    $response = insertSoftwareConfiguration($id_project, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint);
-}else{
-    $response = null;
-}
+$response = insertSerwareConfiguration($id_project, $serware, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint);
+
 echo json_encode($response);

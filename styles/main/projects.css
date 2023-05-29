@@ -209,6 +209,21 @@ body {
   justify-content: center;
   margin: 0;
 }
+#no-projects-search{
+  text-align: center;
+  justify-content: center;
+}
+#no-projects-search>span{
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #be82ff;
+}
+
+#no-projects-search > p{
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #a100ff;
+}
 
 .no-projects {
   text-align: center;

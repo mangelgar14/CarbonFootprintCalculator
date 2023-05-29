@@ -3,13 +3,19 @@ var project = null;
 var pClosed = true;
 window.onload = loader();
 function loader() {
-  document
-    .getElementById("add_version_button").addEventListener("click", () => {
-      newVersion(project);
-    });
+  // document
+  //   .getElementById("add_version_button").addEventListener("click", () => {
+  //     newVersion(project);
+  //   });
+  let select = document.getElementById("order-by");
+  select.addEventListener("change", function () {
+    console.log(document.getElementById("search-query").value)
+    if (document.getElementById("search-query").value == "") dbFetchProjects();
+    else dbSearch();
+  });
   document
     .getElementById("btn_delete")
-    .addEventListener("click", () => dbDeleteProject(project));
+    .addEventListener("click", () => dbDeleteProject());
   dbFetchProjects();
 
   /* ir a resultados / calculadora */
@@ -25,7 +31,6 @@ function loader() {
   whiteButtons.forEach((button) => {
     hoverWhiteArrow(button);
   });
-  /* Add new project Button */
 }
 function clearProjects() {
   let htmlProjects = document
@@ -92,9 +97,9 @@ function openClose(listProject) {
       } else {
         pClosed = !pClosed;
       }
-      if(pClosed){
+      if (pClosed) {
         project = null;
-      }else{
+      } else {
         project = listProject.parentNode.id;
       }
       listProject
@@ -107,20 +112,87 @@ function openClose(listProject) {
       addProjectControl(pClosed);
     });
 }
-function dbFetchProjects() {
+
+function dbSearch() {
+  var order;
+  let select = document.getElementById("order-by");
+  switch (select.selectedIndex) {
+    case 0:
+      order = "lastModified";
+      break;
+    case 1:
+      order = "name";
+      break;
+    case 2:
+      order = "client";
+      break;
+  }
+  if (typeof order === "undefined") {
+    order = "lastModified";
+  }
+  let query = document.getElementById("search-query").value;
   $.ajax({
-    url: "../../../connections/projects/FetchProjects.php",
+    url: "../../../connections/projects/searchProjects.php",
     type: "GET",
+    data: {
+      query: query,
+      order: order,
+    },
     success: function (result) {
       var projectsResult = JSON.parse(result);
       if (projectsResult.length > 0) {
+        document.getElementById("no-projects-search").innerHTML = "";
+        clearProjects();
         hasProjects = true;
-        projectsResult.forEach((project) => {
-          newHtmlProject(project);
+        projectsResult.forEach((p) => {
+          newHtmlProject(p);
+        });
+      } else {
+        clearProjects();
+        document.getElementById("no-projects-search").innerHTML =
+          "<span>No projects found with the search:</span><p>" + query + "</p>";
+      }
+      project = null;
+    },
+    error: function (error) {},
+  });
+}
+function dbFetchProjects(order) {
+  var order;
+  let select = document.getElementById("order-by");
+  switch (select.selectedIndex) {
+    case 0:
+      order = "lastModified";
+      break;
+    case 1:
+      order = "name";
+      break;
+    case 2:
+      order = "client";
+      break;
+  }
+  if (typeof order === "undefined") {
+    order = "lastModified";
+  }
+
+  $.ajax({
+    url: "../../../connections/projects/FetchProjects.php",
+    type: "GET",
+    data: {
+      order: order,
+    },
+    success: function (result) {
+      var projectsResult = JSON.parse(result);
+      if (projectsResult.length > 0) {
+        clearProjects();
+        hasProjects = true;
+        projectsResult.forEach((p) => {
+          newHtmlProject(p);
         });
       } else {
         hasProjects = false;
       }
+      project = null;
       if (hasProjects) hasProjectsStyle();
       else hasNoProjectsStyle();
     },
@@ -156,8 +228,8 @@ function dbInsertProject(name, client, description) {
       description: description,
     },
     success: function (result) {
-      clearProjects();
       dbFetchProjects();
+      pClosed = true;
       addProjectControl(pClosed);
     },
     error: function (err) {
@@ -176,41 +248,45 @@ function dbEditProject(idProject, name, client, description) {
       description: description,
     },
     success: function (result) {
-      clearProjects();
       dbFetchProjects();
     },
   });
 }
-function dbDeleteProject(idProject) {
+function dbDeleteProject() {
   $.ajax({
     url: "../../../connections/projects/deleteProject.php",
     type: "POST",
     data: {
-      idProject: idProject,
+      idProject: project,
     },
     success: function (result) {
-      clearProjects();
       dbFetchProjects();
+      pClosed = true;
       addProjectControl(pClosed);
+      closePopup();
     },
   });
 }
 
-
 function hasProjectsStyle() {
-  let versionButton = document.querySelectorAll(".add-version-button");
-  let projectButton = document.querySelectorAll(".add-project-button-np");
+  try {
+    let versionButton = document.querySelectorAll(".add-version-button");
+    let projectButton = document.querySelectorAll(".add-project-button-np");
 
-  let noProjects = document.querySelectorAll(".no-projects");
-  projectButton[0].classList.add("add-project-button");
-  projectButton[0].classList.remove("add-project-button-np");
+    let noProjects = document.querySelectorAll(".no-projects");
+    noProjects.forEach((p) => {
+      p.classList.add("add-project-button");
+      p.classList.remove("add-project-button-np");
 
-  noProjects[0].classList.add("hidden");
-  versionButton[0].classList.remove("hidden");
-  let listProjects = document.querySelectorAll(".project-field-item");
-  listProjects.forEach((listProject) => {
-    listProject.classList.remove("hidden");
-  });
+      noProjects[0].classList.add("hidden");
+      versionButton[0].classList.remove("hidden");
+    });
+
+    let listProjects = document.querySelectorAll(".project-field-item");
+    listProjects.forEach((listProject) => {
+      listProject.classList.remove("hidden");
+    });
+  } catch (e) {}
 }
 function hasNoProjectsStyle() {
   let listProjects = document.querySelectorAll(".project-field-item");
@@ -228,6 +304,7 @@ function hasNoProjectsStyle() {
   });
   hasProjects = false;
 }
+function searchNoProjectsStyle() {}
 function editProject(idProject) {
   dbFetchProject(idProject);
 
@@ -309,7 +386,7 @@ function gotoConfigure(id) {
   }
 }
 function gotoResults(id) {
-  if ((id != null)) {
+  if (id != null) {
     sessionStorage.setItem("project", id);
     location.href = "results.html";
   } else {
