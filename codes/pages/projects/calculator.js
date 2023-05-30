@@ -31,10 +31,15 @@ function show_table(tableIndex) {
 }
 
 function show_popup(popupIndex, edit) {
+  if(popupIndex == 5){
+    popup_forms[popupIndex].style.visibility = "visible";
+  }
+  else{
   popup_forms.forEach(function (node) {
     node.style.visibility = "visible";
     node.style.display = "none";
   });
+  }
 
   if(!edit){
     popup_forms[popupIndex].style.display = "grid";
@@ -57,6 +62,10 @@ function close_popup() {
           reset(aux.id);
         }    
   });
+}
+
+function close_invalid_data(popupIndex){
+  popup_forms[popupIndex].style.visibility = "hidden";
 }
 
 form_cloud.addEventListener('submit', (e) => {
@@ -160,7 +169,7 @@ function save_cloud() {
     );
    close_popup();
   } else {
-    alert("hay datos malos");
+    show_popup(5);
   }
 }
 
@@ -284,7 +293,7 @@ function save_premise() {
     close_popup();  
   }
   else 
-    alert("Hay datos malos");
+    show_popup(5);
 }
 
 

@@ -120,7 +120,7 @@
                     </form>
                 </div> <!-- form premise -->
             </div> <!-- popup_content -->
-        </div>  <!-- pop_up -->
+        </div>  <!-- popup -->
 
         <!------------------------------ FORM CLOUD ------------------------------>
 
@@ -212,7 +212,7 @@
 
          <!------------------------------ POPUP DELETE ------------------------------>
 
-        <div class="popup" id="popup_error">
+         <div class="popup" id="popup_error">
             <div id="error_content">
                 <div id="div_x"><button type="button" id="btn_x" onclick="close_popup()"><img src="../imgs/cross.png" alt="Close window"/></button></div>
                 <div id="err_type">Alert</p></div>
@@ -223,6 +223,45 @@
                 </div>
             </div> <!-- popup_content -->
         </div> <!-- popup -->
+
+        <!------------------------------ POPUP NOT SAVED ------------------------------>
+
+        <div class="popup">
+            <div id="popup_not_saved">
+                <div id="popup_top">
+                    <div id="popup_top_text">WARNING!</div>
+                    <div id="popup_top_cross">
+                        <button onclick="close_popup()"><img src="../imgs/cross_white.svg" alt="close"></button>
+                    </div>
+                </div>
+                <div id="not_saved_body">
+                    <div id="not_saved_upper_text">THE CONFIGURATION IS NOT SAVED</div>
+                    <div id="not_saved_bottom_text">Save your configuration before continuing.</div>
+                    <div id="not_saved_button">
+                        <button id="btn_not_saved" type="button" onclick="close_popup()">Go Back!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!------------------------------ POPUP INVALID DATA ------------------------------>
+
+        <div class="popup">
+            <div id="popup_not_saved">
+                <div id="popup_top">
+                    <div id="popup_top_text">WARNING!</div>
+                    <div id="popup_top_cross">
+                        <button onclick="close_popup()"><img src="../imgs/cross_white.svg" alt="close"></button>
+                    </div>
+                </div>
+                <div id="not_saved_body">
+                    <div id="not_saved_upper_text">SOME DATA INTRODUCED ARE NOT CORRECT</div>
+                    <div id="not_saved_button">
+                        <button id="btn_not_saved" type="button" onclick="close_invalid_data(5)">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <header>
             <div id="menu">
@@ -240,12 +279,12 @@
         </header>
 
         
-            <div id="top">
-                <a href="projects.html">
-                    <button id="btn_back">Back</button>
-                </a>
-                <div id="top_text">Project's name</div>
-            </div>
+        <div id="top">
+            <a href="projects.html">
+                <button id="btn_back">Back</button>
+            </a>
+            <div id="top_text">Project's name</div>
+        </div>
 
         <div id="mid">
             <div id="container">
@@ -423,7 +462,7 @@
 
         <footer>
             <div id="bottom">
-                <button id="btn_save">Save</button>
+                <button id="btn_save" onclick="show_popup(4)">Save</button>
                 <a id="btn_view_result" href="results.html">
                     <div id="btn_view_result_text">View Result</div> 
                     <img src="../imgs/arrow_right_purple.png" alt="Arrow pointing right">
@@ -434,7 +473,4 @@
         <script src="../codes/pages/projects/calculator.js"></script>
         <script src="../codes/pages/projects/calculator_db.js"></script>
     </body>
-
-    
-
 </html>
