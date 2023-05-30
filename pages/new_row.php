@@ -19,7 +19,7 @@ echo "<tr class=\"table_data\">
 <td>$embedded_emissions</td>
 <td>$carbon_footprint</td>
 <td>
-    <button onclick=\"show_popup($id,true)\"><img src=\"../imgs/edit.png\" alt=\"edit icon\"></button>
-    <button onclick=\"delete_row($id)\"><img src=\"../imgs/trash.png\" alt=\"delete icon\"></button>
+    <button onclick=\"editButton($id)\"><img src=\"../imgs/edit.png\" alt=\"edit icon\"></button>
+    <button onclick=\"show_popup(3)\"><img src=\"../imgs/trash.png\" alt=\"delete icon\"></button>
 </td>  
 </tr>";

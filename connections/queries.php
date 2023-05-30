@@ -3,7 +3,7 @@
 function selectAllProjects($order)
 {
     $db = getConnection();
-    
+
     $sentence = $db->query("SELECT id,name,client,description,lastModified FROM projects ORDER BY $order ASC;");
     return $sentence->fetchAll();
 }
@@ -33,7 +33,7 @@ function insertProject($name, $client, $description)
     $sentence = $db->prepare("INSERT INTO projects (name,client,description,lastModified) VALUES (?,?,?,curdate())");
     return $sentence->execute([$name, $client, $description]);
 }
-function searchProjects($query,$order)
+function searchProjects($query, $order)
 {
     $db = getConnection();
     $sentence = $db->prepare("SELECT id,name,client,description,lastModified FROM projects WHERE name like ? or client like ? ORDER BY $order");
@@ -58,26 +58,19 @@ function fetchSerwareConfigurationById($idSerware)
     $sentence->execute([$idSerware]);
     return $sentence->fetchObject();
 }
-function fetchDataByConfigId($idSerware, $table)
-{
-    // Busca en la base de datos las configuraciones ASOCIADAS A UN PROYECTO
-    $db = getConnection();
-    $sentence = $db->prepare("SELECT * FROM ? WHERE id_serware = ? ;");
-    $sentence->execute([$table,$idSerware]);
-    return $sentence->fetchObject();
-}
-function insertSerwareConfiguration($id_project,$serware, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint)
+
+function insertSerwareConfiguration($id_project, $serware, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint)
 {
     $db = getConnection();
     $sentence = $db->prepare("INSERT INTO serware (id_project ,serware, lastModified , type, provider , location , energy_consumption, consumption_emissions , embedded_emissions , carbon_footprint) VALUES (?,?,curdate(),?,?,?,?,?,?,?)");
-    return $sentence->execute([$id_project,$serware, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint]);
+    return $sentence->execute([$id_project, $serware, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint]);
 }
 
 function editSerwareConfiguration($id, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint)
 {
     $db = getConnection();
     $sentence = $db->prepare("UPDATE serware SET lastModified=curdate() , type=?, provider=? , location=? , energy_consumption=?, consumption_emissions=? , embedded_emissions=? , carbon_footprint=? where id_serware = ?");
-    return $sentence->execute([$type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint,$id]);
+    return $sentence->execute([$type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint, $id]);
 }
 
 function deleteSerwareConfiguration($id)
@@ -86,7 +79,30 @@ function deleteSerwareConfiguration($id)
     $sentence = $db->prepare("DELETE FROM serware where id_serware = ?");
     return $sentence->execute([$id]);
 }
-
+/* CONFIGURATION DATA */
+function fetchDataByConfigId($table, $idSerware)
+{
+    // Busca en la base de datos las configuraciones ASOCIADAS A UN PROYECTO
+    $db = getConnection();
+    echo $table;
+    $sentence = $db->prepare("SELECT * FROM ? WHERE id_serware = ? ;");
+    $sentence->execute([$table, $idSerware]);
+    return $sentence->fetchAll();
+}
+function insertPremiseFormData($idSerware, $num_of_servers, $power_consumption, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $checked_btn, $consumed_renewable_energy, $country)
+{
+    $db = getConnection();
+    $sentence = $db->prepare("INSERT INTO datos_premise (idSerware, n_servers, power_consumption_known, power_consumption, cpu, 
+                                            software_utilization, hours_day, renewable, renewable_certification, renewable_percentage, location) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+    return $sentence->execute([$idSerware, $num_of_servers, $power_consumption, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $checked_btn, $consumed_renewable_energy, $country]);
+}
+function insertCloudFormData($idSerware, $provider, $region, $vcpu_hours, $vgpu_hours, $tb_hdd, $tb_ssd, $gb_memory, $gb_networking)
+{
+    $db = getConnection();
+    $sentence = $db->prepare("INSERT INTO datos_cloud (idSerware, provider, region, vcpu_hours, vgpu_hours, 
+                                            tb_hdd, tb_ssd, gb_memory, gb_networking) VALUES (?,?,?,?,?,?,?,?,?)");
+    return $sentence->execute([$idSerware, $provider, $region, $vcpu_hours, $vgpu_hours, $tb_hdd, $tb_ssd, $gb_memory, $gb_networking]);
+}
 /* CONNECTION */
 function getConnection()
 {

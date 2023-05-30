@@ -18,7 +18,6 @@ function newHtmlServerConfig(config) {
       carbon_footprint: config["carbon_footprint"],
     },
     success: function (result) {
-      console.log(result);
       $("#table_server").append(result);
     },
   });
@@ -68,7 +67,7 @@ function newHtmlPremisePopup(config) {
   });
 }
 function newHtmlCloudPopup(config) {
-  console.log(config)
+
   $.ajax({
     url: "form_cloud.php",
     type: "POST",
@@ -119,7 +118,7 @@ function dbFetchSerwareConfiguration() {
     },
   });
 }
-function dbFetchSerwareConfigurationById($idSerware) {
+function dbFetchSerwareConfigurationById(idSerware) {
   $.ajax({
     url: "../../../connections/calculator/fetchSerwareConfigurationById.php",
     type: "GET",
@@ -137,7 +136,7 @@ function dbFetchSerwareConfigurationById($idSerware) {
     },
   });
 }
-function fetchDataByConfigId($idSerware) {
+function fetchDataByConfigId(idSerware) {
   $.ajax({
     url: "../../../connections/calculator/fetchSerwareConfigurationById.php",
     type: "GET",
@@ -145,14 +144,17 @@ function fetchDataByConfigId($idSerware) {
       idSerware: idSerware,
     },
     success: function (result) {
-      configResult = JSON.parse(result);
+
+      var configResult = JSON.parse(result);
+
       var table = "";
-      if (configResult.length > 0) {
-        if (result["type"] == "Premise") {
+      if (configResult != null) {
+        if (configResult["type"] == "Premise") {
           table = "datos_premise";
-        } else if (result["type"] == "Cloud") {
+        } else if (configResult["type"] == "Cloud") {
           table = "datos_cloud";
         }
+        console.log(table);
         $.ajax({
           url: "../../../connections/calculator/fetchDataByConfigId.php",
           type: "GET",
@@ -161,6 +163,7 @@ function fetchDataByConfigId($idSerware) {
             table: table,
           },
           success: function (result) {
+      
             configResult = JSON.parse(result);
             if (configResult.length > 0) {
               if (table == "datos_premise") {
@@ -181,8 +184,6 @@ function fetchDataByConfigId($idSerware) {
     },
   });
 }
-
-
 function dbInsertConfiguration(
   serware,
   type,
@@ -214,7 +215,7 @@ function dbInsertConfiguration(
       carbon_footprint: carbon_footprint,
     },
     success: function (result) {
-      console.log(result);
+      
     },
     error: function (err) {
       console.log(err);
@@ -232,7 +233,7 @@ function dbEditConfiguration(
   carbon_footprint
 ) {
   $.ajax({
-    url: "../../../connections/calculation/editConfiguration.php",
+    url: "../../../connections/calculator/editConfiguration.php",
     type: "POST",
     data: {
       id: id,
@@ -251,7 +252,7 @@ function dbEditConfiguration(
 }
 function dbDeleteConfiguration(id) {
   $.ajax({
-    url: "../../../connections/projects/deleteConfiguration.php",
+    url: "../../../connections/calculator/deleteConfiguration.php",
     type: "POST",
     data: {
       id: id,
@@ -260,4 +261,62 @@ function dbDeleteConfiguration(id) {
       console.log(result);
     },
   });
+}
+function dbInsertCloudFormData(idSerware, provider, region,vCPU_hours,vGPU_hours,TB_HDD,TB_SSD,GB_memory,GB_networking){
+  $.ajax({
+    url: "../../../connections/calculator/insertFormData.php",
+    type: "POST",
+    data: {
+      idSerware: idSerware,
+      table:"datos_cloud",
+      provider: provider,
+      region: region,
+      vCPU_hours: vCPU_hours,
+      vGPU_hours: vGPU_hours,
+      TB_HDD: TB_HDD,
+      TB_SSD: TB_SSD,
+      GB_memory: GB_memory,
+      GB_networking: GB_networking,
+    },
+    success: function (result) {
+      console.log(result);
+    },
+    error: function (err) {
+      console.log(err);
+    },
+  });
+}
+function dbInsertPremiseFormData(idSerware, num_of_servers, power_consumption, nominal_consumption, cpu, software_utilization, hours_used, renewable_energy, checked_btn,consumed_renewable_energy,country){
+  $.ajax({
+    url: "../../../connections/calculator/insertFormData.php",
+    type: "POST",
+    data: {
+      idSerware: idSerware,
+      table:"datos_cloud",
+      provider: provider,
+      region: region,
+      vCPU_hours: vCPU_hours,
+      vGPU_hours: vGPU_hours,
+      TB_HDD: TB_HDD,
+      TB_SSD: TB_SSD,
+      GB_memory: GB_memory,
+      GB_networking: GB_networking,
+    },
+    success: function (result) {
+      console.log(result);
+    },
+    error: function (err) {
+      console.log(err);
+    },
+  });
+}
+function calculateCloud(){
+
+}
+function calculatePremise(){
+  
+}
+function editButton(id){
+
+  fetchDataByConfigId(id);
 }
