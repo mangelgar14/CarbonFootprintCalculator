@@ -7,8 +7,8 @@
     </head>
 
     <body>
-        <div id="popup">
-            <div id="popup_content">
+        <div class="popup">
+            <div class="popup_content">
                 <div id="popup_top">
                     <div id="popup_top_text">Which enviroment are you working on?</div>
                     <div id="popup_top_cross">
@@ -26,8 +26,8 @@
 
         <!------------------------------ FORM PREMISE ------------------------------>
 
-        <div id="popup">
-            <div id="popup_content">
+        <div class="popup">
+            <div class="popup_content">
                 <div id="popup_top">
                     <div id="popup_top_text">Answer the following questions</div>
                     <div id="popup_top_cross">
@@ -124,8 +124,8 @@
 
         <!------------------------------ FORM CLOUD ------------------------------>
 
-        <div id="popup">
-            <div id="popup_content">
+        <div class="popup">
+            <div class="popup_content">
                 <div id="popup_top">
                     <div id="popup_top_text">Answer the following questions</div>
                     <div id="popup_top_cross">
@@ -210,6 +210,20 @@
             </div> <!-- popup_content -->
         </div>  <!-- pop_up -->
 
+         <!------------------------------ POPUP DELETE ------------------------------>
+
+        <div class="popup" id="popup_error">
+            <div id="error_content">
+                <div id="div_x"><button type="button" id="btn_x" onclick="close_popup()"><img src="../imgs/cross.png" alt="Close window"/></button></div>
+                <div id="err_type">Alert</p></div>
+                <div id="popup_text">Do you want to <span id="bolded">delete</span> this row?</div>
+                <div id="div_close">
+                    <button type="button" id="btn_close" onclick="close_popup()">Close</button>
+                    <button id="btn_confirm_delete" onclick="delete_project()">Delete</button>
+                </div>
+            </div> <!-- popup_content -->
+        </div> <!-- popup -->
+
         <header>
             <div id="menu">
                 <div id="logo"><img src="../imgs/logo_header.png" alt="Accenture logo" loading="lazy"/></div>
@@ -263,8 +277,8 @@
                                 <td>1222</td>
                                 <td>2679</td>
                                 <td>
-                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
-                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
+                                    <button id="btn_edit" onclick="edit_project()"><img src="../imgs/edit.png" alt="edit icon"></button>
+                                    <button id="btn_delete" onclick="show_popup(3)"><img src="../imgs/trash.png" alt="delete icon"></button>
                                 </td>  
                             </tr>
                         </table>

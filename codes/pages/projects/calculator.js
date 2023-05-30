@@ -8,7 +8,7 @@ var tab_tables = document.querySelectorAll("#mid #container .div_table .table");
 var popup_btns = document.querySelectorAll(
   "#popup #form #popup_btn_container button"
 );
-var popup_forms = document.querySelectorAll("#popup");
+var popup_forms = document.querySelectorAll(".popup");
 var popup_inputs = document.querySelectorAll("input[type=text]");
 
 var form_cloud = document.getElementById("form_cloud");
