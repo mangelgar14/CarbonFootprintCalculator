@@ -155,8 +155,14 @@ form_premise.addEventListener("click", (e) => {
 
 function reset(element) {
   var aux = document.getElementById(element);
+<<<<<<< Updated upstream
   if (aux.classList.contains("error")) {
     aux.classList.remove("error");
+=======
+  if(aux.classList.contains('error')){
+    aux.classList.remove('error');
+    aux.classList.value = "";
+>>>>>>> Stashed changes
   }
 }
 

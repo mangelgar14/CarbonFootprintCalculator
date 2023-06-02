@@ -137,6 +137,7 @@ VALUES
         'Wyoming',
         'WECC',
         350,
+    )
         ('GCP', 'us-central1', 'Iowa', '', 479.00),
         ('GCP', 'us-east1', 'South Carolina', '', 500.00),
         (
@@ -411,5 +412,3 @@ VALUES
         0.001,
         1.125
     );
-
-g

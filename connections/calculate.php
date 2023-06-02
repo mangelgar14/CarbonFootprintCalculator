@@ -40,4 +40,52 @@ $emissions_factors =0; //TODO DATOS DE LA TABLA
 /* 
 I = factor de emisiones del consumo energético según el proveedor y la región
 */
+<<<<<<< Updated upstream
 $emissions_factors =0; //TODO DATOS DE LA TABLA
+=======
+function calculateCloudI($provider, $region){
+    $emissions_factors = 0; //TODO DATOS DE LA TABLA
+
+    //sacar el dato C02e de la tabla CloudEmissions igualando el provider 
+    if($provider == 'AWS'){
+
+    }
+    else if($provider == 'GCP'){
+
+    }
+    else{
+
+    }
+
+    return $emission_factors;
+}
+
+//-Premise-//
+/* 
+M = ((E * I) * 0.20) si la I usa 100% de energía renovable se usa el promedio del consumo del país
+*/  
+
+function calculatePremiseM($power_consumption, $location, $e, $i){
+    $m = 0;
+
+    if($power_consumption != 100){
+        $m = (($e * $i) * 0.20);
+    }
+    else{
+        //TODO sacar el valor del país
+        $average_country_consumption = 0;
+        $m = (($e * $average_country_consumption) * 0.20);
+    }
+
+    return $m;
+}
+
+//-Cloud-//
+/* 
+M = ((E * I) * 0.20)
+*/  
+
+function calculateCloudM($e, $i){
+    return ($e * $i) * 0.20;
+}
+>>>>>>> Stashed changes

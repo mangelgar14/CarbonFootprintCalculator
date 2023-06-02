@@ -140,6 +140,7 @@ function insertCloudFormData($idSerware, $provider, $region, $vcpu_hours, $vgpu_
     $sentence = $db->prepare("INSERT INTO datos_cloud (id_serware, provider, region, vcpu_hours, vgpu_hours, tb_hdd, tb_ssd, gb_memory, gb_networking) VALUES (?,?,?,?,?,?,?,?,?)");
     return $sentence->execute([$idSerware, $provider, $region, $vcpu_hours, $vgpu_hours, $tb_hdd, $tb_ssd, $gb_memory, $gb_networking]);
 }
+<<<<<<< Updated upstream
 function editPremiseFormData($idSerware, $num_of_servers, $power_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification, $consumed_renewable_energy, $country){
     $db = getConnection();
     if ($power_consumption_known == "true") {
@@ -180,6 +181,16 @@ function editCloudFormData($idSerware, $provider, $region, $vcpu_hours, $vgpu_ho
     return $sentence->execute([$provider, $region, $vcpu_hours, $vgpu_hours, $tb_hdd, $tb_ssd, $gb_memory, $gb_networking,$idSerware]);
 }
 
+=======
+/* FORM DATA */
+function fetchFromCloudEmissions($region)
+{
+    $db = getConnection();
+    $sentence = $db->prepare("SELECT * FROM CloudEmissions WHERE Region = ?");
+    $sentence->execute([$region]);
+    return $sentence->fetchObject();
+}
+>>>>>>> Stashed changes
 /* CONNECTION */
 function getConnection()
 {

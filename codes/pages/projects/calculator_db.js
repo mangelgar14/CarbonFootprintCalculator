@@ -389,9 +389,44 @@ function dbEditPremiseFormData(dataObject, idSerware) {
     },
   });
 }
+function fetchFromCloudEmissions(region) {
+  alert("Hola");
+  $.ajax({
+    url: "../../../connections/calculator/fetchFromCloudEmissions.php",
+    type: "GET",
+    data: {
+      region: region,
+    },
+    success: function (result) {
+      var configResult = JSON.parse(result);
+      console.log(configResult);
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
+}
 
-function calculateCloud() {}
-function calculatePremise() {}
+function calculatePremise() {
+  
+}
+
+function calculateCloud(config){
+  $.ajax({
+    url: "calculate.php",
+    type: "POST",
+    data: {
+      provider: config["provider"],
+      region: config["region"],
+      country: config["country"],
+      NERCRegion: config["NERCRegion"],
+      CO2e: config["CO2e"],
+    },
+    success: function (result) {
+      console.log(result);
+    },
+  });
+}
 function editButton(id) {
   // Puede que el type simplifique las cosas o no sea necesario, idk
   fetchDataByConfigId(id);
