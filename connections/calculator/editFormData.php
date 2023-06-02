@@ -1,6 +1,6 @@
-<?php
+<?php 
 $table = htmlspecialchars($_POST["table"]);
-$idSerware = htmlspecialchars($_POST["idSerware"]);
+$iderware = htmlspecialchars($_POST["id"]);
 
 $num_of_servers = htmlspecialchars($_POST["num_of_servers"]);
 $nominal_consumption_known = htmlspecialchars($_POST["nominal_consumption_known"]);
@@ -24,13 +24,18 @@ $gb_networking = htmlspecialchars($_POST["GB_networking"]);
 
 include_once "../queries.php";
 if ($table == "datos_cloud") {
-    $response = insertCloudFormData($idSerware,  $provider, $region, $vcpu_hours, $vgpu_hours, $tb_hdd, $tb_ssd, $gb_memory, $gb_networking);
+    $response = editCloudFormData( $provider, $region, $vcpu_hours, $vgpu_hours, $tb_hdd, $tb_ssd, $gb_memory, $gb_networking,$idSerware);
 } 
 else if ($table == "datos_premise") {
-    $response = insertPremiseFormData($idSerware, (int)$num_of_servers, $nominal_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification,$consumed_renewable_energy,$country);
+  
+    echo "$idSerware, $num_of_servers, $nominal_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification,$consumed_renewable_energy,$country";
+   
+    $response = editPremiseFormData((int)$num_of_servers, $nominal_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification,$consumed_renewable_energy,$country,$idSerware);
 } else {
     $response = "teehe";
     
 }
 
 echo json_encode($response);
+
+?>

@@ -101,12 +101,7 @@ body .content-wrapper{
     background: none;
     cursor: pointer;
     color: #ffffff;
-}
-
-#btn_get_started:active{
-    background: white;
-    border: none;
-    color: #a100ff;
+    
 }
 
 #about_us{

@@ -1,8 +1,8 @@
 var project = sessionStorage.getItem("project");
+
 dbFetchSerwareConfiguration();
 
 function newHtmlServerConfig(config) {
-
   $.ajax({
     url: "new_row.php",
     type: "POST",
@@ -43,6 +43,7 @@ function newHtmlSoftwareConfig(config) {
   });
 }
 function newHtmlPremisePopup(config) {
+  console.log(config);
   $.ajax({
     url: "form_premise.php",
     type: "POST",
@@ -61,13 +62,17 @@ function newHtmlPremisePopup(config) {
       funcion: config["funcion"],
     },
     success: function (result) {
-      console.log(result);
-      $("body").append(result);
+      document.getElementById("edit_popup").style.visibility = "visible";
+      $("#edit_popup").append(result);
+      document
+        .getElementById("form_edit")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+        });
     },
   });
 }
 function newHtmlCloudPopup(config) {
-
   $.ajax({
     url: "form_cloud.php",
     type: "POST",
@@ -75,20 +80,23 @@ function newHtmlCloudPopup(config) {
       id: config["id"],
       provider: config["provider"],
       region: config["region"],
-      vCPU_hours: config["vCPU_hours"],
-      consumption_emissions: config["consumption_emissions"],
-      vGPU_hours: config["vGPU_hours"],
-      software_utilization: config["software_utilization"],
-      hours_used: config["hours_used"],
-      renewable_energy: config["renewable_energy"],
-      checked_btn: config["checked_btn"],
-      consumed_renewable_energy: config["consumed_renewable_energy"],
-      country: config["country"],
-      funcion: config["funcion"],
+      vCPU_hours: config["vcpu_hours"],
+      vGPU_hours: config["vgpu_hours"],
+      TB_HDD: config["tb_hdd"],
+      TB_SSD: config["tb_ssd"],
+      GB_memory: config["gb_memory"],
+      GB_networking: config["gb_networking"],
     },
     success: function (result) {
-      console.log(result);
-      $("body").append(result);
+      document.getElementById("edit_popup").style.visibility = "visible";
+      $("#edit_popup").append(result);
+      document.querySelector("#edit_region").value = config["region"];
+      document.querySelector("#edit_provider").value = config["provider"];
+      document
+        .getElementById("form_edit")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+        });
     },
   });
 }
@@ -137,6 +145,7 @@ function dbFetchSerwareConfigurationById(idSerware) {
   });
 }
 function fetchDataByConfigId(idSerware) {
+  // Primero consultar la configuración en la base de datos para saber en qué tabla de datos hay que buscar
   $.ajax({
     url: "../../../connections/calculator/fetchSerwareConfigurationById.php",
     type: "GET",
@@ -144,17 +153,16 @@ function fetchDataByConfigId(idSerware) {
       idSerware: idSerware,
     },
     success: function (result) {
-
       var configResult = JSON.parse(result);
-
       var table = "";
+     
       if (configResult != null) {
         if (configResult["type"] == "Premise") {
           table = "datos_premise";
         } else if (configResult["type"] == "Cloud") {
           table = "datos_cloud";
         }
-        console.log(table);
+
         $.ajax({
           url: "../../../connections/calculator/fetchDataByConfigId.php",
           type: "GET",
@@ -163,13 +171,14 @@ function fetchDataByConfigId(idSerware) {
             table: table,
           },
           success: function (result) {
-      
             configResult = JSON.parse(result);
-            if (configResult.length > 0) {
+            
+            if (configResult) {
+              console.log(configResult)
               if (table == "datos_premise") {
-                newHtmlPremisePopup(result);
+                show_popup(1, configResult);
               } else if (table == "datos_cloud") {
-                newHtmlCloudPopup(result);
+                show_popup(2, configResult);
               }
             }
           },
@@ -192,7 +201,8 @@ function dbInsertConfiguration(
   energy_consumption,
   consumption_emissions,
   embedded_emissions,
-  carbon_footprint
+  carbon_footprint,
+  dataObject
 ) {
   if (serware == 0) {
     serware = "Server";
@@ -215,7 +225,11 @@ function dbInsertConfiguration(
       carbon_footprint: carbon_footprint,
     },
     success: function (result) {
-      
+      if (type == "Premise") {
+        dbInsertPremiseFormData(dataObject, result.replaceAll('"', ""));
+      } else if (type == "Cloud") {
+        dbInsertCloudFormData(dataObject, result.replaceAll('"', ""));
+      }
     },
     error: function (err) {
       console.log(err);
@@ -230,14 +244,14 @@ function dbEditConfiguration(
   energy_consumption,
   consumption_emissions,
   embedded_emissions,
-  carbon_footprint
+  carbon_footprint,
+  dataObject
 ) {
   $.ajax({
     url: "../../../connections/calculator/editConfiguration.php",
     type: "POST",
     data: {
       id: id,
-      type: type,
       provider: provider,
       location: location,
       energy_consumption: energy_consumption,
@@ -246,7 +260,11 @@ function dbEditConfiguration(
       carbon_footprint: carbon_footprint,
     },
     success: function (result) {
-      console.log(result);
+      if (type == "Premise") {
+        dbEditPremiseFormData(dataObject, result.replaceAll('"', ""));
+      } else if (type == "Cloud") {
+        dbEditCloudFormData(dataObject, result.replaceAll('"', ""));
+      }
     },
   });
 }
@@ -262,61 +280,123 @@ function dbDeleteConfiguration(id) {
     },
   });
 }
-function dbInsertCloudFormData(idSerware, provider, region,vCPU_hours,vGPU_hours,TB_HDD,TB_SSD,GB_memory,GB_networking){
+function dbInsertCloudFormData(dataObject, idSerware) {
+  console.log(idSerware);
   $.ajax({
     url: "../../../connections/calculator/insertFormData.php",
     type: "POST",
     data: {
       idSerware: idSerware,
-      table:"datos_cloud",
-      provider: provider,
-      region: region,
-      vCPU_hours: vCPU_hours,
-      vGPU_hours: vGPU_hours,
-      TB_HDD: TB_HDD,
-      TB_SSD: TB_SSD,
-      GB_memory: GB_memory,
-      GB_networking: GB_networking,
+      table: "datos_cloud",
+      provider: dataObject["provider"],
+      region: dataObject["region"],
+      vCPU_hours: dataObject["cpu_hours"],
+      vGPU_hours: dataObject["gpu_hours"],
+      TB_HDD: dataObject["tb_hdd"],
+      TB_SSD: dataObject["tb_sdd"],
+      GB_memory: dataObject["gb_memory"],
+      GB_networking: dataObject["gb_networking"],
     },
+
     success: function (result) {
       console.log(result);
     },
     error: function (err) {
-      console.log(err);
+      console.log("Error insertando FORM DATA");
     },
   });
 }
-function dbInsertPremiseFormData(idSerware, num_of_servers, power_consumption, nominal_consumption, cpu, software_utilization, hours_used, renewable_energy, checked_btn,consumed_renewable_energy,country){
+function dbInsertPremiseFormData(dataObject, idSerware) {
+  console.log(dataObject);
+
   $.ajax({
     url: "../../../connections/calculator/insertFormData.php",
     type: "POST",
     data: {
       idSerware: idSerware,
-      table:"datos_cloud",
-      provider: provider,
-      region: region,
-      vCPU_hours: vCPU_hours,
-      vGPU_hours: vGPU_hours,
-      TB_HDD: TB_HDD,
-      TB_SSD: TB_SSD,
-      GB_memory: GB_memory,
-      GB_networking: GB_networking,
+      table: "datos_premise",
+      num_of_servers: dataObject["num_of_servers"],
+      nominal_consumption_known: dataObject["nominal_consumption_known"],
+      nominal_consumption: dataObject["nominal_consumption"],
+      cpu: dataObject["cpu"],
+      software_utilization: dataObject["software_utilization"],
+      hours_used: dataObject["hours_used"],
+      renewable_energy: dataObject["renewable_energy"],
+      renewable_certification: dataObject["renewable_certification"],
+      consumed_renewable_energy: dataObject["consumed_renewable_energy"],
+      country: dataObject["country"],
+      funcion: dataObject["funcion"],
     },
     success: function (result) {
       console.log(result);
     },
     error: function (err) {
-      console.log(err);
+      dbDeleteConfiguration(idSerware);
+      alert("Error del formulario");
     },
   });
 }
-function calculateCloud(){
+function dbEditCloudFormData(dataObject, idSerware) {
+  $.ajax({
+    url: "../../../connections/calculator/editFormData.php",
+    type: "POST",
+    data: {
+      idSerware: idSerware,
+      table: "datos_cloud",
+      provider: dataObject["provider"],
+      region: dataObject["region"],
+      vCPU_hours: dataObject["cpu_hours"],
+      vGPU_hours: dataObject["gpu_hours"],
+      TB_HDD: dataObject["tb_hdd"],
+      TB_SSD: dataObject["tb_sdd"],
+      GB_memory: dataObject["gb_memory"],
+      GB_networking: dataObject["gb_networking"],
+    },
 
+    success: function (result) {
+      console.log(result);
+    },
+    error: function (err) {
+      console.log("Error editando FORM DATA");
+    },
+  });
 }
-function calculatePremise(){
-  
+function dbEditPremiseFormData(dataObject, idSerware) {
+  $.ajax({
+    url: "../../../connections/calculator/editFormData.php",
+    type: "POST",
+    data: {
+      idSerware: idSerware,
+      table: "datos_premise",
+      num_of_servers: dataObject["num_of_servers"],
+      nominal_consumption_known: dataObject["nominal_consumption_known"],
+      nominal_consumption: dataObject["nominal_consumption"],
+      cpu: dataObject["cpu"],
+      software_utilization: dataObject["software_utilization"],
+      hours_used: dataObject["hours_used"],
+      renewable_energy: dataObject["renewable_energy"],
+      renewable_certification: dataObject["renewable_certification"],
+      consumed_renewable_energy: dataObject["consumed_renewable_energy"],
+      country: dataObject["country"],
+      funcion: dataObject["funcion"],
+    },
+    success: function (result) {
+      console.log(result);
+    },
+    error: function (err) {
+      dbDeleteConfiguration(idSerware);
+      alert("Error del formulario");
+    },
+  });
 }
-function editButton(id){
 
+function calculateCloud() {}
+function calculatePremise() {}
+function editButton(id) {
+  // Puede que el type simplifique las cosas o no sea necesario, idk
   fetchDataByConfigId(id);
+}
+function removeEditPopup(idComponente) {
+  document.getElementById(idComponente).remove();
+  close_popup();
 }
