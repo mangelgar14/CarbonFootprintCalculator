@@ -10,5 +10,5 @@ $carbon_footprint = htmlspecialchars($_POST["carbon_footprint"]);
 
 include_once "../queries.php";
 
-$response = editSerwareConfiguration($id, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint);
+$response = editSerwareConfiguration($id, $type, $provider, $location, $energy_consumption, $consumption_emissions, $embedded_emissions, $carbon_footprint);
 echo json_encode($response);
