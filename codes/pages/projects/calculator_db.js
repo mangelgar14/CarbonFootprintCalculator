@@ -100,6 +100,64 @@ function newHtmlCloudPopup(config) {
     },
   });
 }
+function newHtmlPremisePopup(config) {
+  console.log(config);
+  $.ajax({
+    url: "form_premise.php",
+    type: "POST",
+    data: {
+      id: config["id"],
+      num_of_servers: config["num_of_servers"],
+      power_consumption: config["power_consumption"],
+      nominal_consumption: config["nominal_consumption"],
+      cpu: config["cpu"],
+      software_utilization: config["software_utilization"],
+      hours_used: config["hours_used"],
+      renewable_energy: config["renewable_energy"],
+      checked_btn: config["checked_btn"],
+      consumed_renewable_energy: config["consumed_renewable_energy"],
+      country: config["country"],
+      funcion: config["funcion"],
+    },
+    success: function (result) {
+      document.getElementById("edit_popup").style.visibility = "visible";
+      $("#edit_popup").append(result);
+      document
+        .getElementById("form_edit")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+        });
+    },
+  });
+}
+function newHtmlCloudPopup(config) {
+  $.ajax({
+    url: "form_cloud.php",
+    type: "POST",
+    data: {
+      id: config["id"],
+      provider: config["provider"],
+      region: config["region"],
+      vCPU_hours: config["vcpu_hours"],
+      vGPU_hours: config["vgpu_hours"],
+      TB_HDD: config["tb_hdd"],
+      TB_SSD: config["tb_ssd"],
+      GB_memory: config["gb_memory"],
+      GB_networking: config["gb_networking"],
+    },
+    success: function (result) {
+      document.getElementById("edit_popup").style.visibility = "visible";
+      $("#edit_popup").append(result);
+      document.querySelector("#edit_region").value = config["region"];
+      document.querySelector("#edit_provider").value = config["provider"];
+      document
+        .getElementById("form_edit")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+        });
+    },
+  });
+}
 function dbFetchSerwareConfiguration() {
   $.ajax({
     url: "../../../connections/calculator/fetchSerwareConfiguration.php",
@@ -381,6 +439,7 @@ function dbEditPremiseFormData(dataObject, idSerware) {
       funcion: dataObject["funcion"],
     },
     success: function (result) {
+      console.log(result);
       console.log(result);
     },
     error: function (err) {
