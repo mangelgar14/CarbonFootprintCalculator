@@ -23,6 +23,7 @@ location VARCHAR(128),
 energy_consumption INT, consumption_emissions INT, 
 embedded_emissions INT, 
 carbon_footprint INT, 
+carbon_footprint_year INT, 
 FOREIGN KEY (id_project) REFERENCES projects(id) ON DELETE CASCADE
 );
 

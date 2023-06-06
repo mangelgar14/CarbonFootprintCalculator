@@ -113,7 +113,7 @@
                             </div>
                         </div>
                         <div id="submit_cancel">
-                            <input class="sbmt_save" type="submit" onclick="save_premise()" value="Save">
+                            <input class="sbmt_save" id="premise_save" type="submit"  value="Save">
                             <button class="sbmt_cancel" onclick="close_popup()">Cancel</button>
                         </div>
                     </form>
@@ -201,7 +201,7 @@
                             <div class="q_input"><input type="text" id="cloud_input8"></div>
                         </div>
                         <div id="submit_cancel">
-                            <input class="sbmt_save" type="button" onclick="save_cloud()" value="Save"></input>
+                            <input class="sbmt_save" id="cloud_save" type="button" value="Save"></input>
                             <button class="sbmt_cancel" onclick="close_popup()">Cancel</button>
                         </div>
                     </form>
@@ -218,7 +218,7 @@
                 <div id="popup_text">Do you want to <span id="bolded">delete</span> this row?</div>
                 <div id="div_close">
                     <button type="button" id="btn_close" onclick="close_popup()">Close</button>
-                    <button id="btn_confirm_delete" onclick="delete_project()">Delete</button>
+                    <button id="btn_confirm_delete" onclick="close_popup()">Delete</button>
                 </div>
             </div> <!-- popup_content -->
         </div> <!-- popup -->

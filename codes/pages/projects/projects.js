@@ -3,15 +3,16 @@ var project = null;
 var pClosed = true;
 window.onload = loader();
 function loader() {
-  // document
-  //   .getElementById("add_version_button").addEventListener("click", () => {
-  //     newVersion(project);
-  //   });
+  document
+    .getElementById("add_version_button")
+    .addEventListener("click", () => {
+      newVersion();
+    });
   let select = document.getElementById("order-by");
   select.addEventListener("change", function () {
-    console.log(document.getElementById("search-query").value)
-    if (document.getElementById("search-query").value == "") dbFetchProjects();
-    else dbSearch();
+    if (document.getElementById("search-query").value == "") {
+      dbFetchProjects();
+    } else dbSearch();
   });
   document
     .getElementById("btn_delete")
@@ -126,6 +127,9 @@ function dbSearch() {
     case 2:
       order = "client";
       break;
+    default:
+      order = "lastModified";
+      break;
   }
   if (typeof order === "undefined") {
     order = "lastModified";
@@ -140,15 +144,15 @@ function dbSearch() {
     },
     success: function (result) {
       var projectsResult = JSON.parse(result);
+      clearProjects();
       if (projectsResult.length > 0) {
         document.getElementById("no-projects-search").innerHTML = "";
-        clearProjects();
+
         hasProjects = true;
         projectsResult.forEach((p) => {
           newHtmlProject(p);
         });
       } else {
-        clearProjects();
         document.getElementById("no-projects-search").innerHTML =
           "<span>No projects found with the search:</span><p>" + query + "</p>";
       }
@@ -170,6 +174,9 @@ function dbFetchProjects(order) {
     case 2:
       order = "client";
       break;
+    default:
+      order = "lastModified";
+      break;
   }
   if (typeof order === "undefined") {
     order = "lastModified";
@@ -182,19 +189,19 @@ function dbFetchProjects(order) {
       order: order,
     },
     success: function (result) {
+      clearProjects();
       var projectsResult = JSON.parse(result);
       if (projectsResult.length > 0) {
-        clearProjects();
         hasProjects = true;
+        hasProjectsStyle();
         projectsResult.forEach((p) => {
           newHtmlProject(p);
         });
       } else {
         hasProjects = false;
+        hasNoProjectsStyle();
       }
       project = null;
-      if (hasProjects) hasProjectsStyle();
-      else hasNoProjectsStyle();
     },
     error: function (error) {},
   });
@@ -228,9 +235,7 @@ function dbInsertProject(name, client, description) {
       description: description,
     },
     success: function (result) {
-      dbFetchProjects();
-      pClosed = true;
-      addProjectControl(pClosed);
+      location.reload();
     },
     error: function (err) {
       console.log(err);
@@ -248,7 +253,7 @@ function dbEditProject(idProject, name, client, description) {
       description: description,
     },
     success: function (result) {
-      dbFetchProjects();
+      location.reload();
     },
   });
 }
@@ -260,51 +265,43 @@ function dbDeleteProject() {
       idProject: project,
     },
     success: function (result) {
-      dbFetchProjects();
-      pClosed = true;
-      addProjectControl(pClosed);
-      closePopup();
+      location.reload();
     },
   });
 }
 
 function hasProjectsStyle() {
-  try {
-    let versionButton = document.querySelectorAll(".add-version-button");
-    let projectButton = document.querySelectorAll(".add-project-button-np");
+  let versionButton = document.querySelector(".add-version-button");
+  let projectButton = document.getElementById("add_project_button");
 
-    let noProjects = document.querySelectorAll(".no-projects");
-    noProjects.forEach((p) => {
-      p.classList.add("add-project-button");
-      p.classList.remove("add-project-button-np");
+  projectButton.classList.remove("add-project-button-np");
+  projectButton.classList.add("add-project-button");
 
-      noProjects[0].classList.add("hidden");
-      versionButton[0].classList.remove("hidden");
-    });
+  let noProjects = document.querySelector(".no-projects");
+  noProjects.classList.add("hidden");
+  versionButton.classList.remove("hidden");
 
-    let listProjects = document.querySelectorAll(".project-field-item");
-    listProjects.forEach((listProject) => {
-      listProject.classList.remove("hidden");
-    });
-  } catch (e) {}
+  let listProjects = document.querySelectorAll(".project-field-item");
+  listProjects.forEach((listProject) => {
+    listProject.classList.remove("hidden");
+  });
 }
 function hasNoProjectsStyle() {
-  let listProjects = document.querySelectorAll(".project-field-item");
-  let versionButton = document.querySelectorAll(".add-version-button");
-  let noProjects = document.querySelectorAll(".no-projects");
-  let projectButton = document.querySelectorAll(".add-project-button");
+  let listProjects = document.querySelector(".project-field-item");
+  let versionButton = document.querySelector(".add-version-button");
+  let noProjects = document.querySelector(".no-projects");
+  let projectButton = document.querySelector(".add-project-button");
 
-  projectButton[0].classList.add("add-project-button-np");
-  projectButton[0].classList.remove("add-project-button");
+  projectButton.classList.add("add-project-button-np");
+  projectButtonclassList.remove("add-project-button");
 
-  noProjects[0].classList.remove("hidden");
-  versionButton[0].classList.add("hidden");
+  noProjects.classList.remove("hidden");
+  versionButton.classList.add("hidden");
   listProjects.forEach((listProject) => {
     listProject.classList.add("hidden");
   });
   hasProjects = false;
 }
-function searchNoProjectsStyle() {}
 function editProject(idProject) {
   dbFetchProject(idProject);
 
@@ -322,32 +319,67 @@ function newProject() {
   newProjectButton.addEventListener("click", () => saveProjectButton());
   showProjectPopup();
 }
-function newVersion(p) {
-  dbFetchProject(p);
-
-  showProjectPopup();
+function newVersion() {
+  $.ajax({
+    url: "../../../connections/projects/insertNewVersion.php",
+    type: "POST",
+    data: {
+      idProject: project,
+    },
+    success: function (result) {
+      dbFetchProjects();
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
 }
 function saveProjectButton() {
-  let pName = document.getElementById("project-name").value;
-  let cli = document.getElementById("client").value;
-  let desc = document.getElementById("description").value;
-
-  dbInsertProject(pName, cli, desc);
-  closePopup();
-  document.getElementById("project-name").value = "";
-  document.getElementById("client").value = "";
-  document.getElementById("description").value = "";
+  let pName = document.getElementById("project-name");
+  let cli = document.getElementById("client");
+  let desc = document.getElementById("description");
+  pName.classList.remove("input-error");
+  cli.classList.remove("input-error");
+  if (pName.value.trim() == "") {
+    pName.classList.add("input-error");
+  } else if (cli.value.trim() == "") {
+    cli.classList.add("input-error");
+  } else {
+    dbInsertProject(pName, cli, desc);
+    closePopup();
+    pName.classList.remove("input-error");
+    cli.classList.remove("input-error");
+    pName.value = "";
+    document.value = "";
+    desc.value = "";
+  }
 }
 function saveEditProjectButton(idProject) {
-  let pName = document.getElementById("project-name").value;
-  let cli = document.getElementById("client").value;
-  let desc = document.getElementById("description").value;
+  let pName = document.getElementById("project-name");
+  let cli = document.getElementById("client");
+  let desc = document.getElementById("description");
+  pName.classList.remove("input-error");
+  cli.classList.remove("input-error");
 
-  dbEditProject(idProject, pName, cli, desc);
-  closePopup();
-  document.getElementById("project-name").value = "";
-  document.getElementById("client").value = "";
-  document.getElementById("description").value = "";
+  cli.classList.add("input-error");
+  if (pName.value.trim() == "") {
+    pName.classList.add("input-error");
+  } else if (cli.value.trim() == "") {
+    cli.classList.add("input-error");
+  } else {
+    dbEditProject(
+      idProject,
+      pName.value.trim(),
+      cli.value.trim(),
+      desc.value.trim()
+    );
+    closePopup();
+    pName.classList.remove("input-error");
+    cli.classList.remove("input-error");
+    pName.value = "";
+
+    desc.value = "";
+  }
 }
 
 function showWarningPopup(idProject) {

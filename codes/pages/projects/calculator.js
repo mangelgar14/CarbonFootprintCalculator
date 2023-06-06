@@ -35,17 +35,35 @@ function show_table(tableIndex) {
 }
 
 function show_popup(popupIndex, data) {
-  popup_forms.forEach(function (node) {
-    node.style.visibility = "visible";
-    node.style.display = "none";
-  });
-  if (popupIndex == 5) {
-    popup_forms[popupIndex].style.visibility = "visible";
-  } else {
-    popup_forms[popupIndex].style.visibility = "visible";
-    popup_forms[popupIndex].style.display = "grid";
+  if ((popupIndex == 3)) {
+    let btnSavePremise = document.getElementById("btn_confirm_delete");
+    btnSavePremise.replaceWith(btnSavePremise.cloneNode(true));
+    btnSavePremise = document.getElementById("btn_confirm_delete");
+    btnSavePremise.addEventListener("click", () =>
+      dbDeleteConfiguration(data["id"])
+    );
+  
+  } else if (popupIndex != 5) {
+    popup_forms.forEach(function (node) {
+      node.style.visibility = "none";
+      node.style.display = "none";
+    });
+
+    let btnSavePremise = document.getElementById("premise_save");
+    btnSavePremise.replaceWith(btnSavePremise.cloneNode(true));
+    btnSavePremise = document.getElementById("premise_save");
+    btnSavePremise.addEventListener("click", () =>
+      save_premise(data != null, data)
+    );
+
+    let btnSaveCloud = document.getElementById("cloud_save");
+    btnSaveCloud.replaceWith(btnSaveCloud.cloneNode(true));
+    btnSaveCloud = document.getElementById("cloud_save");
+    btnSaveCloud.addEventListener("click", () =>
+      save_cloud(data != null, data)
+    );
+
     if (data != null) {
-      console.log(data);
       document.getElementById("provider_cloud").value = data["provider"];
       document.getElementById("combo_cloud").value = data["region"];
       document.getElementById("cloud_input3").value = data["vcpu_hours"];
@@ -56,17 +74,30 @@ function show_popup(popupIndex, data) {
       document.getElementById("cloud_input8").value = data["gb_networking"];
 
       document.getElementById("premise_answer1").value = data["n_servers"];
-      document.getElementById("premise_answer2").value =
-        data["power_consumption"];
+
+      var answ2 = document.getElementById("premise_answer2");
+      var cpu = document.getElementById("combo_premise2");
+      if (data["power_consumption_known"] == 0) {
+        answ2.value = "";
+        answ2.disabled = true;
+        cpu.disabled = false;
+      } else {
+        answ2.value = data["power_consumption"];
+        answ2.disabled = false;
+        cpu.disabled = true;
+      }
+
       document.getElementById("premise_answer3").value =
         data["software_utilization"];
-      document.getElementById("premise_answer4").value = data["hours_used"];
+      document.getElementById("premise_answer4").value = data["hours_day"];
       document.getElementById("premise_answer5").value =
         data["renewable_percentage"];
 
       document.getElementById("combo_premise1").selectedIndex =
         data["power_consumption_known"];
-      document.getElementById("combo_premise2").selectedIndex = data["cpu"];
+
+      cpu.selectedIndex = data["cpu"] - 1;
+
       if (data["renewable"] == 0) {
         document.getElementById("premise_answer5").disabled = true;
       }
@@ -82,8 +113,6 @@ function show_popup(popupIndex, data) {
         ].checked = true;
       }
     } else {
-      popupIndex = 1;
-
       document.getElementById("provider_cloud").selectedIndex = 0;
       document.getElementById("combo_cloud").selectedIndex = 0;
       document.getElementById("cloud_input3").value = "";
@@ -95,13 +124,14 @@ function show_popup(popupIndex, data) {
 
       document.getElementById("premise_answer1").value = "";
       document.getElementById("premise_answer2").value = "";
+      document.getElementById("premise_answer2").disabled = true;
       document.getElementById("premise_answer3").value = "";
       document.getElementById("premise_answer4").value = "";
       document.getElementById("premise_answer5").value = "";
 
       document.getElementById("combo_premise1").selectedIndex = 1;
       document.getElementById("combo_premise2").selectedIndex = 0;
-
+      document.getElementById("combo_premise2").disabled = true;
       document.getElementById("premise_answer5").disabled = true;
 
       document.getElementById("combo_premise3").selectedIndex = 0;
@@ -109,10 +139,11 @@ function show_popup(popupIndex, data) {
 
       document.form_premise.btn_radio[0].checked = true;
       document.form_premise.btn_radio[0].checked = false;
-
     }
-  
   }
+
+  popup_forms[popupIndex].style.visibility = "visible";
+  popup_forms[popupIndex].style.display = "grid";
 }
 
 function close_popup() {
@@ -160,7 +191,7 @@ function reset(element) {
   }
 }
 
-function save_cloud(edit) {
+function save_cloud(edit, data) {
   //LLEVAR LOS DATOS A LA BASE DE DATOS Y HACER LOS CÁLCULOS
   let provider = document.getElementById("provider_cloud").value;
   let region_selector = document.getElementById("combo_cloud");
@@ -218,13 +249,10 @@ function save_cloud(edit) {
   var carbon_footprint = Math.random() * 10000;
 
   /* -------------------------- */
-
-  if (valido) {
-    //fetchCO2eFromEmissions(region);
-    calculateCloudE(provider, region, answer3, answer4, answer5, answer6, 
-      answer7, answer8);
+  calculateCloudE(provider, region, answer3, answer4, answer5, answer6, 
+    answer7, answer8);
     
-
+  if (valido) {
     var dataObject = {
       type: "Cloud",
       provider: provider,
@@ -250,7 +278,7 @@ function save_cloud(edit) {
       );
     } else {
       dbEditConfiguration(
-        idSerware,
+        data["id_serware"],
         "Cloud",
         provider,
         region,
@@ -262,6 +290,7 @@ function save_cloud(edit) {
       );
     }
     close_popup();
+    // location.reload();
   } else {
     show_popup(5, null);
   }
@@ -293,7 +322,7 @@ document
     }
   });
 
-function save_premise(edit) {
+function save_premise(edit, data) {
   let num_of_servers = document.getElementById("premise_answer1").value;
   let nominal_consumption = document.getElementById("premise_answer2").value;
   let software_utilization = document.getElementById("premise_answer3").value;
@@ -376,11 +405,11 @@ function save_premise(edit) {
 
   /* -------------------------- */
   var known = false;
-  if (combo1.selectedIndex == 0) {
+  if (combo1.selectedIndex == 1) {
     known = true;
     cpu = "NULL";
   } else {
-    nominal_consumption = "NULL"; //me estás jodiendo.
+    nominal_consumption = "NULL";
   }
   if (btns == undefined) {
     btns = "NULL";
@@ -394,15 +423,10 @@ function save_premise(edit) {
   }
 
   if (valido) {
-    let premiseE = calculatePremiseE(num_of_servers, power_consumption, nominal_consumption, cpu, 
-      software_utilization, hours_used);
-    
-    console.log(premiseE);
-
     var dataObject = {
       type: "Premise",
       num_of_servers: num_of_servers,
-      power_consumption: known,
+      nominal_consumption_known: known,
       nominal_consumption: nominal_consumption,
       cpu: cpu,
       software_utilization: software_utilization,
@@ -412,6 +436,7 @@ function save_premise(edit) {
       consumed_renewable_energy: consumed_renewable_energy,
       country: country,
     };
+    console.log(dataObject);
     if (!edit) {
       dbInsertConfiguration(
         selected_table,
@@ -426,7 +451,7 @@ function save_premise(edit) {
       );
     } else {
       dbEditConfiguration(
-        idSerware,
+        data["id_serware"],
         "Premise",
         num_of_servers,
         country,
@@ -439,6 +464,7 @@ function save_premise(edit) {
     }
 
     close_popup();
+    // location.reload();
   } else show_popup(5);
 }
 

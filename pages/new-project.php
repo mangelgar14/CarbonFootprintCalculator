@@ -23,7 +23,7 @@ echo "<li class=\"new-project-field-item\" id=\"$id\">
       </div>
       <div class=\"project-card-details hidden\">
         <div class=\"project-card-details-content\">
-          <p class=\"desc\">" .
+          <p class=\"desc\"style=\"overflow-wrap: anywhere\"> " .
             $description . "
           </p>
           <ul class=\"project-card-details-summary\">

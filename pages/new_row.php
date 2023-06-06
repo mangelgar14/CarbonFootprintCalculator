@@ -20,6 +20,6 @@ echo "<tr class=\"table_data\">
 <td>$carbon_footprint</td>
 <td>
     <button onclick=\"editButton($id)\"><img src=\"../imgs/edit.png\" alt=\"edit icon\"></button>
-    <button onclick=\"show_popup(3)\"><img src=\"../imgs/trash.png\" alt=\"delete icon\"></button>
+    <button id=\"delete_configuration\" onclick=\"show_popup(3,{id:$id,type:'$type'})\"><img src=\"../imgs/trash.png\" alt=\"delete icon\"></button>
 </td>  
 </tr>";

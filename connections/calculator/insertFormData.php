@@ -22,12 +22,15 @@ $tb_ssd = htmlspecialchars($_POST["TB_SSD"]);
 $gb_memory = htmlspecialchars($_POST["GB_memory"]);
 $gb_networking = htmlspecialchars($_POST["GB_networking"]);
 
+
+
+echo "$idSerware,$num_of_servers, $nominal_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification,$consumed_renewable_energy,$country";
 include_once "../queries.php";
 if ($table == "datos_cloud") {
     $response = insertCloudFormData($idSerware,  $provider, $region, $vcpu_hours, $vgpu_hours, $tb_hdd, $tb_ssd, $gb_memory, $gb_networking);
 } 
 else if ($table == "datos_premise") {
-    $response = insertPremiseFormData($idSerware, (int)$num_of_servers, $nominal_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification,$consumed_renewable_energy,$country);
+    $response = insertPremiseFormData($idSerware, $num_of_servers, $nominal_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification,$consumed_renewable_energy,$country);
 } else {
     $response = "teehe";
     

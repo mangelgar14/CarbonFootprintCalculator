@@ -4,8 +4,7 @@ $calculate = htmlspecialchars($_POST["calculate"]);
 
 $n_servers = htmlspecialchars($_POST["n_servers"]);
 
-//$power_consumption_known = htmlspecialchars($_POST["power_consumption_known"]);
-$power_consumption_known = filter_var($_POST['power_consumption_known'], FILTER_VALIDATE_BOOLEAN);
+$power_consumption_known = htmlspecialchars($_POST["power_consumption_known"]);
 
 $power_consumption = htmlspecialchars($_POST["power_consumption"]);
 $cpu = htmlspecialchars($_POST["cpu"]);
@@ -71,7 +70,7 @@ if(!$power_consumption_known){
     if($cpu == 1){
         $power_consumption = 0.118;
     }
-    else if(cpu == 2){
+    else if($cpu == 2){
         $power_consumption = 0.365;
     }
 }

@@ -42,123 +42,8 @@ function newHtmlSoftwareConfig(config) {
     },
   });
 }
-function newHtmlPremisePopup(config) {
-  console.log(config);
-  $.ajax({
-    url: "form_premise.php",
-    type: "POST",
-    data: {
-      id: config["id"],
-      num_of_servers: config["num_of_servers"],
-      power_consumption: config["power_consumption"],
-      nominal_consumption: config["nominal_consumption"],
-      cpu: config["cpu"],
-      software_utilization: config["software_utilization"],
-      hours_used: config["hours_used"],
-      renewable_energy: config["renewable_energy"],
-      checked_btn: config["checked_btn"],
-      consumed_renewable_energy: config["consumed_renewable_energy"],
-      country: config["country"],
-      funcion: config["funcion"],
-    },
-    success: function (result) {
-      document.getElementById("edit_popup").style.visibility = "visible";
-      $("#edit_popup").append(result);
-      document
-        .getElementById("form_edit")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-        });
-    },
-  });
-}
-function newHtmlCloudPopup(config) {
-  $.ajax({
-    url: "form_cloud.php",
-    type: "POST",
-    data: {
-      id: config["id"],
-      provider: config["provider"],
-      region: config["region"],
-      vCPU_hours: config["vcpu_hours"],
-      vGPU_hours: config["vgpu_hours"],
-      TB_HDD: config["tb_hdd"],
-      TB_SSD: config["tb_ssd"],
-      GB_memory: config["gb_memory"],
-      GB_networking: config["gb_networking"],
-    },
-    success: function (result) {
-      document.getElementById("edit_popup").style.visibility = "visible";
-      $("#edit_popup").append(result);
-      document.querySelector("#edit_region").value = config["region"];
-      document.querySelector("#edit_provider").value = config["provider"];
-      document
-        .getElementById("form_edit")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-        });
-    },
-  });
-}
-function newHtmlPremisePopup(config) {
-  console.log(config);
-  $.ajax({
-    url: "form_premise.php",
-    type: "POST",
-    data: {
-      id: config["id"],
-      num_of_servers: config["num_of_servers"],
-      power_consumption: config["power_consumption"],
-      nominal_consumption: config["nominal_consumption"],
-      cpu: config["cpu"],
-      software_utilization: config["software_utilization"],
-      hours_used: config["hours_used"],
-      renewable_energy: config["renewable_energy"],
-      checked_btn: config["checked_btn"],
-      consumed_renewable_energy: config["consumed_renewable_energy"],
-      country: config["country"],
-      funcion: config["funcion"],
-    },
-    success: function (result) {
-      document.getElementById("edit_popup").style.visibility = "visible";
-      $("#edit_popup").append(result);
-      document
-        .getElementById("form_edit")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-        });
-    },
-  });
-}
-function newHtmlCloudPopup(config) {
-  $.ajax({
-    url: "form_cloud.php",
-    type: "POST",
-    data: {
-      id: config["id"],
-      provider: config["provider"],
-      region: config["region"],
-      vCPU_hours: config["vcpu_hours"],
-      vGPU_hours: config["vgpu_hours"],
-      TB_HDD: config["tb_hdd"],
-      TB_SSD: config["tb_ssd"],
-      GB_memory: config["gb_memory"],
-      GB_networking: config["gb_networking"],
-    },
-    success: function (result) {
-      document.getElementById("edit_popup").style.visibility = "visible";
-      $("#edit_popup").append(result);
-      document.querySelector("#edit_region").value = config["region"];
-      document.querySelector("#edit_provider").value = config["provider"];
-      document
-        .getElementById("form_edit")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-        });
-    },
-  });
-}
 function dbFetchSerwareConfiguration() {
+  
   $.ajax({
     url: "../../../connections/calculator/fetchSerwareConfiguration.php",
     type: "GET",
@@ -168,6 +53,7 @@ function dbFetchSerwareConfiguration() {
     success: function (result) {
       configResult = JSON.parse(result);
       if (configResult.length > 0) {
+        console.log(configResult  )
         configResult.forEach((config) => {
           if (config["serware"] === "Server") {
             newHtmlServerConfig(config);
@@ -203,6 +89,7 @@ function dbFetchSerwareConfigurationById(idSerware) {
   });
 }
 function fetchDataByConfigId(idSerware) {
+
   // Primero consultar la configuración en la base de datos para saber en qué tabla de datos hay que buscar
   $.ajax({
     url: "../../../connections/calculator/fetchSerwareConfigurationById.php",
@@ -212,6 +99,7 @@ function fetchDataByConfigId(idSerware) {
     },
     success: function (result) {
       var configResult = JSON.parse(result);
+      console.log(configResult)
       var table = "";
      
       if (configResult != null) {
@@ -232,7 +120,7 @@ function fetchDataByConfigId(idSerware) {
             configResult = JSON.parse(result);
             
             if (configResult) {
-              console.log(configResult)
+              
               if (table == "datos_premise") {
                 show_popup(1, configResult);
               } else if (table == "datos_cloud") {
@@ -319,9 +207,9 @@ function dbEditConfiguration(
     },
     success: function (result) {
       if (type == "Premise") {
-        dbEditPremiseFormData(dataObject, result.replaceAll('"', ""));
+        dbEditPremiseFormData(dataObject, id);
       } else if (type == "Cloud") {
-        dbEditCloudFormData(dataObject, result.replaceAll('"', ""));
+        dbEditCloudFormData(dataObject, id);
       }
     },
   });
@@ -334,7 +222,7 @@ function dbDeleteConfiguration(id) {
       id: id,
     },
     success: function (result) {
-      console.log(result);
+      location.reload();
     },
   });
 }
@@ -357,7 +245,7 @@ function dbInsertCloudFormData(dataObject, idSerware) {
     },
 
     success: function (result) {
-      console.log(result);
+      location.reload();
     },
     error: function (err) {
       console.log("Error insertando FORM DATA");
@@ -365,7 +253,7 @@ function dbInsertCloudFormData(dataObject, idSerware) {
   });
 }
 function dbInsertPremiseFormData(dataObject, idSerware) {
-  console.log(dataObject);
+
 
   $.ajax({
     url: "../../../connections/calculator/insertFormData.php",
@@ -386,7 +274,7 @@ function dbInsertPremiseFormData(dataObject, idSerware) {
       funcion: dataObject["funcion"],
     },
     success: function (result) {
-      console.log(result);
+      location.reload();
     },
     error: function (err) {
       dbDeleteConfiguration(idSerware);
@@ -412,14 +300,15 @@ function dbEditCloudFormData(dataObject, idSerware) {
     },
 
     success: function (result) {
-      console.log(result);
+      location.reload();
     },
     error: function (err) {
-      console.log("Error editando FORM DATA");
+      console.log("Error editing form");
     },
   });
 }
 function dbEditPremiseFormData(dataObject, idSerware) {
+  console.log(idSerware)
   $.ajax({
     url: "../../../connections/calculator/editFormData.php",
     type: "POST",
@@ -439,16 +328,38 @@ function dbEditPremiseFormData(dataObject, idSerware) {
       funcion: dataObject["funcion"],
     },
     success: function (result) {
-      console.log(result);
-      console.log(result);
+      location.reload();
     },
     error: function (err) {
       dbDeleteConfiguration(idSerware);
-      alert("Error del formulario");
+      console.log("Error editing form");
     },
   });
 }
-
+function dbDeleteConfiguration(id) {
+  $.ajax({
+    url: "../../../connections/calculator/deleteConfiguration.php",
+    type: "POST",
+    data: {
+      id: id,
+    },
+    success: function (result) {
+      location.reload();
+    },
+  });
+}
+function dbDeleteFormData(idSerware) {
+  $.ajax({
+    url: "../../../connections/calculator/deleteFormData.php",
+    type: "POST",
+    data: {
+      idSerware: idSerware,
+    },
+    success: function (result) {
+      location.reload();
+    },
+  });
+}
 function calculatePremiseE(n_servers, power_consumption_known, power_consumption, cpu, 
   software_utilization, hours_used) {
   $.ajax({
@@ -496,12 +407,10 @@ function calculateCloudE(provider, region, vcpu_hours, vgpu_hours, tb_hdd, tb_ss
     },
   });
 }
-
 function calculateCloudI(){
 
 }
 function editButton(id) {
-  // Puede que el type simplifique las cosas o no sea necesario, idk
   fetchDataByConfigId(id);
 }
 function removeEditPopup(idComponente) {

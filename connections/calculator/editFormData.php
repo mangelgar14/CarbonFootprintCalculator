@@ -1,6 +1,6 @@
 <?php 
 $table = htmlspecialchars($_POST["table"]);
-$iderware = htmlspecialchars($_POST["id"]);
+$idSerware = htmlspecialchars($_POST["idSerware"]);
 
 $num_of_servers = htmlspecialchars($_POST["num_of_servers"]);
 $nominal_consumption_known = htmlspecialchars($_POST["nominal_consumption_known"]);
@@ -30,7 +30,7 @@ else if ($table == "datos_premise") {
   
     echo "$idSerware, $num_of_servers, $nominal_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification,$consumed_renewable_energy,$country";
    
-    $response = editPremiseFormData((int)$num_of_servers, $nominal_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification,$consumed_renewable_energy,$country,$idSerware);
+    $response = editPremiseFormData($idSerware, $num_of_servers, $power_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification,$consumed_renewable_energy,$country);
 } else {
     $response = "teehe";
     

@@ -7,13 +7,6 @@ body {
   font-family: Graphik;
 }
 
-.dev-nav {
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
-  padding: 10px;
-  background-color: #a100ff;
-}
 
 .grid-container {
   margin: 15px auto;
@@ -421,7 +414,10 @@ body {
 .project-card .p-date {
   font-size: 1em;
 }
-
+.input-error{
+  box-shadow: 0 0 3px #ff0000;
+  border: 1px #aaa solid;
+}
 .popup-content-top {
   display: grid;
   grid-template-columns: auto auto;
