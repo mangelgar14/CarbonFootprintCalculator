@@ -155,14 +155,8 @@ form_premise.addEventListener("click", (e) => {
 
 function reset(element) {
   var aux = document.getElementById(element);
-<<<<<<< Updated upstream
   if (aux.classList.contains("error")) {
     aux.classList.remove("error");
-=======
-  if(aux.classList.contains('error')){
-    aux.classList.remove('error');
-    aux.classList.value = "";
->>>>>>> Stashed changes
   }
 }
 
@@ -226,6 +220,11 @@ function save_cloud(edit) {
   /* -------------------------- */
 
   if (valido) {
+    //fetchCO2eFromEmissions(region);
+    calculateCloudE(provider, region, answer3, answer4, answer5, answer6, 
+      answer7, answer8);
+    
+
     var dataObject = {
       type: "Cloud",
       provider: provider,
@@ -381,7 +380,7 @@ function save_premise(edit) {
     known = true;
     cpu = "NULL";
   } else {
-    nominal_consumption = "NULL";
+    nominal_consumption = "NULL"; //me estás jodiendo.
   }
   if (btns == undefined) {
     btns = "NULL";
@@ -395,10 +394,15 @@ function save_premise(edit) {
   }
 
   if (valido) {
+    let premiseE = calculatePremiseE(num_of_servers, power_consumption, nominal_consumption, cpu, 
+      software_utilization, hours_used);
+    
+    console.log(premiseE);
+
     var dataObject = {
       type: "Premise",
       num_of_servers: num_of_servers,
-      nominal_consumption_known: known,
+      power_consumption: known,
       nominal_consumption: nominal_consumption,
       cpu: cpu,
       software_utilization: software_utilization,

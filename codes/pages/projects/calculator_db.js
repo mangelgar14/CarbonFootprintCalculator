@@ -389,43 +389,57 @@ function dbEditPremiseFormData(dataObject, idSerware) {
     },
   });
 }
-function fetchFromCloudEmissions(region) {
-  alert("Hola");
-  $.ajax({
-    url: "../../../connections/calculator/fetchFromCloudEmissions.php",
-    type: "GET",
-    data: {
-      region: region,
-    },
-    success: function (result) {
-      var configResult = JSON.parse(result);
-      console.log(configResult);
-    },
-    error: function (error) {
-      console.log(error);
-    },
-  });
-}
 
-function calculatePremise() {
-  
-}
-
-function calculateCloud(config){
+function calculatePremiseE(n_servers, power_consumption_known, power_consumption, cpu, 
+  software_utilization, hours_used) {
   $.ajax({
-    url: "calculate.php",
+    url: "../../../connections/calculate.php",
     type: "POST",
     data: {
-      provider: config["provider"],
-      region: config["region"],
-      country: config["country"],
-      NERCRegion: config["NERCRegion"],
-      CO2e: config["CO2e"],
+      calculate: "premise",
+      n_servers: n_servers,
+      power_consumption_known: power_consumption_known,
+      power_consumption: power_consumption,
+      cpu: cpu,
+      software_utilization: software_utilization,
+      hours_used: hours_used,
     },
     success: function (result) {
       console.log(result);
     },
+    error: function (err) {
+      console.log(err);
+    },
   });
+}
+
+function calculateCloudE(provider, region, vcpu_hours, vgpu_hours, tb_hdd, tb_ssd, 
+  gb_memory, gb_networking) {
+  $.ajax({
+    url: "../../../connections/calculate.php",
+    type: "POST",
+    data: {
+      calculate: "cloud",
+      provider: provider,
+      region: region,
+      vcpu_hours: vcpu_hours,
+      vgpu_hours: vgpu_hours,
+      tb_hdd: tb_hdd,
+      tb_ssd: tb_ssd,
+      gb_memory: gb_memory,
+      gb_networking: gb_networking,
+    },
+    success: function (result) {
+      console.log(result);
+    },
+    error: function (err) {
+      console.log(err);
+    },
+  });
+}
+
+function calculateCloudI(){
+
 }
 function editButton(id) {
   // Puede que el type simplifique las cosas o no sea necesario, idk

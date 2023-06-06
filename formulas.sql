@@ -1,5 +1,5 @@
 CREATE TABLE CloudEmissions (
-    id INT PRIMARY KEY AUTO AUTO_INCREMENT,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     Provider VARCHAR(50),
     Region VARCHAR(50),
     Country VARCHAR(50),
@@ -136,74 +136,74 @@ VALUES
         'West Central US',
         'Wyoming',
         'WECC',
-        350,
-    )
-        ('GCP', 'us-central1', 'Iowa', '', 479.00),
-        ('GCP', 'us-east1', 'South Carolina', '', 500.00),
-        (
-            'GCP',
-            'us-east4',
-            'Northern Virginia',
-            '',
-            383.00
-        ),
-        ('GCP', 'us-west1', 'Oregon', '', 117.00),
-        ('GCP', 'us-west2', 'Los Angeles', '', 248.00),
-        ('GCP', 'us-west3', 'Salt Lake City', '', 561.00),
-        ('GCP', 'us-west4', 'Las Vegas', '', 491.00),
-        ('GCP', 'asia-east1', 'Taiwan', '', 541.00),
-        ('GCP', 'asia-east2', 'Hong Kong', '', 626.00),
-        ('GCP', 'asia-northeast1', 'Japan', '', 524.00),
-        ('GCP', 'asia-northeast2', 'Japan', '', 524.00),
-        (
-            'GCP',
-            'asia-northeast3',
-            'South Korea',
-            '',
-            540.00
-        ),
-        ('GCP', 'asia-south1', 'India', '', 723.00),
-        (
-            'GCP',
-            'asia-southeast1',
-            'Singapore',
-            '',
-            493.00
-        ),
-        (
-            'GCP',
-            'asia-southeast2',
-            'Indonesia',
-            '',
-            772.00
-        ),
-        (
-            'GCP',
-            'australia-southeast1',
-            'Australia',
-            '',
-            725.00
-        ),
-        ('GCP', 'europe-north1', 'Finland', '', 181.00),
-        ('GCP', 'europe-west1', 'Belgium', '', 196.00),
-        ('GCP', 'europe-west2', 'England', '', 257.00),
-        ('GCP', 'europe-west3', 'Germany', '', 319.00),
-        ('GCP', 'europe-west4', 'Netherlands', '', 474.00),
-        ('GCP', 'europe-west6', 'Switzerland', '', 29.00),
-        (
-            'GCP',
-            'northamerica-northeast1',
-            'Canada',
-            '',
-            143.00
-        ),
-        (
-            'GCP',
-            'southamerica-east1',
-            'Brazil',
-            '',
-            109.00
-        );
+        350
+    ),
+    ('GCP', 'us-central1', 'Iowa', '', 479.00),
+    ('GCP', 'us-east1', 'South Carolina', '', 500.00),
+    (
+        'GCP',
+        'us-east4',
+        'Northern Virginia',
+        '',
+        383.00
+    ),
+    ('GCP', 'us-west1', 'Oregon', '', 117.00),
+    ('GCP', 'us-west2', 'Los Angeles', '', 248.00),
+    ('GCP', 'us-west3', 'Salt Lake City', '', 561.00),
+    ('GCP', 'us-west4', 'Las Vegas', '', 491.00),
+    ('GCP', 'asia-east1', 'Taiwan', '', 541.00),
+    ('GCP', 'asia-east2', 'Hong Kong', '', 626.00),
+    ('GCP', 'asia-northeast1', 'Japan', '', 524.00),
+    ('GCP', 'asia-northeast2', 'Japan', '', 524.00),
+    (
+        'GCP',
+        'asia-northeast3',
+        'South Korea',
+        '',
+        540.00
+    ),
+    ('GCP', 'asia-south1', 'India', '', 723.00),
+    (
+        'GCP',
+        'asia-southeast1',
+        'Singapore',
+        '',
+        493.00
+    ),
+    (
+        'GCP',
+        'asia-southeast2',
+        'Indonesia',
+        '',
+        772.00
+    ),
+    (
+        'GCP',
+        'australia-southeast1',
+        'Australia',
+        '',
+        725.00
+    ),
+    ('GCP', 'europe-north1', 'Finland', '', 181.00),
+    ('GCP', 'europe-west1', 'Belgium', '', 196.00),
+    ('GCP', 'europe-west2', 'England', '', 257.00),
+    ('GCP', 'europe-west3', 'Germany', '', 319.00),
+    ('GCP', 'europe-west4', 'Netherlands', '', 474.00),
+    ('GCP', 'europe-west6', 'Switzerland', '', 29.00),
+    (
+        'GCP',
+        'northamerica-northeast1',
+        'Canada',
+        '',
+        143.00
+    ),
+    (
+        'GCP',
+        'southamerica-east1',
+        'Brazil',
+        '',
+        109.00
+    );
 
 CREATE TABLE PremiseEmissions (
     Country VARCHAR(50),
@@ -371,7 +371,6 @@ INSERT INTO
         coeficiente_networking,
         pue
     )
-
 VALUES
     (
         'AWS',
