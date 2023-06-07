@@ -5,12 +5,11 @@ $provider = htmlspecialchars($_POST["provider"]);
 $region = htmlspecialchars($_POST["region"]);
 $vCPU_hours = htmlspecialchars($_POST["vCPU_hours"]);
 $vGPU_hours = htmlspecialchars($_POST["vGPU_hours"]);
-$software_utilization = htmlspecialchars($_POST["software_utilization"]);
-$hours_used = htmlspecialchars($_POST["hours_used"]);
-$renewable_energy = htmlspecialchars($_POST["renewable_energy"]);
-$checked_btn = htmlspecialchars($_POST["checked_btn"]);
-$consumed_renewable_energy = htmlspecialchars($_POST["consumed_renewable_energy"]);
-$country = htmlspecialchars($_POST["country"]);
+$TB_HDD = htmlspecialchars($_POST["TB_HDD"]);
+$TB_SSD = htmlspecialchars($_POST["TB_SSD"]);
+$GB_memory = htmlspecialchars($_POST["GB_memory"]);
+$GB_networking = htmlspecialchars($_POST["GB_networking"]);
+
 
 $funcion = htmlspecialchars($_POST["funcion"]);
 
@@ -69,27 +68,27 @@ echo "<div id=\"popup\">
             </div>
             <div id=\"cloud_question3\" class=\"question\">
                 <div class=\"q_text\">3. How many vCPU hours do you use per day/for the sotfware usage?*</div>
-                <div class=\"q_input\"><input type=\"text\" id=\"cloud_input3\"></div>
+                <div class=\"q_input\"><input type=\"text\" id=\"cloud_input3\" value=\"$vCPU_hours\"></div>
             </div>
             <div id=\"cloud_question4\" class=\"question\">
                 <div class=\"q_text\">4. How many vGPU hours do you use per day/for the software usage?*</div>
-                <div class=\"q_input\"><input type=\"text\" id=\"cloud_input4\"></div>
+                <div class=\"q_input\"><input type=\"text\" id=\"cloud_input4\" value=\"$vGPU_hours\"></div>
             </div>
             <div id=\"cloud_question5\" class=\"question\">
                 <div class=\"q_text\">5. How many TB of HDD storage do you use per day/for the software usage?</div>
-                <div class=\"q_input\"><input type=\"text\" id=\"cloud_input5\"></div>
+                <div class=\"q_input\"><input type=\"text\" id=\"cloud_input5\" value=\"$TB_HDD\"></div>
             </div>
             <div id=\"cloud_question6\" class=\"question\">
                 <div class=\"q_text\">6. How many TB of SDD storage do you use per day/for the software usage?</div>
-                <div class=\"q_input\"><input type=\"text\" id=\"cloud_input6\"></div>
+                <div class=\"q_input\"><input type=\"text\" id=\"cloud_input6\" value=\"$TB_SSD\"></div>
             </div>
             <div id=\"cloud_question7\" class=\"question\">
                 <div class=\"q_text\">7. How many GB of memory do you use per day/for the software?</div>
-                <div class=\"q_input\"><input type=\"text\" id=\"cloud_input7\"></div>
+                <div class=\"q_input\"><input type=\"text\" id=\"cloud_input7\" value=\"$GB_memory\"></div>
             </div>
             <div id=\"cloud_question8\" class=\"question\">
                 <div class=\"q_text\">8. How many GB of networking do you use per day/for the software?</div>
-                <div class=\"q_input\"><input type=\"text\" id=\"cloud_input8\"></div>
+                <div class=\"q_input\"><input type=\"text\" id=\"cloud_input8\" value=\"$GB_networking\"></div>
             </div>
             <div id=\"submit_cancel\">
                 <input class=\"sbmt_save\" type=\"button\" onclick=\"$funcion($id)\" value=\"Save\"></input>

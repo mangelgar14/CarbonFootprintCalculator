@@ -7,13 +7,6 @@ body {
   font-family: Graphik;
 }
 
-.dev-nav {
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
-  padding: 10px;
-  background-color: #a100ff;
-}
 
 .grid-container {
   margin: 15px auto;
@@ -208,6 +201,21 @@ body {
   text-align: center;
   justify-content: center;
   margin: 0;
+}
+#no-projects-search{
+  text-align: center;
+  justify-content: center;
+}
+#no-projects-search>span{
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #be82ff;
+}
+
+#no-projects-search > p{
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #a100ff;
 }
 
 .no-projects {
@@ -406,7 +414,10 @@ body {
 .project-card .p-date {
   font-size: 1em;
 }
-
+.input-error{
+  box-shadow: 0 0 3px #ff0000;
+  border: 1px #aaa solid;
+}
 .popup-content-top {
   display: grid;
   grid-template-columns: auto auto;

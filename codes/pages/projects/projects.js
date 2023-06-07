@@ -4,12 +4,19 @@ var pClosed = true;
 window.onload = loader();
 function loader() {
   document
-    .getElementById("add_version_button").addEventListener("click", () => {
-      newVersion(project);
+    .getElementById("add_version_button")
+    .addEventListener("click", () => {
+      newVersion();
     });
+  let select = document.getElementById("order-by");
+  select.addEventListener("change", function () {
+    if (document.getElementById("search-query").value == "") {
+      dbFetchProjects();
+    } else dbSearch();
+  });
   document
     .getElementById("btn_delete")
-    .addEventListener("click", () => dbDeleteProject(project));
+    .addEventListener("click", () => dbDeleteProject());
   dbFetchProjects();
 
   /* ir a resultados / calculadora */
@@ -25,7 +32,6 @@ function loader() {
   whiteButtons.forEach((button) => {
     hoverWhiteArrow(button);
   });
-  /* Add new project Button */
 }
 function clearProjects() {
   let htmlProjects = document
@@ -92,9 +98,9 @@ function openClose(listProject) {
       } else {
         pClosed = !pClosed;
       }
-      if(pClosed){
+      if (pClosed) {
         project = null;
-      }else{
+      } else {
         project = listProject.parentNode.id;
       }
       listProject
@@ -107,22 +113,95 @@ function openClose(listProject) {
       addProjectControl(pClosed);
     });
 }
-function dbFetchProjects() {
+
+function dbSearch() {
+  var order;
+  let select = document.getElementById("order-by");
+  switch (select.selectedIndex) {
+    case 0:
+      order = "lastModified";
+      break;
+    case 1:
+      order = "name";
+      break;
+    case 2:
+      order = "client";
+      break;
+    default:
+      order = "lastModified";
+      break;
+  }
+  if (typeof order === "undefined") {
+    order = "lastModified";
+  }
+  let query = document.getElementById("search-query").value;
+  $.ajax({
+    url: "../../../connections/projects/searchProjects.php",
+    type: "GET",
+    data: {
+      query: query,
+      order: order,
+    },
+    success: function (result) {
+      var projectsResult = JSON.parse(result);
+      clearProjects();
+      if (projectsResult.length > 0) {
+        document.getElementById("no-projects-search").innerHTML = "";
+
+        hasProjects = true;
+        projectsResult.forEach((p) => {
+          newHtmlProject(p);
+        });
+      } else {
+        document.getElementById("no-projects-search").innerHTML =
+          "<span>No projects found with the search:</span><p>" + query + "</p>";
+      }
+      project = null;
+    },
+    error: function (error) {},
+  });
+}
+function dbFetchProjects(order) {
+  var order;
+  let select = document.getElementById("order-by");
+  switch (select.selectedIndex) {
+    case 0:
+      order = "lastModified";
+      break;
+    case 1:
+      order = "name";
+      break;
+    case 2:
+      order = "client";
+      break;
+    default:
+      order = "lastModified";
+      break;
+  }
+  if (typeof order === "undefined") {
+    order = "lastModified";
+  }
+
   $.ajax({
     url: "../../../connections/projects/FetchProjects.php",
     type: "GET",
+    data: {
+      order: order,
+    },
     success: function (result) {
+      clearProjects();
       var projectsResult = JSON.parse(result);
       if (projectsResult.length > 0) {
         hasProjects = true;
-        projectsResult.forEach((project) => {
-          newHtmlProject(project);
+        hasProjectsStyle();
+        projectsResult.forEach((p) => {
+          newHtmlProject(p);
         });
       } else {
         hasProjects = false;
+        hasNoProjectsStyle();
       }
-      if (hasProjects) hasProjectsStyle();
-      else hasNoProjectsStyle();
+      project = null;
     },
     error: function (error) {},
   });
@@ -156,9 +235,7 @@ function dbInsertProject(name, client, description) {
       description: description,
     },
     success: function (result) {
-      clearProjects();
-      dbFetchProjects();
-      addProjectControl(pClosed);
+      location.reload();
     },
     error: function (err) {
       console.log(err);
@@ -176,53 +253,50 @@ function dbEditProject(idProject, name, client, description) {
       description: description,
     },
     success: function (result) {
-      clearProjects();
-      dbFetchProjects();
+      location.reload();
     },
   });
 }
-function dbDeleteProject(idProject) {
+function dbDeleteProject() {
   $.ajax({
     url: "../../../connections/projects/deleteProject.php",
     type: "POST",
     data: {
-      idProject: idProject,
+      idProject: project,
     },
     success: function (result) {
-      clearProjects();
-      dbFetchProjects();
-      addProjectControl(pClosed);
+      location.reload();
     },
   });
 }
 
-
 function hasProjectsStyle() {
-  let versionButton = document.querySelectorAll(".add-version-button");
-  let projectButton = document.querySelectorAll(".add-project-button-np");
+  let versionButton = document.querySelector(".add-version-button");
+  let projectButton = document.getElementById("add_project_button");
 
-  let noProjects = document.querySelectorAll(".no-projects");
-  projectButton[0].classList.add("add-project-button");
-  projectButton[0].classList.remove("add-project-button-np");
+  projectButton.classList.remove("add-project-button-np");
+  projectButton.classList.add("add-project-button");
 
-  noProjects[0].classList.add("hidden");
-  versionButton[0].classList.remove("hidden");
+  let noProjects = document.querySelector(".no-projects");
+  noProjects.classList.add("hidden");
+  versionButton.classList.remove("hidden");
+
   let listProjects = document.querySelectorAll(".project-field-item");
   listProjects.forEach((listProject) => {
     listProject.classList.remove("hidden");
   });
 }
 function hasNoProjectsStyle() {
-  let listProjects = document.querySelectorAll(".project-field-item");
-  let versionButton = document.querySelectorAll(".add-version-button");
-  let noProjects = document.querySelectorAll(".no-projects");
-  let projectButton = document.querySelectorAll(".add-project-button");
+  let listProjects = document.querySelector(".project-field-item");
+  let versionButton = document.querySelector(".add-version-button");
+  let noProjects = document.querySelector(".no-projects");
+  let projectButton = document.querySelector(".add-project-button");
 
-  projectButton[0].classList.add("add-project-button-np");
-  projectButton[0].classList.remove("add-project-button");
+  projectButton.classList.add("add-project-button-np");
+  projectButtonclassList.remove("add-project-button");
 
-  noProjects[0].classList.remove("hidden");
-  versionButton[0].classList.add("hidden");
+  noProjects.classList.remove("hidden");
+  versionButton.classList.add("hidden");
   listProjects.forEach((listProject) => {
     listProject.classList.add("hidden");
   });
@@ -245,32 +319,67 @@ function newProject() {
   newProjectButton.addEventListener("click", () => saveProjectButton());
   showProjectPopup();
 }
-function newVersion(p) {
-  dbFetchProject(p);
-
-  showProjectPopup();
+function newVersion() {
+  $.ajax({
+    url: "../../../connections/projects/insertNewVersion.php",
+    type: "POST",
+    data: {
+      idProject: project,
+    },
+    success: function (result) {
+      dbFetchProjects();
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
 }
 function saveProjectButton() {
-  let pName = document.getElementById("project-name").value;
-  let cli = document.getElementById("client").value;
-  let desc = document.getElementById("description").value;
-
-  dbInsertProject(pName, cli, desc);
-  closePopup();
-  document.getElementById("project-name").value = "";
-  document.getElementById("client").value = "";
-  document.getElementById("description").value = "";
+  let pName = document.getElementById("project-name");
+  let cli = document.getElementById("client");
+  let desc = document.getElementById("description");
+  pName.classList.remove("input-error");
+  cli.classList.remove("input-error");
+  if (pName.value.trim() == "") {
+    pName.classList.add("input-error");
+  } else if (cli.value.trim() == "") {
+    cli.classList.add("input-error");
+  } else {
+    dbInsertProject(pName, cli, desc);
+    closePopup();
+    pName.classList.remove("input-error");
+    cli.classList.remove("input-error");
+    pName.value = "";
+    document.value = "";
+    desc.value = "";
+  }
 }
 function saveEditProjectButton(idProject) {
-  let pName = document.getElementById("project-name").value;
-  let cli = document.getElementById("client").value;
-  let desc = document.getElementById("description").value;
+  let pName = document.getElementById("project-name");
+  let cli = document.getElementById("client");
+  let desc = document.getElementById("description");
+  pName.classList.remove("input-error");
+  cli.classList.remove("input-error");
 
-  dbEditProject(idProject, pName, cli, desc);
-  closePopup();
-  document.getElementById("project-name").value = "";
-  document.getElementById("client").value = "";
-  document.getElementById("description").value = "";
+  cli.classList.add("input-error");
+  if (pName.value.trim() == "") {
+    pName.classList.add("input-error");
+  } else if (cli.value.trim() == "") {
+    cli.classList.add("input-error");
+  } else {
+    dbEditProject(
+      idProject,
+      pName.value.trim(),
+      cli.value.trim(),
+      desc.value.trim()
+    );
+    closePopup();
+    pName.classList.remove("input-error");
+    cli.classList.remove("input-error");
+    pName.value = "";
+
+    desc.value = "";
+  }
 }
 
 function showWarningPopup(idProject) {
@@ -309,7 +418,7 @@ function gotoConfigure(id) {
   }
 }
 function gotoResults(id) {
-  if ((id != null)) {
+  if (id != null) {
     sessionStorage.setItem("project", id);
     location.href = "results.html";
   } else {

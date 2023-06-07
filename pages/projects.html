@@ -44,7 +44,7 @@
       <div id="err_type">Alert</p>
       </div>
       <div id="text">Are you sure you want to <b>delete</b> this?</div>
-      <div id="div_close"><button type="button" id="btn_delete" class="button-purple-bg" onclick="closePopup()">Delete</button></div>
+      <div id="div_close"><button type="button" id="btn_delete" class="button-purple-bg" onclick=" dbDeleteProject()">Delete</button></div>
     </div>
   </div>
   <header>
@@ -80,15 +80,15 @@
     </div>
     <div class="item2">
       Order by:
-      <select>
+      <select id="order-by">
         <option>Date</option>
-        <option>Project name</option>
-        <option>Client name</option>
+        <option>Name</option>
+        <option>Client</option>
       </select>
     </div>
     <div class="item3">
-      <input type="text" placeholder="" />
-      <button type="submit"><i class="fa fa-search"></i></button>
+      <input id="search-query" type="text" placeholder="" maxlength="30" />
+      <button type="submit" onclick="dbSearch()"><i class="fa fa-search"></i></button>
     </div>
   </div>
   <div class="add-buttons">
@@ -109,8 +109,8 @@
         To create a project select the “Add Project Button” at the top of
         these messages.
       </p>
-      </div>
-    
+    </div>
+    <div id="no-projects-search"></div>
 
   </ul>
   <main></main>

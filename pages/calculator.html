@@ -7,8 +7,9 @@
     </head>
 
     <body>
-        <div id="popup">
-            <div id="popup_content">
+   
+        <div class="popup">
+            <div class="popup_content">
                 <div id="popup_top">
                     <div id="popup_top_text">Which enviroment are you working on?</div>
                     <div id="popup_top_cross">
@@ -17,8 +18,8 @@
                 </div>    
                 <div id="btn_selector">
                     <div id="popup_btn_container">
-                        <button class="selection_btn" id="premise_form" onclick="show_popup(1, false)">On Premise</button>
-                        <button class="selection_btn" id="cloud_form" onclick="show_popup(2, false)">On Cloud</button>
+                        <button class="selection_btn" id="premise_form" onclick="show_popup(1, null)">On Premise</button>
+                        <button class="selection_btn" id="cloud_form" onclick="show_popup(2, null)">On Cloud</button>
                     </div>
                 </div>
             </div> <!-- popup_content -->
@@ -26,8 +27,8 @@
 
         <!------------------------------ FORM PREMISE ------------------------------>
 
-        <div id="popup">
-            <div id="popup_content">
+        <div class="popup">
+            <div class="popup_content">
                 <div id="popup_top">
                     <div id="popup_top_text">Answer the following questions</div>
                     <div id="popup_top_cross">
@@ -36,7 +37,7 @@
                 </div>
 
                 <div id="form">
-                    <form id="form_premise">
+                    <form id="form_premise" name="form_premise">
                         <div id="premise_question1" class="question">
                             <div class="q_text">1. How many servers do you have in this configuration?*</div>
                             <div class="q_input"><input type="text" id="premise_answer1"></div>
@@ -46,8 +47,8 @@
                                 of one server is according to the manufacturer specifications?*</div>
                             <div class="q_input">
                                 <select id="combo_premise1">
-                                    <option value="yes">Yes</option>
                                     <option value="no">No</option>
+                                    <option value="yes">Yes</option>
                                 </select>
                             </div>
                         </div>
@@ -80,8 +81,8 @@
                             <div class="q_text">7. Does the server consume renewable energy?*</div>
                             <div class="q_input">
                                 <select id="combo_premise3">
-                                    <option value="yes">Yes</option>
                                     <option value="no">No</option>
+                                    <option value="yes">Yes</option>
                                 </select>
                             </div>
                         </div>
@@ -89,14 +90,12 @@
                             <div id="premise_question8">
                                 <div class="q_text">8. How do you certify that your energy is renewable?*</div>
                                 <div class="q_input">
-                                    <input type="radio" name="btn_radio" id="radio" value="0">
-                                    <label for="answer1">Contract with a supplier where 
-                                        the server consumption is included.</label></br>
-                                    <input type="radio" name="btn_radio1" id="radio" value="1">
-                                    <label for="answer1">Audited sustaiability report.</label></br>
-                                    <input type="radio" name="btn_radio2" id="radio" value="2">
-                                    <label for="answer1">Formal written statement 
-                                        from the energy supplier.</label>       
+                                    <input type="radio" name="btn_radio"  value="0">
+                                    Contract with a supplier where the server consumption is included.<br>
+                                    <input type="radio" name="btn_radio"  value="1">
+                                   Audited sustaiability report.<br> 
+                                    <input type="radio" name="btn_radio"  value="2">
+                                   Formal written statement from the energy supplier.  
                                 </div>
                             </div>
                             <div id="premise_question9" class="question">
@@ -114,18 +113,18 @@
                             </div>
                         </div>
                         <div id="submit_cancel">
-                            <input class="sbmt_save" type="submit" onclick="save_premise()" value="Save"></input>
+                            <input class="sbmt_save" id="premise_save" type="submit"  value="Save">
                             <button class="sbmt_cancel" onclick="close_popup()">Cancel</button>
                         </div>
                     </form>
                 </div> <!-- form premise -->
             </div> <!-- popup_content -->
-        </div>  <!-- pop_up -->
+        </div>  <!-- popup -->
 
         <!------------------------------ FORM CLOUD ------------------------------>
 
-        <div id="popup">
-            <div id="popup_content">
+        <div class="popup">
+            <div class="popup_content">
                 <div id="popup_top">
                     <div id="popup_top_text">Answer the following questions</div>
                     <div id="popup_top_cross">
@@ -134,7 +133,7 @@
                 </div>
 
                 <div id="form">
-                    <form id="form_cloud">
+                    <form id="form_cloud" name="form_cloud">
                         <div id="cloud_question1" class="question">
                             <div class="q_text">1.- Who is your Cloud services provider/for the software?</div>
                             <div class="q_input">
@@ -202,13 +201,71 @@
                             <div class="q_input"><input type="text" id="cloud_input8"></div>
                         </div>
                         <div id="submit_cancel">
-                            <input class="sbmt_save" type="button" onclick="save_cloud()" value="Save"></input>
+                            <input class="sbmt_save" id="cloud_save" type="button" value="Save"></input>
                             <button class="sbmt_cancel" onclick="close_popup()">Cancel</button>
                         </div>
                     </form>
                 </div> <!-- form cloud -->
             </div> <!-- popup_content -->
         </div>  <!-- pop_up -->
+
+         <!------------------------------ POPUP DELETE ------------------------------>
+
+         <div class="popup" id="popup_error">
+            <div id="error_content">
+                <div id="div_x"><button type="button" id="btn_x" onclick="close_popup()"><img src="../imgs/cross.png" alt="Close window"/></button></div>
+                <div id="err_type">Alert</p></div>
+                <div id="popup_text">Do you want to <span id="bolded">delete</span> this row?</div>
+                <div id="div_close">
+                    <button type="button" id="btn_close" onclick="close_popup()">Close</button>
+                    <button id="btn_confirm_delete" onclick="close_popup()">Delete</button>
+                </div>
+            </div> <!-- popup_content -->
+        </div> <!-- popup -->
+
+        <!------------------------------ POPUP NOT SAVED ------------------------------>
+
+        <div class="popup">
+            <div id="popup_not_saved">
+                <div id="popup_top">
+                    <div id="popup_top_text">WARNING!</div>
+                    <div id="popup_top_cross">
+                        <button onclick="close_popup()"><img src="../imgs/cross_white.svg" alt="close"></button>
+                    </div>
+                </div>
+                <div id="not_saved_body">
+                    <div id="not_saved_upper_text">THE CONFIGURATION IS NOT SAVED</div>
+                    <div id="not_saved_bottom_text">Save your configuration before continuing.</div>
+                    <div id="not_saved_button">
+                        <button id="btn_not_saved" type="button" onclick="close_popup()">Go Back!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!------------------------------ POPUP INVALID DATA ------------------------------>
+
+        <div class="popup">
+            <div id="popup_not_saved">
+                <div id="popup_top">
+                    <div id="popup_top_text">WARNING!</div>
+                    <div id="popup_top_cross">
+                        <button onclick="close_popup()"><img src="../imgs/cross_white.svg" alt="close"></button>
+                    </div>
+                </div>
+                <div id="not_saved_body">
+                    <div id="not_saved_upper_text">SOME DATA INTRODUCED ARE NOT CORRECT</div>
+                    <div id="not_saved_button">
+                        <button id="btn_not_saved" type="button" onclick="close_invalid_data(5)">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- popup -->
+
+
+
 
         <header>
             <div id="menu">
@@ -226,12 +283,12 @@
         </header>
 
         
-            <div id="top">
-                <a href="projects.html">
-                    <button id="btn_back">Back</button>
-                </a>
-                <div id="top_text">Project's name</div>
-            </div>
+        <div id="top">
+            <a href="projects.html">
+                <button id="btn_back">Back</button>
+            </a>
+            <div id="top_text">Project's name</div>
+        </div>
 
         <div id="mid">
             <div id="container">
@@ -253,20 +310,7 @@
                                 <th class="middle">Carbon Footprint</th>
                                 <th class="last"></th>
                             </tr>
-                            <tr class="table_data">
-                                <td>01/01/2000</td>
-                                <td>Cloud</td>
-                                <td>AWS</td>
-                                <td>us-central</td>
-                                <td>1522</td>
-                                <td>555</td>
-                                <td>1222</td>
-                                <td>2679</td>
-                                <td>
-                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
-                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
-                                </td>  
-                            </tr>
+
                         </table>
                     </div>
                     <div class="table">
@@ -282,125 +326,14 @@
                                 <th class="middle">Carbon Footprint</th>
                                 <th class="last"></th>
                             </tr>
-                            <tr class="table_data">
-                                <td>01/01/2000</td>
-                                <td>Cloud</td>
-                                <td>AWS</td>
-                                <td>us-central</td>
-                                <td>1522</td>
-                                <td>555</td>
-                                <td>1222</td>
-                                <td>2679</td>
-                                <td>                                    
-                                    <button id="btn_edit" onclick="show_popup(1, true)"><img src="../imgs/edit.png" alt="edit icon"></button>
-                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
-                                </td>  
-                            </tr>
-                            <tr class="table_data">
-                                <td>01/01/2000</td>
-                                <td>Cloud</td>
-                                <td>AWS</td>
-                                <td>us-central</td>
-                                <td>1522</td>
-                                <td>555</td>
-                                <td>1222</td>
-                                <td>2679</td>
-                                <td>                                    
-                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
-                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
-                                </td>  
-                            </tr>
-                            <tr class="table_data">
-                                <td>01/01/2000</td>
-                                <td>Cloud</td>
-                                <td>AWS</td>
-                                <td>us-central</td>
-                                <td>1522</td>
-                                <td>555</td>
-                                <td>1222</td>
-                                <td>2679</td>
-                                <td>                                    
-                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
-                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
-                                </td>  
-                            </tr>
-                            <tr class="table_data">
-                                <td>01/01/2000</td>
-                                <td>Cloud</td>
-                                <td>AWS</td>
-                                <td>us-central</td>
-                                <td>1522</td>
-                                <td>555</td>
-                                <td>1222</td>
-                                <td>2679</td>
-                                <td>
-                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
-                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
-                                </td>  
-                            </tr>
-                            <tr class="table_data">
-                                <td>01/01/2000</td>
-                                <td>Cloud</td>
-                                <td>AWS</td>
-                                <td>us-central</td>
-                                <td>1522</td>
-                                <td>555</td>
-                                <td>1222</td>
-                                <td>2679</td>
-                                <td>
-                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
-                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
-                                </td>  
-                            </tr>
-                            <tr class="table_data">
-                                <td>01/01/2000</td>
-                                <td>Cloud</td>
-                                <td>AWS</td>
-                                <td>us-central</td>
-                                <td>1522</td>
-                                <td>555</td>
-                                <td>1222</td>
-                                <td>2679</td>
-                                <td>
-                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
-                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
-                                </td>  
-                            </tr>
-                            <tr class="table_data">
-                                <td>01/01/2000</td>
-                                <td>Cloud</td>
-                                <td>AWS</td>
-                                <td>us-central</td>
-                                <td>1522</td>
-                                <td>555</td>
-                                <td>1222</td>
-                                <td>2679</td>
-                                <td>
-                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
-                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
-                                </td>  
-                            </tr>
-                            <tr class="table_data">
-                                <td>01/01/2000</td>
-                                <td>Cloud</td>
-                                <td>AWS</td>
-                                <td>us-central</td>
-                                <td>1522</td>
-                                <td>555</td>
-                                <td>1222</td>
-                                <td>2679</td>
-                                <td>
-                                    <button id="btn_edit"><img src="../imgs/edit.png" alt="edit icon"></button>
-                                    <button id="btn_delete"><img src="../imgs/trash.png" alt="delete icon"></button>
-                                </td>  
-                            </tr>
+                            
                         </table>
                     </div>
                 </div>
             </div>
             
             <div id="btn_add">
-                <button id="btn_add_cfg" onclick="show_popup(0, false)">
+                <button id="btn_add_cfg" onclick="show_popup(0,null)">
                     <img src="../imgs/plus.svg" alt="Icon of a plus sign">
                     Add new configuration
                 </button>
@@ -409,7 +342,7 @@
 
         <footer>
             <div id="bottom">
-                <button id="btn_save">Save</button>
+                <button id="btn_save" onclick="show_popup(4,null)">Save</button>
                 <a id="btn_view_result" href="results.html">
                     <div id="btn_view_result_text">View Result</div> 
                     <img src="../imgs/arrow_right_purple.png" alt="Arrow pointing right">
@@ -420,7 +353,4 @@
         <script src="../codes/pages/projects/calculator.js"></script>
         <script src="../codes/pages/projects/calculator_db.js"></script>
     </body>
-
-    
-
 </html>
