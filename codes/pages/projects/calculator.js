@@ -35,14 +35,13 @@ function show_table(tableIndex) {
 }
 
 function show_popup(popupIndex, data) {
-  if ((popupIndex == 3)) {
+  if (popupIndex == 3) {
     let btnSavePremise = document.getElementById("btn_confirm_delete");
     btnSavePremise.replaceWith(btnSavePremise.cloneNode(true));
     btnSavePremise = document.getElementById("btn_confirm_delete");
     btnSavePremise.addEventListener("click", () =>
       dbDeleteConfiguration(data["id"])
     );
-  
   } else if (popupIndex != 5) {
     popup_forms.forEach(function (node) {
       node.style.visibility = "none";
@@ -139,7 +138,8 @@ function show_popup(popupIndex, data) {
       document.form_premise.btn_radio[0].checked = false;
     }
   }
-
+  var v = document.getElementById("provider_cloud");
+  getRegions(v.value);
   popup_forms[popupIndex].style.visibility = "visible";
   popup_forms[popupIndex].style.display = "grid";
 }

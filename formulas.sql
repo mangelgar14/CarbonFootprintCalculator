@@ -1,14 +1,17 @@
-CREATE TABLE CloudEmissions (
+
+drop table if exists cloud_emissions; drop table if exists  premise_emissions; drop table if exists  coeficientes_cloud; 
+
+CREATE TABLE cloud_emissions (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    Provider VARCHAR(50),
-    Region VARCHAR(50),
-    Country VARCHAR(50),
-    NERCRegion VARCHAR(50),
-    CO2e DECIMAL(10, 3)
+    provider VARCHAR(50),
+    region VARCHAR(50),
+    country VARCHAR(50),
+    nerc_region VARCHAR(50),
+    co2e DECIMAL(10, 3)
 );
 
 INSERT INTO
-    CloudEmissions (Provider, Region, Country, NERCRegion, CO2e)
+    cloud_emissions (provider, region, country, nerc_region, co2e)
 VALUES
     (
         'AWS',
@@ -205,14 +208,14 @@ VALUES
         109.00
     );
 
-CREATE TABLE PremiseEmissions (
-    Country VARCHAR(50),
-    State VARCHAR(50),
-    Emissions DECIMAL(10, 1)
+CREATE TABLE premise_emissions (
+    country VARCHAR(50),
+    state VARCHAR(50),
+    emissions DECIMAL(10, 1)
 );
 
 INSERT INTO
-    PremiseEmissions (Country, State, Emissions)
+    premise_emissions (country, state, emissions)
 VALUES
     ('Algeria', 'Algeria', 483.8),
     ('Andorra', 'Andorra', 474.8),
@@ -343,8 +346,8 @@ VALUES
     ('Venezuela', 'Venezuela', 313.8),
     ('Vietnam', 'Vietnam', 648.8);
 
-CREATE TABLE CoeficientesCloud (
-    proveedor VARCHAR(50),
+CREATE TABLE coeficientes_cloud (
+    provider VARCHAR(50),
     kvatios_min_cpu FLOAT,
     kvatios_max_cpu FLOAT,
     kvatios_min_gpu FLOAT,
@@ -358,8 +361,8 @@ CREATE TABLE CoeficientesCloud (
 );
 
 INSERT INTO
-    CoeficientesCloud (
-        proveedor,
+    coeficientes_cloud (
+        provider,
         kvatios_min_cpu,
         kvatios_max_cpu,
         kvatios_min_gpu,

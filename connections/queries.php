@@ -109,7 +109,8 @@ function fetchSerwareConfigurations($id)
     $sentence->execute([$id]);
     return $sentence->fetchAll();
 }
-function fetchSerwareConfigurationById($idSerware){
+function fetchSerwareConfigurationById($idSerware)
+{
     // Busca en la base de datos las configuraciones a partir de su id
     $db = getConnection();
     $sentence = $db->prepare("SELECT * FROM serware WHERE id_serware = ? ");
@@ -260,17 +261,19 @@ function deletePremiseFormData($id)
     return $sentence->execute([$id]);
 }
 
-function fetchCO2eFromCloudEmissions($region){
+function fetchCO2eFromCloudEmissions($region)
+{
     $db = getConnection();
-    $sentence = $db->prepare("SELECT CO2e FROM CloudEmissions WHERE region = ?");
+    $sentence = $db->prepare("SELECT co2e FROM cloud_emissions WHERE region = ?");
     $sentence->execute([$region]);
 
     return $sentence->fetch(PDO::FETCH_ASSOC);
 }
 
-function fetchFromCoeficientesCloud($provider){
+function fetchFromCoeficientesCloud($provider)
+{
     $db = getConnection();
-    $sentence = $db->prepare("SELECT * FROM CoeficientesCloud WHERE proveedor = ?");
+    $sentence = $db->prepare("SELECT * FROM coeficientes_cloud WHERE provider = ?");
     $sentence->execute([$provider]);
 
     return $sentence->fetch(PDO::FETCH_ASSOC);
@@ -278,18 +281,32 @@ function fetchFromCoeficientesCloud($provider){
 function fetchFromCloudEmissions($region)
 {
     $db = getConnection();
-    $sentence = $db->prepare("SELECT * FROM CloudEmissions WHERE Region = ?");
+    $sentence = $db->prepare("SELECT * FROM cloud_emissions WHERE region = ?");
     $sentence->execute([$region]);
     return $sentence->fetchObject();
 }
-function fetchFromPremiseEmissions($location){
+function fetchFromPremiseEmissions($location)
+{
     $db = getConnection();
-    $sentence = $db->prepare("SELECT Emissions FROM PremiseEmissions WHERE State = ?");
+    $sentence = $db->prepare("SELECT emissions FROM premise_emissions WHERE state = ?");
     $sentence->execute([$location]);
 
     return $sentence->fetch(PDO::FETCH_ASSOC);
 }
-
+function fetchProviders()
+{
+    $db = getConnection();
+    $sentence = $db->prepare("SELECT DISTINCT provider FROM coeficientes_cloud;");
+    $sentence->execute();
+    return $sentence->fetchAll();
+}
+function fetchRegionsOfProvider($provider)
+{
+    $db = getConnection();
+    $sentence = $db->prepare("SELECT region FROM cloud_emissions WHERE provider = ?");
+    $sentence->execute([$provider]);
+    return $sentence->fetchAll();
+}
 /* CONNECTION */
 function getConnection()
 {

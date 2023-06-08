@@ -24,12 +24,12 @@
         <div class="popup-content-top">
           <label for="project-name">Project Name</label>
           <label for="client">Client Name</label>
-          <input id="project-name" type="text" name="project-name" required />
-          <input type="text" id="client" name="client" required />
+          <input id="project-name" type="text" name="project-name" />
+          <input type="text" id="client" name="client" />
         </div>
         <div class="popup-content-mid">
           <label for="description">Description</label>
-          <textarea rows="8" name="description" id="description"></textarea>
+          <textarea rows="8" name="description" id="description" maxlength="240"></textarea>
         </div>
         <div class="popup-content-bot">
           <button type="button" class="button-white-bg" onclick="closePopup()">
