@@ -385,10 +385,12 @@ function calculatePremise(data, edit, selected_table, n_servers, power_consumpti
       cpu: cpu,
       software_utilization: software_utilization,
       hours_used: hours_used,
+      consumed_renewable_energy:consumed_renewable_energy,
       country: country,
     },
     success: function (result) { 
       var configResult = JSON.parse(result);
+      console.log(configResult)
       var energy_consumption = configResult["energy_consumption"];
       var consumption_emissions = configResult["consumption_emissions"];
       var embedded_emissions = configResult["embedded_emissions"];
@@ -459,6 +461,7 @@ function calculateCloud(data, edit, provider, region, vcpu_hours, vgpu_hours, tb
     },
     success: function (result) {
       var configResult = JSON.parse(result);
+      console.log(configResult)
       var energy_consumption = configResult["energy_consumption"];
       var consumption_emissions = configResult["consumption_emissions"];
       var embedded_emissions = configResult["embedded_emissions"];

@@ -173,15 +173,15 @@ function insertPremiseFormData(
 {
     $db = getConnection();
     if ($power_consumption_known == "true") {
-        $power_consumption_known = true;
+        $power_consumption_known = 1;
     } else {
-        $power_consumption_known = false;
+        $power_consumption_known = 0;
     }
 
     if ($renewable_energy == "true") {
-        $renewable_energy = true;
+        $renewable_energy = 1;
     } else {
-        $renewable_energy = false;
+        $renewable_energy = 0;
     }
 
     if ($renewable_certification === "NULL") {
@@ -201,7 +201,6 @@ function insertPremiseFormData(
     }
 
     $sentence = $db->prepare("INSERT INTO datos_premise (id_serware, n_servers, power_consumption_known, power_consumption, cpu, software_utilization, hours_day, renewable, renewable_certification, renewable_percentage, location) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
-    echo "$idSerware, $num_of_servers, $power_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification, $consumed_renewable_energy, $country";
     return $sentence->execute([$idSerware, $num_of_servers, $power_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification, $consumed_renewable_energy, $country]);
 }
 function insertCloudFormData($idSerware, $provider, $region, $vcpu_hours, $vgpu_hours, $tb_hdd, $tb_ssd, $gb_memory, $gb_networking)
@@ -288,7 +287,7 @@ function fetchFromCloudEmissions($region)
 function fetchFromPremiseEmissions($location)
 {
     $db = getConnection();
-    $sentence = $db->prepare("SELECT emissions FROM premise_emissions WHERE state = ?");
+    $sentence = $db->prepare("SELECT * FROM premise_emissions WHERE state = ?");
     $sentence->execute([$location]);
 
     return $sentence->fetch(PDO::FETCH_ASSOC);
