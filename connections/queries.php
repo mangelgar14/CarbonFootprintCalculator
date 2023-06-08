@@ -157,36 +157,50 @@ function fetchCloudDataByConfigId($idSerware)
 
     return $sentence->fetchObject();
 }
-function insertPremiseFormData($idSerware, $num_of_servers, $power_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification, $consumed_renewable_energy, $country)
+function insertPremiseFormData(
+    $idSerware, 
+    $num_of_servers, 
+    $power_consumption_known, 
+    $nominal_consumption, 
+    $cpu, 
+    $software_utilization, 
+    $hours_used, 
+    $renewable_energy, 
+    $renewable_certification, 
+    $consumed_renewable_energy, 
+    $country)
 {
     $db = getConnection();
-
     if ($power_consumption_known == "true") {
-        $power_consumption_known = 1;
-        $cpu = null;
+        $power_consumption_known = true;
     } else {
-        $nominal_consumption = null;
-        $power_consumption_known = 0;
+        $power_consumption_known = false;
     }
 
     if ($renewable_energy == "true") {
-        $renewable_energy = 1;
+        $renewable_energy = true;
     } else {
-        $renewable_energy = 0;
-        $renewable_certification = null;
-        $consumed_renewable_energy = null;
+        $renewable_energy = false;
     }
 
     if ($renewable_certification === "NULL") {
         $renewable_certification = null;
     }
-
-
+    if ($cpu === "NULL") {
+        $cpu = null;
+    }
+    if ($nominal_consumption === "NULL") {
+        $nominal_consumption = null;
+    }
     if ($software_utilization === "NULL") {
         $software_utilization = null;
     }
-    echo "$idSerware, $num_of_servers, $power_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification,$consumed_renewable_energy,$country";
+    if ($consumed_renewable_energy === "NULL") {
+        $consumed_renewable_energy = null;
+    }
+
     $sentence = $db->prepare("INSERT INTO datos_premise (id_serware, n_servers, power_consumption_known, power_consumption, cpu, software_utilization, hours_day, renewable, renewable_certification, renewable_percentage, location) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+    echo "$idSerware, $num_of_servers, $power_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification, $consumed_renewable_energy, $country";
     return $sentence->execute([$idSerware, $num_of_servers, $power_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification, $consumed_renewable_energy, $country]);
 }
 function insertCloudFormData($idSerware, $provider, $region, $vcpu_hours, $vgpu_hours, $tb_hdd, $tb_ssd, $gb_memory, $gb_networking)

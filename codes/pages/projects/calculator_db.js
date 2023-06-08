@@ -53,7 +53,7 @@ function dbFetchSerwareConfiguration() {
     success: function (result) {
       configResult = JSON.parse(result);
       if (configResult.length > 0) {
-        console.log(configResult  )
+        console.log(configResult);
         configResult.forEach((config) => {
           if (config["serware"] === "Server") {
             newHtmlServerConfig(config);
@@ -99,7 +99,7 @@ function fetchDataByConfigId(idSerware) {
     },
     success: function (result) {
       var configResult = JSON.parse(result);
-      console.log(configResult)
+      console.log(configResult);
       var table = "";
      
       if (configResult != null) {
@@ -308,7 +308,7 @@ function dbEditCloudFormData(dataObject, idSerware) {
   });
 }
 function dbEditPremiseFormData(dataObject, idSerware) {
-  console.log(idSerware)
+  console.log(idSerware);
   $.ajax({
     url: "../../../connections/calculator/editFormData.php",
     type: "POST",
@@ -360,8 +360,8 @@ function dbDeleteFormData(idSerware) {
     },
   });
 }
-function calculatePremiseE(n_servers, power_consumption_known, power_consumption, cpu, 
-  software_utilization, hours_used) {
+function calculatePremise(data, edit, selected_table, n_servers, power_consumption_known, power_consumption, cpu, 
+  software_utilization, hours_used, isRenewable, btns, consumed_renewable_energy, country) {
   $.ajax({
     url: "../../../connections/calculate.php",
     type: "POST",
@@ -373,9 +373,55 @@ function calculatePremiseE(n_servers, power_consumption_known, power_consumption
       cpu: cpu,
       software_utilization: software_utilization,
       hours_used: hours_used,
+      country: country,
     },
-    success: function (result) {
-      console.log(result);
+    success: function (result) { 
+      var configResult = JSON.parse(result);
+      var energy_consumption = configResult["energy_consumption"];
+      var consumption_emissions = configResult["consumption_emissions"];
+      var embedded_emissions = configResult["embedded_emissions"];
+      var carbon_footprint = configResult["carbon_footprint"];
+
+      var dataObject = {
+        type: "Premise",
+        num_of_servers: n_servers,
+        nominal_consumption_known: power_consumption_known,
+        nominal_consumption: power_consumption,
+        cpu: cpu,
+        software_utilization: software_utilization,
+        hours_used: hours_used,
+        renewable_energy: isRenewable,
+        renewable_certification: btns,
+        consumed_renewable_energy: consumed_renewable_energy,
+        country: country,
+      };
+      if (!edit) {
+        dbInsertConfiguration(
+          selected_table,
+          "Premise",
+          n_servers,
+          country,
+          energy_consumption,
+          consumption_emissions,
+          embedded_emissions,
+          carbon_footprint,
+          dataObject
+        );
+      } else {
+        dbEditConfiguration(
+          data["id_serware"],
+          "Premise",
+          n_servers,
+          country,
+          energy_consumption,
+          consumption_emissions,
+          embedded_emissions,
+          carbon_footprint,
+          dataObject
+        );
+      }
+  
+      close_popup();
     },
     error: function (err) {
       console.log(err);
@@ -383,8 +429,8 @@ function calculatePremiseE(n_servers, power_consumption_known, power_consumption
   });
 }
 
-function calculateCloudE(provider, region, vcpu_hours, vgpu_hours, tb_hdd, tb_ssd, 
-  gb_memory, gb_networking) {
+function calculateCloud(data, edit, provider, region, vcpu_hours, vgpu_hours, tb_hdd, tb_ssd, 
+  gb_memory, gb_networking, edit, selected_table) {
   $.ajax({
     url: "../../../connections/calculate.php",
     type: "POST",
@@ -400,15 +446,54 @@ function calculateCloudE(provider, region, vcpu_hours, vgpu_hours, tb_hdd, tb_ss
       gb_networking: gb_networking,
     },
     success: function (result) {
-      console.log(result);
+      var configResult = JSON.parse(result);
+      var energy_consumption = configResult["energy_consumption"];
+      var consumption_emissions = configResult["consumption_emissions"];
+      var embedded_emissions = configResult["embedded_emissions"];
+      var carbon_footprint = configResult["carbon_footprint"];
+
+      var dataObject = {
+        type: "Cloud",
+        provider: provider,
+        region: region, // TODO sacar de db
+        cpu_hours: vcpu_hours,
+        gpu_hours: vgpu_hours,
+        tb_hdd: tb_hdd,
+        tb_sdd: tb_ssd,
+        gb_memory: gb_memory,
+        gb_networking: gb_networking,
+      };
+      if (!edit) {
+        dbInsertConfiguration(
+          selected_table,
+          "Cloud",
+          provider,
+          region,
+          energy_consumption,
+          consumption_emissions,
+          embedded_emissions,
+          carbon_footprint,
+          dataObject
+        );
+      } else {
+        dbEditConfiguration(
+          data["id_serware"],
+          "Cloud",
+          provider,
+          region,
+          energy_consumption,
+          consumption_emissions,
+          embedded_emissions,
+          carbon_footprint,
+          dataObject
+        );
+      }
+      close_popup();
     },
     error: function (err) {
       console.log(err);
     },
   });
-}
-function calculateCloudI(){
-
 }
 function editButton(id) {
   fetchDataByConfigId(id);

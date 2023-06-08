@@ -3,17 +3,12 @@
 $calculate = htmlspecialchars($_POST["calculate"]);
 
 $n_servers = htmlspecialchars($_POST["n_servers"]);
-
 $power_consumption_known = htmlspecialchars($_POST["power_consumption_known"]);
-
 $power_consumption = htmlspecialchars($_POST["power_consumption"]);
 $cpu = htmlspecialchars($_POST["cpu"]);
 $software_utilization = htmlspecialchars($_POST["software_utilization"]);
 $hours_day = htmlspecialchars($_POST["hours_used"]);
-
 $renewable_energy = htmlspecialchars($_POST["renewable_energy"]);
-$renewable_energy = filter_var($_POST['renewable_energy'], FILTER_VALIDATE_BOOLEAN);
-
 $renewable_certification=  htmlspecialchars($_POST['renewable_certification']);
 $consumed_renewable_energy = htmlspecialchars($_POST["consumed_renewable_energy"]);
 $country = htmlspecialchars($_POST["country"]);
@@ -41,7 +36,13 @@ if($calculate == "premise"){
 
     $carbon_footprint_year = $carbon_footprint * 365 /1000000;
 
-    echo "$premiseE, $premiseI, $premiseM, $carbon_footprint, $carbon_footprint_year";
+    $data = array("energy_consumption" => $premiseE,
+    "consumption_emissions" => $premiseI,
+    "embedded_emissions" => $premiseM,
+    "carbon_footprint" => $carbon_footprint,
+    "carbon_footprint_year" => $carbon_footprint_year);
+
+    echo json_encode($data);
 }
 else if($calculate == "cloud"){
     $cloudE = calculateCloudE($provider, $vcpu_hours, $vgpu_hours, $tb_hdd, $tb_ssd, $gb_memory, 
@@ -54,6 +55,14 @@ else if($calculate == "cloud"){
     $carbon_footprint = $cloudE * $cloudI + $cloudM;
 
     $carbon_footprint_year = $carbon_footprint * 365 / 1000000;
+
+    $data = array("energy_consumption" => $cloudE,
+    "consumption_emissions" => $cloudI,
+    "embedded_emissions" => $cloudM,
+    "carbon_footprint" => $carbon_footprint,
+    "carbon_footprint_year" => $carbon_footprint_year);
+
+    echo json_encode($data);
 }
 
 // CONSUMO ENERGÉTICO (E) //
@@ -160,7 +169,6 @@ function calculatePremiseM($power_consumption, $location, $e, $i){
     else{
         $average_country_consumption = fetchFromPremiseEmissions($location)["Emissions"];
         $m = (($e * $average_country_consumption) * 0.20);
-        echo "$m";
     }
 
     return $m;
