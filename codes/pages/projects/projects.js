@@ -136,7 +136,7 @@ function dbSearch() {
   }
   let query = document.getElementById("search-query").value;
   $.ajax({
-    url: "../../../connections/projects/searchProjects.php",
+    url: "../../connections/projects/searchProjects.php",
     type: "GET",
     data: {
       query: query,
@@ -183,7 +183,7 @@ function dbFetchProjects(order) {
   }
 
   $.ajax({
-    url: "../../../connections/projects/FetchProjects.php",
+    url: "../../connections/projects/FetchProjects.php",
     type: "GET",
     data: {
       order: order,
@@ -208,7 +208,7 @@ function dbFetchProjects(order) {
 }
 function dbFetchProject(idProject) {
   $.ajax({
-    url: "../../../connections/projects/fetchProjectById.php",
+    url: "../../connections/projects/fetchProjectById.php",
     type: "POST",
     data: {
       idProject: idProject,
@@ -227,7 +227,7 @@ function dbFetchProject(idProject) {
 }
 function dbInsertProject(name, client, description) {
   $.ajax({
-    url: "../../../connections/projects/InsertProject.php",
+    url: "../../connections/projects/InsertProject.php",
     type: "POST",
     data: {
       projectName: name,
@@ -244,7 +244,7 @@ function dbInsertProject(name, client, description) {
 }
 function dbEditProject(idProject, name, client, description) {
   $.ajax({
-    url: "../../../connections/projects/editProject.php",
+    url: "../../connections/projects/editProject.php",
     type: "POST",
     data: {
       idProject: idProject,
@@ -259,7 +259,7 @@ function dbEditProject(idProject, name, client, description) {
 }
 function dbDeleteProject() {
   $.ajax({
-    url: "../../../connections/projects/deleteProject.php",
+    url: "../../connections/projects/deleteProject.php",
     type: "POST",
     data: {
       idProject: project,
@@ -321,7 +321,7 @@ function newProject() {
 }
 function newVersion() {
   $.ajax({
-    url: "../../../connections/projects/insertNewVersion.php",
+    url: "../../connections/projects/insertNewVersion.php",
     type: "POST",
     data: {
       idProject: project,
@@ -338,6 +338,7 @@ function saveProjectButton() {
   let pName = document.getElementById("project-name");
   let cli = document.getElementById("client");
   let desc = document.getElementById("description");
+
   pName.classList.remove("input-error");
   cli.classList.remove("input-error");
   if (pName.value.trim() == "") {
@@ -345,7 +346,7 @@ function saveProjectButton() {
   } else if (cli.value.trim() == "") {
     cli.classList.add("input-error");
   } else {
-    dbInsertProject(pName, cli, desc);
+    dbInsertProject(pName.value.trim(), cli.value.trim(), desc.value.trim());
     closePopup();
     pName.classList.remove("input-error");
     cli.classList.remove("input-error");

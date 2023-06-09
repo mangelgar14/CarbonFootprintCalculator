@@ -47,8 +47,8 @@
                                 of one server is according to the manufacturer specifications?*</div>
                             <div class="q_input">
                                 <select id="combo_premise1">
-                                    <option value="no">No</option>
                                     <option value="yes">Yes</option>
+                                    <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
@@ -81,8 +81,8 @@
                             <div class="q_text">7. Does the server consume renewable energy?*</div>
                             <div class="q_input">
                                 <select id="combo_premise3">
-                                    <option value="no">No</option>
                                     <option value="yes">Yes</option>
+                                    <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
@@ -137,10 +137,8 @@
                         <div id="cloud_question1" class="question">
                             <div class="q_text">1.- Who is your Cloud services provider/for the software?</div>
                             <div class="q_input">
-                                <select id="provider_cloud">
-                                    <option value="AWS">AWS</option>
-                                    <option value="GCP">GCP</option>
-                                    <option value="Microsoft Azure">Microsoft Azure</option>
+                                <select id="provider_cloud" onchange="getRegions()">
+      
                                 </select>
                             </div>
                         </div>
@@ -148,31 +146,7 @@
                             <div class="q_text">2. In which region is the server located?</div>
                             <div class="q_input">
                                 <select id="combo_cloud">
-                                    <option>us-east-1</option>
-                                    <option>us-east-2</option>
-                                    <option>us-west-1</option>
-                                    <option>us-west-2</option>
-                                    <option>us-gov-east-1</option>
-                                    <option>us-gov-west-1</option>
-                                    <option>af-south-1</option>
-                                    <option>ap-east-1</option>
-                                    <option>ap-south-1</option>
-                                    <option>ap-northeast-1</option>
-                                    <option>ap-northeast-2</option>
-                                    <option>ap-northeast-3</option>
-                                    <option>ap-southeast-1</option>
-                                    <option>ap-southeast-2</option>
-                                    <option>ap-southeast-3</option>
-                                    <option>ca-central-1</option>
-                                    <option>cn-north-1</option>
-                                    <option>cn-northwest-1</option>
-                                    <option>eu-central-1</option>
-                                    <option>eu-west-1</option>
-                                    <option>eu-west-2</option>
-                                    <option>eu-west-3</option> 
-                                    <option>eu-north-1</option>
-                                    <option>me-south-1</option>
-                                    <option>sa-east-1</option>
+                                  
                                 </select>
                             </div>
                         </div>

@@ -109,7 +109,8 @@ function fetchSerwareConfigurations($id)
     $sentence->execute([$id]);
     return $sentence->fetchAll();
 }
-function fetchSerwareConfigurationById($idSerware){
+function fetchSerwareConfigurationById($idSerware)
+{
     // Busca en la base de datos las configuraciones a partir de su id
     $db = getConnection();
     $sentence = $db->prepare("SELECT * FROM serware WHERE id_serware = ? ");
@@ -157,15 +158,23 @@ function fetchCloudDataByConfigId($idSerware)
 
     return $sentence->fetchObject();
 }
-function insertPremiseFormData($idSerware, $num_of_servers, $power_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification, $consumed_renewable_energy, $country)
+function insertPremiseFormData(
+    $idSerware, 
+    $num_of_servers, 
+    $power_consumption_known, 
+    $nominal_consumption, 
+    $cpu, 
+    $software_utilization, 
+    $hours_used, 
+    $renewable_energy, 
+    $renewable_certification, 
+    $consumed_renewable_energy, 
+    $country)
 {
     $db = getConnection();
-
     if ($power_consumption_known == "true") {
         $power_consumption_known = 1;
-        $cpu = null;
     } else {
-        $nominal_consumption = null;
         $power_consumption_known = 0;
     }
 
@@ -173,19 +182,24 @@ function insertPremiseFormData($idSerware, $num_of_servers, $power_consumption_k
         $renewable_energy = 1;
     } else {
         $renewable_energy = 0;
-        $renewable_certification = null;
-        $consumed_renewable_energy = null;
     }
 
     if ($renewable_certification === "NULL") {
         $renewable_certification = null;
     }
-
-
+    if ($cpu === "NULL") {
+        $cpu = null;
+    }
+    if ($nominal_consumption === "NULL") {
+        $nominal_consumption = null;
+    }
     if ($software_utilization === "NULL") {
         $software_utilization = null;
     }
-    echo "$idSerware, $num_of_servers, $power_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification,$consumed_renewable_energy,$country";
+    if ($consumed_renewable_energy === "NULL") {
+        $consumed_renewable_energy = null;
+    }
+
     $sentence = $db->prepare("INSERT INTO datos_premise (id_serware, n_servers, power_consumption_known, power_consumption, cpu, software_utilization, hours_day, renewable, renewable_certification, renewable_percentage, location) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
     return $sentence->execute([$idSerware, $num_of_servers, $power_consumption_known, $nominal_consumption, $cpu, $software_utilization, $hours_used, $renewable_energy, $renewable_certification, $consumed_renewable_energy, $country]);
 }
@@ -246,17 +260,19 @@ function deletePremiseFormData($id)
     return $sentence->execute([$id]);
 }
 
-function fetchCO2eFromCloudEmissions($region){
+function fetchCO2eFromCloudEmissions($region)
+{
     $db = getConnection();
-    $sentence = $db->prepare("SELECT CO2e FROM CloudEmissions WHERE region = ?");
+    $sentence = $db->prepare("SELECT co2e FROM cloud_emissions WHERE region = ?");
     $sentence->execute([$region]);
 
     return $sentence->fetch(PDO::FETCH_ASSOC);
 }
 
-function fetchFromCoeficientesCloud($provider){
+function fetchFromCoeficientesCloud($provider)
+{
     $db = getConnection();
-    $sentence = $db->prepare("SELECT * FROM CoeficientesCloud WHERE proveedor = ?");
+    $sentence = $db->prepare("SELECT * FROM coeficientes_cloud WHERE provider = ?");
     $sentence->execute([$provider]);
 
     return $sentence->fetch(PDO::FETCH_ASSOC);
@@ -264,18 +280,32 @@ function fetchFromCoeficientesCloud($provider){
 function fetchFromCloudEmissions($region)
 {
     $db = getConnection();
-    $sentence = $db->prepare("SELECT * FROM CloudEmissions WHERE Region = ?");
+    $sentence = $db->prepare("SELECT * FROM cloud_emissions WHERE region = ?");
     $sentence->execute([$region]);
     return $sentence->fetchObject();
 }
-function fetchFromPremiseEmissions($location){
+function fetchFromPremiseEmissions($location)
+{
     $db = getConnection();
-    $sentence = $db->prepare("SELECT Emissions FROM PremiseEmissions WHERE State = ?");
+    $sentence = $db->prepare("SELECT * FROM premise_emissions WHERE state = ?");
     $sentence->execute([$location]);
 
     return $sentence->fetch(PDO::FETCH_ASSOC);
 }
-
+function fetchProviders()
+{
+    $db = getConnection();
+    $sentence = $db->prepare("SELECT DISTINCT provider FROM coeficientes_cloud;");
+    $sentence->execute();
+    return $sentence->fetchAll();
+}
+function fetchRegionsOfProvider($provider)
+{
+    $db = getConnection();
+    $sentence = $db->prepare("SELECT region FROM cloud_emissions WHERE provider = ?");
+    $sentence->execute([$provider]);
+    return $sentence->fetchAll();
+}
 /* CONNECTION */
 function getConnection()
 {

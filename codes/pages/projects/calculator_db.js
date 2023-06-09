@@ -1,6 +1,24 @@
 var project = sessionStorage.getItem("project");
 
+if (project == null) {
+  location.href = "projects.html";
+} else {
+  $.ajax({
+    url: "../../connections/projects/fetchProjectsById.php",
+    type: "GET",
+    data: {
+      idProject: project,
+    },
+    success: function (result) {
+  
+      document.getElementById("top_text").innerHTML = JSON.parse(result)["name"];
+    },
+  });
+}
+
 dbFetchSerwareConfiguration();
+
+fetchProviders();
 
 function newHtmlServerConfig(config) {
   $.ajax({
@@ -43,9 +61,8 @@ function newHtmlSoftwareConfig(config) {
   });
 }
 function dbFetchSerwareConfiguration() {
-  
   $.ajax({
-    url: "../../../connections/calculator/fetchSerwareConfiguration.php",
+    url: "../../connections/calculator/fetchSerwareConfiguration.php",
     type: "GET",
     data: {
       id_project: project,
@@ -53,7 +70,6 @@ function dbFetchSerwareConfiguration() {
     success: function (result) {
       configResult = JSON.parse(result);
       if (configResult.length > 0) {
-        console.log(configResult  )
         configResult.forEach((config) => {
           if (config["serware"] === "Server") {
             newHtmlServerConfig(config);
@@ -72,7 +88,7 @@ function dbFetchSerwareConfiguration() {
 }
 function dbFetchSerwareConfigurationById(idSerware) {
   $.ajax({
-    url: "../../../connections/calculator/fetchSerwareConfigurationById.php",
+    url: "../../connections/calculator/fetchSerwareConfigurationById.php",
     type: "GET",
     data: {
       idSerware: idSerware,
@@ -89,19 +105,18 @@ function dbFetchSerwareConfigurationById(idSerware) {
   });
 }
 function fetchDataByConfigId(idSerware) {
-
   // Primero consultar la configuración en la base de datos para saber en qué tabla de datos hay que buscar
   $.ajax({
-    url: "../../../connections/calculator/fetchSerwareConfigurationById.php",
+    url: "../../connections/calculator/fetchSerwareConfigurationById.php",
     type: "GET",
     data: {
       idSerware: idSerware,
     },
     success: function (result) {
       var configResult = JSON.parse(result);
-      console.log(configResult)
+      console.log(configResult);
       var table = "";
-     
+
       if (configResult != null) {
         if (configResult["type"] == "Premise") {
           table = "datos_premise";
@@ -110,7 +125,7 @@ function fetchDataByConfigId(idSerware) {
         }
 
         $.ajax({
-          url: "../../../connections/calculator/fetchDataByConfigId.php",
+          url: "../../connections/calculator/fetchDataByConfigId.php",
           type: "GET",
           data: {
             idSerware: idSerware,
@@ -118,9 +133,8 @@ function fetchDataByConfigId(idSerware) {
           },
           success: function (result) {
             configResult = JSON.parse(result);
-            
+
             if (configResult) {
-              
               if (table == "datos_premise") {
                 show_popup(1, configResult);
               } else if (table == "datos_cloud") {
@@ -157,7 +171,7 @@ function dbInsertConfiguration(
   }
 
   $.ajax({
-    url: "../../../connections/calculator/insertConfiguration.php",
+    url: "../../connections/calculator/insertConfiguration.php",
     type: "POST",
     data: {
       serware: serware,
@@ -194,7 +208,7 @@ function dbEditConfiguration(
   dataObject
 ) {
   $.ajax({
-    url: "../../../connections/calculator/editConfiguration.php",
+    url: "../../connections/calculator/editConfiguration.php",
     type: "POST",
     data: {
       id: id,
@@ -216,7 +230,7 @@ function dbEditConfiguration(
 }
 function dbDeleteConfiguration(id) {
   $.ajax({
-    url: "../../../connections/calculator/deleteConfiguration.php",
+    url: "../../connections/calculator/deleteConfiguration.php",
     type: "POST",
     data: {
       id: id,
@@ -229,7 +243,7 @@ function dbDeleteConfiguration(id) {
 function dbInsertCloudFormData(dataObject, idSerware) {
   console.log(idSerware);
   $.ajax({
-    url: "../../../connections/calculator/insertFormData.php",
+    url: "../../connections/calculator/insertFormData.php",
     type: "POST",
     data: {
       idSerware: idSerware,
@@ -253,10 +267,8 @@ function dbInsertCloudFormData(dataObject, idSerware) {
   });
 }
 function dbInsertPremiseFormData(dataObject, idSerware) {
-
-
   $.ajax({
-    url: "../../../connections/calculator/insertFormData.php",
+    url: "../../connections/calculator/insertFormData.php",
     type: "POST",
     data: {
       idSerware: idSerware,
@@ -284,7 +296,7 @@ function dbInsertPremiseFormData(dataObject, idSerware) {
 }
 function dbEditCloudFormData(dataObject, idSerware) {
   $.ajax({
-    url: "../../../connections/calculator/editFormData.php",
+    url: "../../connections/calculator/editFormData.php",
     type: "POST",
     data: {
       idSerware: idSerware,
@@ -308,9 +320,9 @@ function dbEditCloudFormData(dataObject, idSerware) {
   });
 }
 function dbEditPremiseFormData(dataObject, idSerware) {
-  console.log(idSerware)
+  console.log(idSerware);
   $.ajax({
-    url: "../../../connections/calculator/editFormData.php",
+    url: "../../connections/calculator/editFormData.php",
     type: "POST",
     data: {
       idSerware: idSerware,
@@ -338,7 +350,7 @@ function dbEditPremiseFormData(dataObject, idSerware) {
 }
 function dbDeleteConfiguration(id) {
   $.ajax({
-    url: "../../../connections/calculator/deleteConfiguration.php",
+    url: "../../connections/calculator/deleteConfiguration.php",
     type: "POST",
     data: {
       id: id,
@@ -350,7 +362,7 @@ function dbDeleteConfiguration(id) {
 }
 function dbDeleteFormData(idSerware) {
   $.ajax({
-    url: "../../../connections/calculator/deleteFormData.php",
+    url: "../../connections/calculator/deleteFormData.php",
     type: "POST",
     data: {
       idSerware: idSerware,
@@ -360,10 +372,10 @@ function dbDeleteFormData(idSerware) {
     },
   });
 }
-function calculatePremiseE(n_servers, power_consumption_known, power_consumption, cpu, 
-  software_utilization, hours_used) {
+function calculatePremise(data, edit, selected_table, n_servers, power_consumption_known, power_consumption, cpu, 
+  software_utilization, hours_used, isRenewable, btns, consumed_renewable_energy, country) {
   $.ajax({
-    url: "../../../connections/calculate.php",
+    url: "../../connections/calculate.php",
     type: "POST",
     data: {
       calculate: "premise",
@@ -373,9 +385,57 @@ function calculatePremiseE(n_servers, power_consumption_known, power_consumption
       cpu: cpu,
       software_utilization: software_utilization,
       hours_used: hours_used,
+      consumed_renewable_energy:consumed_renewable_energy,
+      country: country,
     },
-    success: function (result) {
-      console.log(result);
+    success: function (result) { 
+      var configResult = JSON.parse(result);
+      console.log(configResult)
+      var energy_consumption = configResult["energy_consumption"];
+      var consumption_emissions = configResult["consumption_emissions"];
+      var embedded_emissions = configResult["embedded_emissions"];
+      var carbon_footprint = configResult["carbon_footprint"];
+
+      var dataObject = {
+        type: "Premise",
+        num_of_servers: n_servers,
+        nominal_consumption_known: power_consumption_known,
+        nominal_consumption: power_consumption,
+        cpu: cpu,
+        software_utilization: software_utilization,
+        hours_used: hours_used,
+        renewable_energy: isRenewable,
+        renewable_certification: btns,
+        consumed_renewable_energy: consumed_renewable_energy,
+        country: country,
+      };
+      if (!edit) {
+        dbInsertConfiguration(
+          selected_table,
+          "Premise",
+          n_servers,
+          country,
+          energy_consumption,
+          consumption_emissions,
+          embedded_emissions,
+          carbon_footprint,
+          dataObject
+        );
+      } else {
+        dbEditConfiguration(
+          data["id_serware"],
+          "Premise",
+          n_servers,
+          country,
+          energy_consumption,
+          consumption_emissions,
+          embedded_emissions,
+          carbon_footprint,
+          dataObject
+        );
+      }
+  
+      close_popup();
     },
     error: function (err) {
       console.log(err);
@@ -383,10 +443,10 @@ function calculatePremiseE(n_servers, power_consumption_known, power_consumption
   });
 }
 
-function calculateCloudE(provider, region, vcpu_hours, vgpu_hours, tb_hdd, tb_ssd, 
-  gb_memory, gb_networking) {
+function calculateCloud(data, edit, provider, region, vcpu_hours, vgpu_hours, tb_hdd, tb_ssd, 
+  gb_memory, gb_networking, edit, selected_table) {
   $.ajax({
-    url: "../../../connections/calculate.php",
+    url: "../../connections/calculate.php",
     type: "POST",
     data: {
       calculate: "cloud",
@@ -400,15 +460,55 @@ function calculateCloudE(provider, region, vcpu_hours, vgpu_hours, tb_hdd, tb_ss
       gb_networking: gb_networking,
     },
     success: function (result) {
-      console.log(result);
+      var configResult = JSON.parse(result);
+      console.log(configResult)
+      var energy_consumption = configResult["energy_consumption"];
+      var consumption_emissions = configResult["consumption_emissions"];
+      var embedded_emissions = configResult["embedded_emissions"];
+      var carbon_footprint = configResult["carbon_footprint"];
+
+      var dataObject = {
+        type: "Cloud",
+        provider: provider,
+        region: region, // TODO sacar de db
+        cpu_hours: vcpu_hours,
+        gpu_hours: vgpu_hours,
+        tb_hdd: tb_hdd,
+        tb_sdd: tb_ssd,
+        gb_memory: gb_memory,
+        gb_networking: gb_networking,
+      };
+      if (!edit) {
+        dbInsertConfiguration(
+          selected_table,
+          "Cloud",
+          provider,
+          region,
+          energy_consumption,
+          consumption_emissions,
+          embedded_emissions,
+          carbon_footprint,
+          dataObject
+        );
+      } else {
+        dbEditConfiguration(
+          data["id_serware"],
+          "Cloud",
+          provider,
+          region,
+          energy_consumption,
+          consumption_emissions,
+          embedded_emissions,
+          carbon_footprint,
+          dataObject
+        );
+      }
+      close_popup();
     },
     error: function (err) {
       console.log(err);
     },
   });
-}
-function calculateCloudI(){
-
 }
 function editButton(id) {
   fetchDataByConfigId(id);
@@ -416,4 +516,56 @@ function editButton(id) {
 function removeEditPopup(idComponente) {
   document.getElementById(idComponente).remove();
   close_popup();
+}
+function getRegions(provider) {
+
+  if (provider == undefined) {
+    provider = document.getElementById("provider_cloud").value;
+  }
+  $.ajax({
+    url: "../../connections/calculator/fetchRegionsOfProvider.php",
+    type: "GET",
+    data: {
+      provider: provider,
+    },
+    success: function (result) {
+      jsonResult = JSON.parse(result);
+      $("#combo_cloud").empty();
+      jsonResult.forEach((prov) => {
+        $("#combo_cloud").append(
+          '<option value="' +
+            prov["region"] +
+            '">' +
+            prov["region"] +
+            "</option>"
+        );
+      });
+    },
+    error: function (err) {
+      console.log("Error loading regions");
+    },
+  });
+}
+function fetchProviders() {
+  $.ajax({
+    url: "../../connections/calculator/fetchProviders.php",
+    type: "GET",
+    success: function (result) {
+      jsonResult = JSON.parse(result);
+      jsonResult.forEach((prov) => {
+        $("#provider_cloud").append(
+          '<option value="' +
+            prov["provider"] +
+            '">' +
+            prov["provider"] +
+            "</option>"
+        );
+      });
+      var v = document.getElementById("provider_cloud");
+      getRegions(v.options[v.selectedIndex].value);
+    },
+    error: function (err) {
+      console.log("Error loading cloud providers");
+    },
+  });
 }
